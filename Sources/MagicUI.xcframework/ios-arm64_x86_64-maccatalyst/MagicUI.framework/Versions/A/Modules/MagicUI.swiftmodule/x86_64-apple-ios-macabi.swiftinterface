@@ -62,6 +62,9 @@ public enum LoremIpsumAmountType : Swift.String {
     get
   }
 }
+@_hasMissingDesignatedInitializers public class MagicUIBundleReference {
+  @objc deinit
+}
 extension SwiftUI.View {
   public func frame(square lenght: CoreGraphics.CGFloat?) -> some SwiftUI.View
   
