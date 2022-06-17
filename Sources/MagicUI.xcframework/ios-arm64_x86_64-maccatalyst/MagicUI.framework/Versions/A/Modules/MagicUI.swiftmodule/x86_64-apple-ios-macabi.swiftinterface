@@ -11,6 +11,95 @@ extension SwiftUI.View {
   public func frame(square lenght: CoreGraphics.CGFloat?) -> some SwiftUI.View
   
 }
+public struct Toast : SwiftUI.View {
+  public var displayMode: MagicUI.ToastDisplayMode
+  public var type: MagicUI.ToastType
+  public var title: Swift.String?
+  public var subTitle: Swift.String?
+  public var style: MagicUI.ToastStyle?
+  public init(displayMode: MagicUI.ToastDisplayMode = .alert, type: MagicUI.ToastType, title: Swift.String? = nil, subTitle: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
+  public init(displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType, title: Swift.String? = nil)
+  public var banner: some SwiftUI.View {
+    get
+  }
+  public var hud: some SwiftUI.View {
+    get
+  }
+  public var alert: some SwiftUI.View {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI5ToastV4bodyQrvp", 0) __
+}
+public struct ToastModifier : SwiftUI.ViewModifier {
+  public func main() -> some SwiftUI.View
+  
+  @_Concurrency.MainActor(unsafe) public func body(content: MagicUI.ToastModifier.Content) -> some SwiftUI.View
+  
+  public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI13ToastModifierV4body7contentQr05SwiftB005_ViewD8_ContentVyACG_tF", 0) __
+}
+extension SwiftUI.View {
+  public func toast(isPresented: SwiftUI.Binding<Swift.Bool>, duration: Swift.Double = 2, tapToDismiss: Swift.Bool = true, offsetY: CoreGraphics.CGFloat = 0, toast: @escaping () -> MagicUI.Toast, onTap: (() -> ())? = nil, completion: (() -> ())? = nil) -> some SwiftUI.View
+  
+}
+public enum ToastBannerAnimation {
+  case slide, pop
+  public static func == (a: MagicUI.ToastBannerAnimation, b: MagicUI.ToastBannerAnimation) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum ToastDisplayMode : Swift.Equatable {
+  case alert
+  case hud
+  case banner(_: MagicUI.ToastBannerAnimation)
+  public static func == (a: MagicUI.ToastDisplayMode, b: MagicUI.ToastDisplayMode) -> Swift.Bool
+}
+public enum ToastType : Swift.Equatable {
+  case complete(_: SwiftUI.Color)
+  case error(_: SwiftUI.Color)
+  case systemImage(_: Swift.String, _: SwiftUI.Color)
+  case image(_: Swift.String, _: SwiftUI.Color)
+  case loading
+  case regular
+  public static func == (a: MagicUI.ToastType, b: MagicUI.ToastType) -> Swift.Bool
+}
+public enum ToastStyle : Swift.Equatable {
+  case style(backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, subTitleColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, subTitleFont: SwiftUI.Font? = nil)
+  public static func == (a: MagicUI.ToastStyle, b: MagicUI.ToastStyle) -> Swift.Bool
+}
+public class ToastManager : Combine.ObservableObject {
+  @Combine.Published @_projectedValueProperty($isPresented) public var isPresented: Swift.Bool {
+    get
+    set
+    _modify
+  }
+  public var $isPresented: Combine.Published<Swift.Bool>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  @Combine.Published @_projectedValueProperty($options) public var options: MagicUI.ToastOptions {
+    get
+    set
+    _modify
+  }
+  public var $options: Combine.Published<MagicUI.ToastOptions>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  public init()
+  public func present(_ options: MagicUI.ToastOptions)
+  public func hide()
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+}
+public struct ToastOptions {
+}
 @_Concurrency.MainActor(unsafe) public struct ContentView<Content> : SwiftUI.View where Content : SwiftUI.View {
   @_Concurrency.MainActor(unsafe) public init(licenseKey: Swift.String, content: @escaping () -> Content)
   @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
@@ -18,3 +107,5 @@ extension SwiftUI.View {
   }
   public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI11ContentViewV4bodyQrvp", 0) __<Content>
 }
+extension MagicUI.ToastBannerAnimation : Swift.Equatable {}
+extension MagicUI.ToastBannerAnimation : Swift.Hashable {}
