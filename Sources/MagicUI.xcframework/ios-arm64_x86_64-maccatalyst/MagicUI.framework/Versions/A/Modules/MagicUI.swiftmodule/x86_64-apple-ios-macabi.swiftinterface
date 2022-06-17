@@ -8,15 +8,15 @@ import Swift
 import SwiftUI
 import _Concurrency
 extension SwiftUI.View {
-  public func configure(_ magicUIApp: MagicUI.MagicUIApp) -> some SwiftUI.View
-  
   public func frame(square lenght: CoreGraphics.CGFloat?) -> some SwiftUI.View
   
 }
-public class MagicUIApp : Combine.ObservableObject {
-  public init(_ licenseKey: Swift.String)
-  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
-  @objc deinit
+@_Concurrency.MainActor(unsafe) public struct ContentView<Content> : SwiftUI.View where Content : SwiftUI.View {
+  @_Concurrency.MainActor(unsafe) public init(licenseKey: Swift.String, content: @escaping () -> Content)
+  @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI11ContentViewV4bodyQrvp", 0) __<Content>
 }
 public struct LicenseManager {
   public static var key: Swift.String
