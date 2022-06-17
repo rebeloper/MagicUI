@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Assets.car</key>
+		<data>
+		h0Ggcvz2xBmWbXQlOp2C/8rALa4=
+		</data>
 		<key>Headers/MagicUI-Swift.h</key>
 		<data>
 		csz6K2ohojrYyBufTNiGVTWShWM=
@@ -18,15 +22,15 @@
 		</data>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		gMLBAHyYtksdB/20SobOnI9Q2lw=
+		1XZCQEtM5YpcfDk3lUwTYrLWsfM=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		0eQ4PEIPDPszb96p1pMF14172nQ=
+		wR8YVUkao9FJiT428jfwyu/hzYI=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		eY3/Hq/DSa0qqawaHJQ9KZfVTA0=
+		H07W0s7BwKM0NOQSmZcUvWDNTT0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -35,6 +39,13 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Assets.car</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			1fye3FzAMfLqluJJ9mTNsNw08zNAG1xe3hN5M1ynmHE=
+			</data>
+		</dict>
 		<key>Headers/MagicUI-Swift.h</key>
 		<dict>
 			<key>hash2</key>
@@ -53,21 +64,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ybZzXfFuWYQU+DJBLUrF6LAwPB6CoIWVW4ckXY9ZIfA=
+			vy7OBVomljOS2UEpF0pTYWFSEYkUIR1TqWLAP3pWsoQ=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bX1mMJ3Ab17XkpQVW4RaHxgmrDOdOdwNpfGwbzvumNk=
+			QuXU1/L3Au5AxAblwfDJRHvoxvopf6pBg1asyubX9W8=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oO0IyxEtDz9jNEtdAnSvAP8q1qifoglHAFAkMWox/V0=
+			sLqoSPMPJHenhtSrkJwOl0e1Re1dtp4d8wK6ZKcNVDI=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

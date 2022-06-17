@@ -7,6 +7,61 @@ import Foundation
 import Swift
 import SwiftUI
 import _Concurrency
+public struct LoremIpsum {
+  public static let atExtraExtraExtraShort: Swift.String
+  public static let atExtraExtraShort: Swift.String
+  public static let extraExtraExtraShort: Swift.String
+  public static let extraExtraShort: Swift.String
+  public static let extraShort: Swift.String
+  public static let short: Swift.String
+  public static let medium: Swift.String
+  public static let normal: Swift.String
+  public static let long: Swift.String
+  public static let extraLong: Swift.String
+  public static let oneParagraph: Swift.String
+  public static let twoParagraphs: Swift.String
+  public static let threeParagraphs: Swift.String
+  public static let names: [Swift.String]
+  public static func randomName() -> Swift.String
+  public static let texts: [Swift.String]
+  public static func randomText() -> Swift.String
+  public static func amount(_ value: Swift.Int = randomInt(), multiplier: MagicUI.LoremIpsumAmountMultiplier = .none, type: MagicUI.LoremIpsumAmountType = .none) -> Swift.String
+  public static func secondsAgo(_ value: Swift.Int = randomInt(59), isShort: Swift.Bool = true) -> Swift.String
+  public static func minutesAgo(_ value: Swift.Int = randomInt(59), isShort: Swift.Bool = true) -> Swift.String
+  public static func hoursAgo(_ value: Swift.Int = randomInt(24), isShort: Swift.Bool = true) -> Swift.String
+  public static func daysAgo(_ value: Swift.Int = randomInt(30), isShort: Swift.Bool = true) -> Swift.String
+  public static func weeksAgo(_ value: Swift.Int = randomInt(3), isShort: Swift.Bool = true) -> Swift.String
+  public static func monthsAgo(_ value: Swift.Int = randomInt(11), isShort: Swift.Bool = true) -> Swift.String
+  public static func yearsAgo(_ value: Swift.Int = randomInt(9), isShort: Swift.Bool = true) -> Swift.String
+  public static func now() -> Swift.String
+  public static func randomInt(_ max: Swift.Int = 99) -> Swift.Int
+  public static func randomNumber() -> Swift.String
+}
+public enum LoremIpsumAmountMultiplier : Swift.String {
+  case none
+  case K
+  case M
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum LoremIpsumAmountType : Swift.String {
+  case none
+  case likes
+  case views
+  case comments
+  case followers
+  case following
+  case subscribers
+  case replies
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 extension SwiftUI.View {
   public func frame(square lenght: CoreGraphics.CGFloat?) -> some SwiftUI.View
   
@@ -108,5 +163,117 @@ public struct ToastOptions {
   }
   public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI11ContentViewV4bodyQrvp", 0) __<Content>
 }
+public struct LoremPicsum {
+  public static let foodAndDrinkName: Swift.String
+  public static let backToSchoolName: Swift.String
+  public static let natureName: Swift.String
+  public static let architectureName: Swift.String
+  public static let businessName: Swift.String
+  public static let fashionName: Swift.String
+  public static let healthName: Swift.String
+  public static let interiorName: Swift.String
+  public static let streetName: Swift.String
+  public static let technologyName: Swift.String
+  public static let textureName: Swift.String
+  public static let travelName: Swift.String
+  public static let athleticsName: Swift.String
+  public static let historyName: Swift.String
+  public static let person0Name: Swift.String
+  public static let person1Name: Swift.String
+  public static let person2Name: Swift.String
+  public static let person3Name: Swift.String
+  public static let person4Name: Swift.String
+  public static let person5Name: Swift.String
+  public static let person6Name: Swift.String
+  public static let person7Name: Swift.String
+  public static let person8Name: Swift.String
+  public static let person9Name: Swift.String
+  public static var foodAndDrink: SwiftUI.Image {
+    get
+  }
+  public static var backToSchool: SwiftUI.Image {
+    get
+  }
+  public static var nature: SwiftUI.Image {
+    get
+  }
+  public static var architecture: SwiftUI.Image {
+    get
+  }
+  public static var business: SwiftUI.Image {
+    get
+  }
+  public static var fashion: SwiftUI.Image {
+    get
+  }
+  public static var health: SwiftUI.Image {
+    get
+  }
+  public static var interior: SwiftUI.Image {
+    get
+  }
+  public static var street: SwiftUI.Image {
+    get
+  }
+  public static var technology: SwiftUI.Image {
+    get
+  }
+  public static var texture: SwiftUI.Image {
+    get
+  }
+  public static var travel: SwiftUI.Image {
+    get
+  }
+  public static var athletics: SwiftUI.Image {
+    get
+  }
+  public static var history: SwiftUI.Image {
+    get
+  }
+  public static var person0: SwiftUI.Image {
+    get
+  }
+  public static var person1: SwiftUI.Image {
+    get
+  }
+  public static var person2: SwiftUI.Image {
+    get
+  }
+  public static var person3: SwiftUI.Image {
+    get
+  }
+  public static var person4: SwiftUI.Image {
+    get
+  }
+  public static var person5: SwiftUI.Image {
+    get
+  }
+  public static var person6: SwiftUI.Image {
+    get
+  }
+  public static var person7: SwiftUI.Image {
+    get
+  }
+  public static var person8: SwiftUI.Image {
+    get
+  }
+  public static var person9: SwiftUI.Image {
+    get
+  }
+  public static let imageNames: [Swift.String]
+  public static let images: [SwiftUI.Image]
+  public static func randomImageName() -> Swift.String
+  public static func randomImage() -> SwiftUI.Image
+  public static let peopleNames: [Swift.String]
+  public static let people: [SwiftUI.Image]
+  public static func randomPersonName() -> Swift.String
+  public static func randomPerson() -> SwiftUI.Image
+}
+extension MagicUI.LoremIpsumAmountMultiplier : Swift.Equatable {}
+extension MagicUI.LoremIpsumAmountMultiplier : Swift.Hashable {}
+extension MagicUI.LoremIpsumAmountMultiplier : Swift.RawRepresentable {}
+extension MagicUI.LoremIpsumAmountType : Swift.Equatable {}
+extension MagicUI.LoremIpsumAmountType : Swift.Hashable {}
+extension MagicUI.LoremIpsumAmountType : Swift.RawRepresentable {}
 extension MagicUI.ToastBannerAnimation : Swift.Equatable {}
 extension MagicUI.ToastBannerAnimation : Swift.Hashable {}

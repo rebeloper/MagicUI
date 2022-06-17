@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Resources/Assets.car</key>
+		<data>
+		UPK5ctD1mnguVCJGasOPxUB3/MA=
+		</data>
 		<key>Resources/Info.plist</key>
 		<data>
 		dgFs/JucMvn9+u3mvjhiDnN9YUQ=
@@ -29,42 +33,42 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			FctYg+OLp3QP5GjqVTcmZ3Qxu7RRA68OUWj+MJwJftE=
+			rRR3fkcCrG8zThaf50ho6EdPK9VSLKm5GUjs03jm+Aw=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-macabi.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			iYv+GA5wCyfmtU5thKCyfYvFEX4C4WZCrjACtrY2I4A=
+			r3k58W7APPyqn/3zlOXe+5CELlKjBpB9MJ/oGFVCK/0=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-macabi.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZPA7PC79oFBpRrksyTrtvIHS8geqJOZwHAQmCfH5cME=
+			b6ctMuGFbQAIhHrYDQdRF4kJPL+PvfpOmk03M0bqybg=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-macabi.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ax0LhCs3LUIwJ6E3SLEXc4BcmB0F/AO1rX3oI3tZpqI=
+			yxEDCMwDMizzMBjh6uMlDkMeT41bcnGHO3deBnI94JM=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-macabi.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4C3/BIv/3pvUYREo8nSYM6gr5ThbjWopzHKAa3Xb3SQ=
+			ck68ayjVNQzP7XVZ0ie5u78AWjOymZkqBPNIuZOyNlE=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-macabi.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RKEgRYZ5IVr5WGtF/ZC1vuoYGQheQIf3C3D5IONMNdE=
+			LzCjhS1tl798bYtwOO/o2ydnGQpT9aHzNsZD4XEYxek=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -72,6 +76,13 @@
 			<key>hash2</key>
 			<data>
 			KmNkFlpoEkbrnSqv7te/5x85eDoEy0XaCUProajHolM=
+			</data>
+		</dict>
+		<key>Resources/Assets.car</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			4TAK+RUN+AAXskN3ey7UEYd7ZoOk5UEF9yjevW2Zb4M=
 			</data>
 		</dict>
 		<key>Resources/Info.plist</key>
