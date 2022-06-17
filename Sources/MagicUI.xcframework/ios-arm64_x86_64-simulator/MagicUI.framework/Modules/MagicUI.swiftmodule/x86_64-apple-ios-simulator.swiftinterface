@@ -14,8 +14,7 @@ extension SwiftUI.View {
   
 }
 public class MagicUIApp : Combine.ObservableObject {
-  public init()
-  public func configure(_ licenseKey: Swift.String)
+  public init(_ licenseKey: Swift.String)
   public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
   @objc deinit
 }
