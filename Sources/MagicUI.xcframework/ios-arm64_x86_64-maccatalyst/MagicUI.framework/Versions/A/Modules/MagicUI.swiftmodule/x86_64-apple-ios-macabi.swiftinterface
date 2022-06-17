@@ -7,13 +7,7 @@ import Foundation
 import Swift
 import SwiftUI
 import _Concurrency
-extension SwiftUI.View {
-  public func configure(_ magicUI: MagicUI.MagicUI, licenseKey: Swift.String) -> some SwiftUI.View
-  
-  public func frame(square lenght: CoreGraphics.CGFloat?) -> some SwiftUI.View
-  
-}
-public class MagicUI : Combine.ObservableObject {
+public class MagicUIApp : Combine.ObservableObject {
   public init()
   public func configure(_ licenseKey: Swift.String)
   public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
