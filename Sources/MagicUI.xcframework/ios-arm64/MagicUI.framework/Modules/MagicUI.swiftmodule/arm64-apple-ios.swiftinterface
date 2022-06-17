@@ -8,18 +8,16 @@ import Swift
 import SwiftUI
 import _Concurrency
 extension SwiftUI.View {
-  public func configure(_ licenseKey: Swift.String) -> some SwiftUI.View
+  public func configure(_ magicUI: MagicUI.MagicUI, licenseKey: Swift.String) -> some SwiftUI.View
   
   public func frame(square lenght: CoreGraphics.CGFloat?) -> some SwiftUI.View
   
 }
-@_hasMissingDesignatedInitializers public class MagicUI : Combine.ObservableObject {
+public class MagicUI : Combine.ObservableObject {
+  public init()
   public func configure(_ licenseKey: Swift.String)
   public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
   @objc deinit
-}
-public struct MagicUIApp {
-  public static func configure(_ licenseKey: Swift.String)
 }
 public struct LicenseManager {
   public static var key: Swift.String
