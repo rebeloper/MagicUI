@@ -18,6 +18,3 @@ extension SwiftUI.View {
   }
   public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI11ContentViewV4bodyQrvp", 0) __<Content>
 }
-public struct LicenseManager {
-  public static var key: Swift.String
-}
