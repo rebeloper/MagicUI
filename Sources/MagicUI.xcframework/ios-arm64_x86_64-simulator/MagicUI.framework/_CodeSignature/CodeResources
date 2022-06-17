@@ -30,7 +30,7 @@
 		</data>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		YV3axH7MvjvPxJ36fV9xUlV+NL0=
+		eEuetSZqClQKxDoCKWzaWjrjv2M=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -42,7 +42,7 @@
 		</data>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		Aey9fXHppVB3WNx7vNtnzo4q8vc=
+		qT35PznKOC8ixdieCoRjGrjQcKQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -90,7 +90,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			p+5h9aNqTPinP47X1ywQ+Nj/S+Hjx31JZebBfHnLC2U=
+			aEBf+J/sa/j4TURfy3GoSG0fgS0NQrLVoi8tti2K/lw=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -111,7 +111,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			AfKK4QcmhOszSFm7pmTQho0sxztCTHlulOunNQCDWC4=
+			GWpxNqQlDPpa7VfJlhM+z4odfp9A184YrPmx29C3oGY=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
