@@ -22,11 +22,11 @@
 		</data>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		fLuCquUaTzrfh+dMGNv5CysfzSA=
+		BRUP8DJ7LxtYV5TkF0I5uLPOczw=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		EB686341UC1/M86BWWQkZvFdi7Y=
+		S2GJvuIhfNc6OkYy1B+IOZpRins=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		Y58lBUyME55zy8oQHOBlBC8ZM8k=
+		63iA+MeCKiOyQPShbY6VEA3/+/g=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		ZlVHTnzzBtq8EGuZzPKmzRyGlYs=
+		hXPc5iL7onCo1+0neg7fIyLdvtE=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -72,14 +72,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			J6Ri4aSAjyaysohFaX+pwGpYAhY+rR5IIToQ1CLssAU=
+			Z73rWrmellGJvJiU/kqUnQTgrhWcCxRJjAN6a5Y5lTA=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			DzAHfpzYZSuDnHd8ffXXTLY8kBf7dSkYa9uP/S7FqtA=
+			7eNqch4ix09ONkHUm+/FtaYAZO5Sp2uN6uxD2wI8q8Q=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -93,14 +93,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			6K5//TttNbD2ETaNFH7Y5pT+BO4V6+USpsCAGS7bAMM=
+			GOC69qfUWYXsDViQZWPpUiC+p4zYAVqW8Uo70Dxljx8=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bEtAUWiGBQZLQCQHxg8ju6sKDwA10VFTwa44JNcsa24=
+			VMUitAF0OSppwMFNjfcZTEyJAR2X1L8Va6PW9hrvdYY=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

@@ -99,6 +99,7 @@ public class ToastManager : Combine.ObservableObject {
   @objc deinit
 }
 public struct ToastOptions {
+  public init(displayMode: MagicUI.ToastDisplayMode? = nil, type: MagicUI.ToastType? = nil, title: Swift.String? = nil, subTitle: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
 }
 @_Concurrency.MainActor(unsafe) public struct ContentView<Content> : SwiftUI.View where Content : SwiftUI.View {
   @_Concurrency.MainActor(unsafe) public init(licenseKey: Swift.String, content: @escaping () -> Content)
