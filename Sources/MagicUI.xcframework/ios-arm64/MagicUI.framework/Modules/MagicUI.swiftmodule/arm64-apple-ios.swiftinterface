@@ -126,7 +126,7 @@ public enum ToastType : Swift.Equatable {
   public static func == (a: MagicUI.ToastType, b: MagicUI.ToastType) -> Swift.Bool
 }
 public enum ToastStyle : Swift.Equatable {
-  case style(backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, subTitleColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, subTitleFont: SwiftUI.Font? = nil)
+  case style(backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, subTitleColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, subTitleFont: SwiftUI.Font? = nil, imageMaxLength: CoreGraphics.CGFloat? = 20, systemImageFont: SwiftUI.Font? = nil, cornerRadius: CoreGraphics.CGFloat? = nil)
   public static func == (a: MagicUI.ToastStyle, b: MagicUI.ToastStyle) -> Swift.Bool
 }
 public class ToastManager : Combine.ObservableObject {
