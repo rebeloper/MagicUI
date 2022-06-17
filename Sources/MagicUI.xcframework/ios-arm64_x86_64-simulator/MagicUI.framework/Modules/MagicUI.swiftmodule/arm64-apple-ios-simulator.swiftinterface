@@ -8,7 +8,7 @@ import Swift
 import SwiftUI
 import _Concurrency
 extension SwiftUI.View {
-  public func configure(_ magicUIApp: MagicUI.MagicUIApp, licenseKey: Swift.String) -> some SwiftUI.View
+  public func configure(_ magicUIApp: MagicUI.MagicUIApp) -> some SwiftUI.View
   
   public func frame(square lenght: CoreGraphics.CGFloat?) -> some SwiftUI.View
   
