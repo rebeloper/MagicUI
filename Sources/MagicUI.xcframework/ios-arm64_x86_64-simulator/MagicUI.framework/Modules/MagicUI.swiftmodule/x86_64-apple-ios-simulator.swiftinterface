@@ -73,9 +73,9 @@ public struct Toast : SwiftUI.View {
   public var displayMode: MagicUI.ToastDisplayMode
   public var type: MagicUI.ToastType
   public var title: Swift.String?
-  public var subTitle: Swift.String?
+  public var message: Swift.String?
   public var style: MagicUI.ToastStyle?
-  public init(displayMode: MagicUI.ToastDisplayMode = .alert, type: MagicUI.ToastType, title: Swift.String? = nil, subTitle: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
+  public init(displayMode: MagicUI.ToastDisplayMode = .alert, type: MagicUI.ToastType, title: Swift.String? = nil, message: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
   public init(displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType, title: Swift.String? = nil)
   public var banner: some SwiftUI.View {
     get
@@ -110,6 +110,14 @@ public enum ToastBannerAnimation {
     get
   }
 }
+public enum ToastPreset {
+  case progress, error, success, warning, info
+  public static func == (a: MagicUI.ToastPreset, b: MagicUI.ToastPreset) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
 public enum ToastDisplayMode : Swift.Equatable {
   case alert
   case hud
@@ -117,7 +125,7 @@ public enum ToastDisplayMode : Swift.Equatable {
   public static func == (a: MagicUI.ToastDisplayMode, b: MagicUI.ToastDisplayMode) -> Swift.Bool
 }
 public enum ToastType : Swift.Equatable {
-  case complete(_: SwiftUI.Color)
+  case success(_: SwiftUI.Color)
   case error(_: SwiftUI.Color)
   case systemImage(_: Swift.String, _: SwiftUI.Color)
   case image(_: Swift.String, _: SwiftUI.Color)
@@ -138,7 +146,7 @@ public enum BackgroundMaterial {
   }
 }
 public enum ToastStyle : Swift.Equatable {
-  case style(backgroundMaterial: MagicUI.BackgroundMaterial? = .ultraThinMaterial, backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, subTitleColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, subTitleFont: SwiftUI.Font? = nil, imageMaxLength: CoreGraphics.CGFloat? = 20, systemImageFont: SwiftUI.Font? = nil, cornerRadius: CoreGraphics.CGFloat? = nil)
+  case style(backgroundMaterial: MagicUI.BackgroundMaterial? = .ultraThinMaterial, backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, messageColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, messageFont: SwiftUI.Font? = nil, imageMaxLength: CoreGraphics.CGFloat? = 20, systemImageFont: SwiftUI.Font? = nil, cornerRadius: CoreGraphics.CGFloat? = nil)
   public static func == (a: MagicUI.ToastStyle, b: MagicUI.ToastStyle) -> Swift.Bool
 }
 public class ToastManager : Combine.ObservableObject {
@@ -163,26 +171,22 @@ public class ToastManager : Combine.ObservableObject {
     set
   }
   public init()
-  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, subTitle: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
-  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, subTitle: Swift.String? = nil, backgroundMaterial: MagicUI.BackgroundMaterial? = nil, backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, subTitleColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, subTitleFont: SwiftUI.Font? = nil, imageMaxLength: CoreGraphics.CGFloat? = 20, systemImageFont: SwiftUI.Font? = nil, cornerRadius: CoreGraphics.CGFloat? = nil)
+  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, message: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
+  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, message: Swift.String? = nil, backgroundMaterial: MagicUI.BackgroundMaterial? = nil, backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, messageColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, messageFont: SwiftUI.Font? = nil, imageMaxLength: CoreGraphics.CGFloat? = 20, systemImageFont: SwiftUI.Font? = nil, cornerRadius: CoreGraphics.CGFloat? = nil)
   public func present(options: MagicUI.ToastOptions)
-  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String, subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
-  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String, subTitle: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
-  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
-  public func presentError(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String? = "Error", subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
-  public func presentSuccess(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String? = "Success", subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
-  public func presentWarning(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String? = "Warning", subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
-  public func presentInfo(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String? = "Info", subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
-  public func presentProgress(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String? = "Working", subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
-  public func present(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String, subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
+  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String, message: Swift.String, style: MagicUI.ToastStyle? = nil)
+  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String, message: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
+  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, message: Swift.String, style: MagicUI.ToastStyle? = nil)
+  public func present(_ preset: MagicUI.ToastPreset, _ displayMode: MagicUI.ToastDisplayMode, message: Swift.String, style: MagicUI.ToastStyle? = nil)
+  public func present(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String, message: Swift.String, style: MagicUI.ToastStyle? = nil)
   public func present(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String, style: MagicUI.ToastStyle? = nil)
-  public func present(_ displayMode: MagicUI.ToastDisplayMode, subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
+  public func present(_ displayMode: MagicUI.ToastDisplayMode, message: Swift.String, style: MagicUI.ToastStyle? = nil)
   public func hide()
   public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
   @objc deinit
 }
 public struct ToastOptions {
-  public init(displayMode: MagicUI.ToastDisplayMode? = nil, type: MagicUI.ToastType? = nil, title: Swift.String? = nil, subTitle: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
+  public init(displayMode: MagicUI.ToastDisplayMode? = nil, type: MagicUI.ToastType? = nil, title: Swift.String? = nil, message: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
 }
 @_Concurrency.MainActor(unsafe) public struct ContentView<Content> : SwiftUI.View where Content : SwiftUI.View {
   @_Concurrency.MainActor(unsafe) public init(licenseKey: Swift.String, content: @escaping () -> Content)
@@ -305,5 +309,7 @@ extension MagicUI.LoremIpsumAmountType : Swift.Hashable {}
 extension MagicUI.LoremIpsumAmountType : Swift.RawRepresentable {}
 extension MagicUI.ToastBannerAnimation : Swift.Equatable {}
 extension MagicUI.ToastBannerAnimation : Swift.Hashable {}
+extension MagicUI.ToastPreset : Swift.Equatable {}
+extension MagicUI.ToastPreset : Swift.Hashable {}
 extension MagicUI.BackgroundMaterial : Swift.Equatable {}
 extension MagicUI.BackgroundMaterial : Swift.Hashable {}
