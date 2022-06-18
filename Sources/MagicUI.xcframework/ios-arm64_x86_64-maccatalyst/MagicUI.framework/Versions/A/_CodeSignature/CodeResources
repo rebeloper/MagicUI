@@ -33,42 +33,42 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			cAdRGyywWppSm7vLUPxidRSrpSEvtgFOlXxqXGcyPj0=
+			lo8+CUah3S7YMdDcB3rRf8vEh4RzaBuAJTHsbqTog3I=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-macabi.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			iY4CNiFGjS3N31mwyZEgOAGwFbRe++m9RH5gb5pU244=
+			5ARWrxGSpB/9QM3tfc4svHcCTc9TQlA5fs2F0wqPuHw=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-macabi.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			tTFyifwgbZWXs8hPib6iudTkaI53KqzX8tHgLEZCMN8=
+			JUghxOAGf7VEgu76IP1URGv6osz27Kb74phcBNWhgzE=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-macabi.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BgnsCgRV8vIjlvx76aOtgx/xmt2+cUCycVOgmRySWpA=
+			Hwb+gOHRm3qtqv2+jBjfvmK7LRXWH37wCjg49hlofCc=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-macabi.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			E87OGz0F8btQLzTTbmmwuQpxwbUFFWMx3FKpUMV5PVk=
+			z10PnLuc6ScE6ISUooHwX3pXnXxwTg+MQX5gRTjHj9E=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-macabi.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			NpHR9watQWROR3OA32L45ezBCicODVzmJD1qDtp8Uck=
+			egjzgpJCxrwO2VgYiZKOpFtUjZiSrtbTNNy9Aej7uHo=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
