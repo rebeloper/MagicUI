@@ -169,6 +169,10 @@ public class ToastManager : Combine.ObservableObject {
   public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String, subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
   public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String, subTitle: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
   public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
+  public func presentError(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String? = "Error", subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
+  public func presentSuccess(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String? = "Success", subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
+  public func presentWarning(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String? = "Warning", subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
+  public func presentInfo(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String? = "Info", subTitle: Swift.String, style: MagicUI.ToastStyle? = nil)
   public func hide()
   public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
   @objc deinit
