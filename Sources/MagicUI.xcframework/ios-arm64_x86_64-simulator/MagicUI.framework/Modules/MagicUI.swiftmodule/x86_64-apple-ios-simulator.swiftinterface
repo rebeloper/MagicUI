@@ -125,8 +125,20 @@ public enum ToastType : Swift.Equatable {
   case regular
   public static func == (a: MagicUI.ToastType, b: MagicUI.ToastType) -> Swift.Bool
 }
+public enum BackgroundMaterial {
+  case regularMaterial
+  case thickMaterial
+  case thinMaterial
+  case ultraThinMaterial
+  case ultraThickMaterial
+  public static func == (a: MagicUI.BackgroundMaterial, b: MagicUI.BackgroundMaterial) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
 public enum ToastStyle : Swift.Equatable {
-  case style(backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, subTitleColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, subTitleFont: SwiftUI.Font? = nil, imageMaxLength: CoreGraphics.CGFloat? = 20, systemImageFont: SwiftUI.Font? = nil, cornerRadius: CoreGraphics.CGFloat? = nil)
+  case style(backgroundMaterial: MagicUI.BackgroundMaterial? = .ultraThinMaterial, backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, subTitleColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, subTitleFont: SwiftUI.Font? = nil, imageMaxLength: CoreGraphics.CGFloat? = 20, systemImageFont: SwiftUI.Font? = nil, cornerRadius: CoreGraphics.CGFloat? = nil)
   public static func == (a: MagicUI.ToastStyle, b: MagicUI.ToastStyle) -> Swift.Bool
 }
 public class ToastManager : Combine.ObservableObject {
@@ -151,7 +163,9 @@ public class ToastManager : Combine.ObservableObject {
     set
   }
   public init()
-  public func present(_ options: MagicUI.ToastOptions)
+  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, subTitle: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
+  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, subTitle: Swift.String? = nil, backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, subTitleColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, subTitleFont: SwiftUI.Font? = nil, imageMaxLength: CoreGraphics.CGFloat? = 20, systemImageFont: SwiftUI.Font? = nil, cornerRadius: CoreGraphics.CGFloat? = nil)
+  public func present(options: MagicUI.ToastOptions)
   public func hide()
   public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
   @objc deinit
@@ -280,3 +294,5 @@ extension MagicUI.LoremIpsumAmountType : Swift.Hashable {}
 extension MagicUI.LoremIpsumAmountType : Swift.RawRepresentable {}
 extension MagicUI.ToastBannerAnimation : Swift.Equatable {}
 extension MagicUI.ToastBannerAnimation : Swift.Hashable {}
+extension MagicUI.BackgroundMaterial : Swift.Equatable {}
+extension MagicUI.BackgroundMaterial : Swift.Hashable {}
