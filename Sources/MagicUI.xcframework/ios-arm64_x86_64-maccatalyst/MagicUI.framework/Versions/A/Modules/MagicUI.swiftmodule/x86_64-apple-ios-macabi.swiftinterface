@@ -164,7 +164,7 @@ public class ToastManager : Combine.ObservableObject {
   }
   public init()
   public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, subTitle: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
-  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, subTitle: Swift.String? = nil, backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, subTitleColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, subTitleFont: SwiftUI.Font? = nil, imageMaxLength: CoreGraphics.CGFloat? = 20, systemImageFont: SwiftUI.Font? = nil, cornerRadius: CoreGraphics.CGFloat? = nil)
+  public func present(_ displayMode: MagicUI.ToastDisplayMode, type: MagicUI.ToastType = .regular, title: Swift.String? = nil, subTitle: Swift.String? = nil, backgroundMaterial: MagicUI.BackgroundMaterial? = nil, backgroundColor: SwiftUI.Color? = nil, titleColor: SwiftUI.Color? = nil, subTitleColor: SwiftUI.Color? = nil, titleFont: SwiftUI.Font? = nil, subTitleFont: SwiftUI.Font? = nil, imageMaxLength: CoreGraphics.CGFloat? = 20, systemImageFont: SwiftUI.Font? = nil, cornerRadius: CoreGraphics.CGFloat? = nil)
   public func present(options: MagicUI.ToastOptions)
   public func hide()
   public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
