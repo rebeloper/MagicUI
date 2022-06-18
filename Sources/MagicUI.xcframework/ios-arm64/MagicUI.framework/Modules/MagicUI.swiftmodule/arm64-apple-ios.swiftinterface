@@ -188,6 +188,95 @@ public class ToastManager : Combine.ObservableObject {
 public struct ToastOptions {
   public init(displayMode: MagicUI.ToastDisplayMode? = nil, type: MagicUI.ToastType? = nil, title: Swift.String? = nil, message: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
 }
+public class AlertManager : Combine.ObservableObject {
+  @Combine.Published @_projectedValueProperty($isAlertPresented) public var isAlertPresented: Swift.Bool {
+    get
+    set
+    _modify
+  }
+  public var $isAlertPresented: Combine.Published<Swift.Bool>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  @Combine.Published @_projectedValueProperty($isConfirmationDialogPresented) public var isConfirmationDialogPresented: Swift.Bool {
+    get
+    set
+    _modify
+  }
+  public var $isConfirmationDialogPresented: Combine.Published<Swift.Bool>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  @Combine.Published @_projectedValueProperty($options) public var options: MagicUI.AlertOptions {
+    get
+    set
+    _modify
+  }
+  public var $options: Combine.Published<MagicUI.AlertOptions>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  public init()
+  public func present(options: MagicUI.AlertOptions)
+  public func present(_ type: MagicUI.AlertType, title: Swift.String? = nil, message: Swift.String? = nil, actions: [MagicUI.AlertAction]? = nil)
+  public func present(_ preset: MagicUI.AlertPreset, _ type: MagicUI.AlertType, message: Swift.String, actions: [MagicUI.AlertAction]? = nil)
+  public func hide()
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+}
+public enum AlertPreset {
+  case error, success, warning, info
+  public static func == (a: MagicUI.AlertPreset, b: MagicUI.AlertPreset) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum AlertType {
+  case alert, confirmationDialog
+  public static func == (a: MagicUI.AlertType, b: MagicUI.AlertType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct AlertOptions {
+  public init(type: MagicUI.AlertType = .alert, title: Swift.String? = nil, message: Swift.String? = nil, actions: [MagicUI.AlertAction]? = nil)
+}
+public struct AlertAction : Swift.Identifiable {
+  public let id: Foundation.UUID
+  public init(role: SwiftUI.ButtonRole? = nil, label: Swift.String, action: (() -> Swift.Void)? = nil)
+  public init(role: SwiftUI.ButtonRole? = nil, label: MagicUI.AlertActionLabel, action: (() -> Swift.Void)? = nil)
+  public typealias ID = Foundation.UUID
+}
+public enum AlertActionLabel : Swift.String {
+  case ok
+  case cancel
+  case agree
+  case later
+  case remindMeLater
+  case skip
+  case dontAskAgain
+  case dismiss
+  case forward
+  case back
+  case previous
+  case next
+  case yes
+  case no
+  case confirm
+  case deny
+  case open
+  case close
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 @_Concurrency.MainActor(unsafe) public struct ContentView<Content> : SwiftUI.View where Content : SwiftUI.View {
   @_Concurrency.MainActor(unsafe) public init(licenseKey: Swift.String, content: @escaping () -> Content)
   @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
@@ -313,3 +402,10 @@ extension MagicUI.ToastPreset : Swift.Equatable {}
 extension MagicUI.ToastPreset : Swift.Hashable {}
 extension MagicUI.BackgroundMaterial : Swift.Equatable {}
 extension MagicUI.BackgroundMaterial : Swift.Hashable {}
+extension MagicUI.AlertPreset : Swift.Equatable {}
+extension MagicUI.AlertPreset : Swift.Hashable {}
+extension MagicUI.AlertType : Swift.Equatable {}
+extension MagicUI.AlertType : Swift.Hashable {}
+extension MagicUI.AlertActionLabel : Swift.Equatable {}
+extension MagicUI.AlertActionLabel : Swift.Hashable {}
+extension MagicUI.AlertActionLabel : Swift.RawRepresentable {}
