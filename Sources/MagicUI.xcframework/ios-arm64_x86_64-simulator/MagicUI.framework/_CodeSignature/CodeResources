@@ -22,27 +22,27 @@
 		</data>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		8Mx2auZsruH7Zm/7nckJogpOGas=
+		x+4mYKMfD8J9E7RUjcCHhbramH0=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		gMRosVKfPQ5dv4W1EZ2V9KSIxnY=
+		ueDoqzPDNxUOKxtMwxm8qHiUyDs=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		1yp04r18g3JLUCnNXwHSXyb3Uo0=
+		xHIgs5YcMMDsXAoIkj2+1+5vq9E=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		ICz1xhciGK2usluKck4LPv1ITO4=
+		6ZRNq9QZKVymGS4iGh832/EIcIo=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		zI7bYdLNc3oQi0/OX4qCJY4yxn4=
+		UqX68+rRPNDTC3b6G1iOL9xSO9A=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		OaW31nMSC0KUgOK0Y0n5nyojRmI=
+		NlBAm59/MS1LP8LOy/G0HP6DDYg=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -76,42 +76,42 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			YU6RDWj+zyhFziLcWN1AoYF0dMw8q8vqO76TBITtD9c=
+			MVnAjrstncJyaoe/oe9jefkoBWTKu2ppRT3Ytg/8oiU=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RjF0wmFTV5+u40tqsBcRSiX4Einak5zcHZaAztkCRgI=
+			kd3P2Y+HAiq1cmcaJtOgK63pQz034dnxo4rVjf0U1S4=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yV+1AW94Ba+LNfKutcaRcW1hOakJcCvuF44Ba7MqYcs=
+			jCM7h7qCMlXA9CdwvsRyPr3c57VgjGuqnQ+QjuILjLk=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			M+d9/eW5vFg1WHzPRXBC7sLTL5tsdToki753kGIQcZI=
+			1YsYXNCkp1PCLdSdAfK5exVi2UybvcSyOE/xkMUZmGs=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			l8pOTZDL/Mmyn6/VPaRLYJHm6y+cckyIckdTpkEjl5s=
+			apkT8wzQzwSCseiuI7A7FfDrc1KQLSnmyDLWW2OgE70=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			43vBJm7SlnbNt15P687HRmHe7D+cm0DoctfeLcNnLOE=
+			T7y6aHBoxTOQIFpLvsMnJetxpj1LWyV0kXPnQSxk4ec=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
