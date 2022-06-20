@@ -188,6 +188,13 @@ public class ToastManager : Combine.ObservableObject {
 public struct ToastOptions {
   public init(displayMode: MagicUI.ToastDisplayMode? = nil, type: MagicUI.ToastType? = nil, title: Swift.String? = nil, message: Swift.String? = nil, style: MagicUI.ToastStyle? = nil)
 }
+public struct VSpacer : SwiftUI.View {
+  public init(minLength: CoreGraphics.CGFloat? = nil)
+  @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI7VSpacerV4bodyQrvp", 0) __
+}
 public class AlertManager : Combine.ObservableObject {
   @Combine.Published @_projectedValueProperty($isAlertPresented) public var isAlertPresented: Swift.Bool {
     get
@@ -283,6 +290,13 @@ public enum AlertActionLabel : Swift.String {
     get
   }
   public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI11ContentViewV4bodyQrvp", 0) __<Content>
+}
+public struct HSpacer : SwiftUI.View {
+  public init(minLength: CoreGraphics.CGFloat? = nil)
+  @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI7HSpacerV4bodyQrvp", 0) __
 }
 public struct LoremPicsum {
   public static let foodAndDrinkName: Swift.String
