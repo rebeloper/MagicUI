@@ -70,6 +70,8 @@ extension SwiftUI.View {
   
   public func isHidden(_ shouldHide: Swift.Bool) -> some SwiftUI.View
   
+  public func `if`<Content>(_ condition: @autoclosure () -> Swift.Bool, transform: (Self) -> Content) -> some SwiftUI.View where Content : SwiftUI.View
+  
 }
 public struct Toast : SwiftUI.View {
   public var displayMode: MagicUI.ToastDisplayMode
