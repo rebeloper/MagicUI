@@ -6,6 +6,7 @@ import Foundation
 @_exported import MagicUI
 import Swift
 import SwiftUI
+import UIKit
 import _Concurrency
 public struct LoremIpsum {
   public static let atExtraExtraExtraShort: Swift.String
@@ -278,6 +279,77 @@ public enum AlertActionLabel : Swift.String {
   public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
+    get
+  }
+}
+extension SwiftUI.Color {
+  public init(hex: Swift.String)
+}
+extension SwiftUI.Color {
+  public static let systemRed: SwiftUI.Color
+  public static let systemGreen: SwiftUI.Color
+  public static let systemBlue: SwiftUI.Color
+  public static let systemOrange: SwiftUI.Color
+  public static let systemYellow: SwiftUI.Color
+  public static let systemPink: SwiftUI.Color
+  public static let systemPurple: SwiftUI.Color
+  public static let systemTeal: SwiftUI.Color
+  public static let systemIndigo: SwiftUI.Color
+  public static let systemBrown: SwiftUI.Color
+  public static let systemMint: SwiftUI.Color
+  public static let systemCyan: SwiftUI.Color
+  public static let systemGray: SwiftUI.Color
+  public static let systemGray2: SwiftUI.Color
+  public static let systemGray3: SwiftUI.Color
+  public static let systemGray4: SwiftUI.Color
+  public static let systemGray5: SwiftUI.Color
+  public static let systemGray6: SwiftUI.Color
+  public static let systemBlack: SwiftUI.Color
+  public static let systemWhite: SwiftUI.Color
+  public static let label: SwiftUI.Color
+  public static let secondaryLabel: SwiftUI.Color
+  public static let tertiaryLabel: SwiftUI.Color
+  public static let quaternaryLabel: SwiftUI.Color
+  public static let link: SwiftUI.Color
+  public static let placeholderText: SwiftUI.Color
+  public static let separator: SwiftUI.Color
+  public static let opaqueSeparator: SwiftUI.Color
+  public static let systemBackground: SwiftUI.Color
+  public static let secondarySystemBackground: SwiftUI.Color
+  public static let tertiarySystemBackground: SwiftUI.Color
+  public static let systemGroupedBackground: SwiftUI.Color
+  public static let secondarySystemGroupedBackground: SwiftUI.Color
+  public static let tertiarySystemGroupedBackground: SwiftUI.Color
+  public static let systemFill: SwiftUI.Color
+  public static let secondarySystemFill: SwiftUI.Color
+  public static let tertiarySystemFill: SwiftUI.Color
+  public static let quaternarySystemFill: SwiftUI.Color
+  public static let lightText: SwiftUI.Color
+  public static let darkText: SwiftUI.Color
+  public static let fixedBlack: SwiftUI.Color
+  public static let fixedDarkGray: SwiftUI.Color
+  public static let fixedLightGray: SwiftUI.Color
+  public static let fixedWhite: SwiftUI.Color
+  public static let fixedGray: SwiftUI.Color
+  public static let fixedRed: SwiftUI.Color
+  public static let fixedGreen: SwiftUI.Color
+  public static let fixedBlue: SwiftUI.Color
+  public static let fixedCyan: SwiftUI.Color
+  public static let fixedYellow: SwiftUI.Color
+  public static let fixedMagenta: SwiftUI.Color
+  public static let fixedOrange: SwiftUI.Color
+  public static let fixedPurple: SwiftUI.Color
+  public static let fixedBrown: SwiftUI.Color
+  public static let fixedClear: SwiftUI.Color
+}
+extension SwiftUI.Color {
+  public func uiColor() -> UIKit.UIColor
+}
+extension SwiftUI.Color {
+  public static var random: SwiftUI.Color {
+    get
+  }
+  public static var systemRandom: SwiftUI.Color {
     get
   }
 }
