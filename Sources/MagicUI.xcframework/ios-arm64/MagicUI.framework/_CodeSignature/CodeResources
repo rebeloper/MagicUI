@@ -26,11 +26,11 @@
 		</data>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		O8CpfWA9oa9icRkMpUPwOFWmu70=
+		wHusGzaYbQc7DI4JQEFGVC7gW10=
 		</data>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		N68O8FMzYIfWf9idxwFYCgPEAtc=
+		ktUA5qrtYUxnhNgFUHSbckS7Mt0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -71,14 +71,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			qzmE3X03plWUBwLHk5O7k+vM3w8/1t2JB2noPg3jkFI=
+			2uNBnLboBAaG/ZdOuRLPVvVNPIyOZEUpTM3lg3XGdvY=
 			</data>
 		</dict>
 		<key>Modules/MagicUI.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mfykTsVGUZsQg+DWzOxX1kIi5S9fHHbMHrbAjQKKjWQ=
+			RoC6s5biBWEydsDLpvMsCMGdjnvEC3TJ79BY55ETjpA=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

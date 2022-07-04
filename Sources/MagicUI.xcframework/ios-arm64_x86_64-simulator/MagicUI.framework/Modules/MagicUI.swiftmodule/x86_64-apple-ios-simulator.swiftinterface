@@ -228,6 +228,7 @@ public class AlertManager : Combine.ObservableObject {
   public func present(options: MagicUI.AlertOptions)
   public func present(_ type: MagicUI.AlertType, title: Swift.String? = nil, message: Swift.String? = nil, actions: [MagicUI.AlertAction]? = nil)
   public func present(_ preset: MagicUI.AlertPreset, _ type: MagicUI.AlertType, message: Swift.String, actions: [MagicUI.AlertAction]? = nil)
+  public func present(_ error: Swift.Error, actions: [MagicUI.AlertAction]? = nil)
   public func hide()
   public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
   @objc deinit
