@@ -186,6 +186,11 @@ public class ToastManager : Combine.ObservableObject {
   public func present(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String, message: Swift.String, style: MagicUI.ToastStyle? = nil)
   public func present(_ displayMode: MagicUI.ToastDisplayMode, title: Swift.String, style: MagicUI.ToastStyle? = nil)
   public func present(_ displayMode: MagicUI.ToastDisplayMode, message: Swift.String, style: MagicUI.ToastStyle? = nil)
+  
+  #if compiler(>=5.3) && $AsyncAwait
+  public func present(_ displayMode: MagicUI.ToastDisplayMode = .hud, type: MagicUI.ToastType = .loading, title: Swift.String? = nil, message: Swift.String? = nil, style: MagicUI.ToastStyle? = nil, alertManager: MagicUI.AlertManager? = nil, action: @escaping () async throws -> ()) async throws
+  #endif
+
   public func hide()
   public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
   @objc deinit
