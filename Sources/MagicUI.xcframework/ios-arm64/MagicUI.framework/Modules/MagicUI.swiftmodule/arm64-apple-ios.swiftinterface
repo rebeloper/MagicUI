@@ -394,7 +394,7 @@ extension SwiftUI.Color {
   public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI11ContentViewV4bodyQrvp", 0) __<Content>
 }
 extension MagicUI.WebView {
-  public func load(url: Foundation.URL, webViewStore: MagicUI.WebViewStore, isActive: SwiftUI.Binding<Swift.Bool>? = nil) -> some SwiftUI.View
+  @_Concurrency.MainActor public func load(url: Foundation.URL, webViewStore: MagicUI.WebViewStore, isActive: SwiftUI.Binding<Swift.Bool>? = nil) -> some SwiftUI.View
   
 }
 public struct LoremPicsum {
