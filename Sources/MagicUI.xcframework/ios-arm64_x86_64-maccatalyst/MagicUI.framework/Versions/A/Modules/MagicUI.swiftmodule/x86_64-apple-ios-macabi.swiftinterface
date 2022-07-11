@@ -289,11 +289,28 @@ public enum AlertActionLabel : Swift.String {
     get
   }
 }
-public struct WebView : SwiftUI.UIViewRepresentable {
-  public var url: Foundation.URL
-  public init(url: Foundation.URL)
-  @_Concurrency.MainActor(unsafe) public func makeUIView(context: MagicUI.WebView.Context) -> WebKit.WKWebView
-  @_Concurrency.MainActor(unsafe) public func updateUIView(_ webView: WebKit.WKWebView, context: MagicUI.WebView.Context)
+@dynamicMemberLookup public class WebViewStore : Combine.ObservableObject {
+  @Combine.Published @_projectedValueProperty($wkWebView) public var wkWebView: WebKit.WKWebView {
+    get
+    set
+  }
+  public var $wkWebView: Combine.Published<WebKit.WKWebView>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  public init(wkWebView: WebKit.WKWebView = WKWebView())
+  public subscript<T>(dynamicMember keyPath: Swift.KeyPath<WebKit.WKWebView, T>) -> T {
+    get
+  }
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+}
+public struct WebView : SwiftUI.View, SwiftUI.UIViewRepresentable {
+  public let wkWebView: WebKit.WKWebView
+  public init(wkWebView: WebKit.WKWebView)
+  @_Concurrency.MainActor(unsafe) public func makeUIView(context: SwiftUI.UIViewRepresentableContext<MagicUI.WebView>) -> WebKit.WKWebView
+  @_Concurrency.MainActor(unsafe) public func updateUIView(_ uiView: WebKit.WKWebView, context: SwiftUI.UIViewRepresentableContext<MagicUI.WebView>)
   public typealias Body = Swift.Never
   public typealias Coordinator = Swift.Void
   public typealias UIViewType = WebKit.WKWebView
@@ -375,6 +392,10 @@ extension SwiftUI.Color {
     get
   }
   public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI11ContentViewV4bodyQrvp", 0) __<Content>
+}
+extension MagicUI.WebView {
+  public func load(url: Foundation.URL, webViewStore: MagicUI.WebViewStore, isActive: SwiftUI.Binding<Swift.Bool>? = nil) -> some SwiftUI.View
+  
 }
 public struct LoremPicsum {
   public static let foodAndDrinkName: Swift.String
