@@ -291,6 +291,7 @@ public enum AlertActionLabel : Swift.String {
 }
 public struct WebView : SwiftUI.UIViewRepresentable {
   public var url: Foundation.URL
+  public init(url: Foundation.URL)
   @_Concurrency.MainActor(unsafe) public func makeUIView(context: MagicUI.WebView.Context) -> WebKit.WKWebView
   @_Concurrency.MainActor(unsafe) public func updateUIView(_ webView: WebKit.WKWebView, context: MagicUI.WebView.Context)
   public typealias Body = Swift.Never
