@@ -393,6 +393,70 @@ extension SwiftUI.Color {
   }
   public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI11ContentViewV4bodyQrvp", 0) __<Content>
 }
+extension Swift.Double {
+  public func rounded(toPlaces places: Swift.Int) -> Swift.Double
+  public func toDecimalString(withPlaces places: Swift.Int) -> Swift.String
+  public func convert(maxDecimals max: Swift.Int) -> Swift.Double
+}
+extension SwiftUI.View {
+  public func currency(_ currency: MagicUI.Currency) -> some SwiftUI.View
+  
+}
+public struct CurrencyFieldModifier : SwiftUI.ViewModifier {
+  @SwiftUI.State @_projectedValueProperty($text) public var text: Swift.String {
+    get
+    nonmutating set
+    nonmutating _modify
+  }
+  public var $text: SwiftUI.Binding<Swift.String> {
+    get
+  }
+  public var currency: MagicUI.Currency
+  public init(currency: MagicUI.Currency)
+  @_Concurrency.MainActor(unsafe) public func body(content: MagicUI.CurrencyFieldModifier.Content) -> some SwiftUI.View
+  
+  public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI21CurrencyFieldModifierV4body7contentQr05SwiftB005_ViewE8_ContentVyACG_tF", 0) __
+}
+public class Currency : Foundation.ObservableObject {
+  @Combine.Published @_projectedValueProperty($string) public var string: Swift.String {
+    get
+    set
+    _modify
+  }
+  public var $string: Combine.Published<Swift.String>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  @Combine.Published @_projectedValueProperty($value) public var value: Swift.Double {
+    get
+    set
+    _modify
+  }
+  public var $value: Combine.Published<Swift.Double>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  public var currency: Swift.String
+  public init(_ currency: Swift.String)
+  public init(_ type: MagicUI.CurrencyType)
+  public func title() -> Swift.String
+  public func text() -> SwiftUI.Binding<Swift.String>
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+}
+public enum CurrencyType : Swift.String {
+  case dollarSign
+  case dollarSignSpace
+  case usd
+  case usdSpace
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 extension MagicUI.WebView {
   public func load(url: Foundation.URL, webViewStore: MagicUI.WebViewStore, isActive: SwiftUI.Binding<Swift.Bool>? = nil) -> some SwiftUI.View
   
@@ -522,3 +586,6 @@ extension MagicUI.AlertType : Swift.Hashable {}
 extension MagicUI.AlertActionLabel : Swift.Equatable {}
 extension MagicUI.AlertActionLabel : Swift.Hashable {}
 extension MagicUI.AlertActionLabel : Swift.RawRepresentable {}
+extension MagicUI.CurrencyType : Swift.Equatable {}
+extension MagicUI.CurrencyType : Swift.Hashable {}
+extension MagicUI.CurrencyType : Swift.RawRepresentable {}
