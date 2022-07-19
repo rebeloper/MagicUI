@@ -75,6 +75,21 @@ extension SwiftUI.View {
   public func `if`<Content>(_ condition: @autoclosure () -> Swift.Bool, transform: (Self) -> Content) -> some SwiftUI.View where Content : SwiftUI.View
   
 }
+@_Concurrency.MainActor(unsafe) public struct CurrencyField : SwiftUI.View {
+  @SwiftUI.ObservedObject @_projectedValueProperty($currency) @_Concurrency.MainActor(unsafe) public var currency: MagicUI.Currency {
+    get
+    set
+    _modify
+  }
+  @_Concurrency.MainActor(unsafe) public var $currency: SwiftUI.ObservedObject<MagicUI.Currency>.Wrapper {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public init(_ currency: MagicUI.Currency)
+  @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI13CurrencyFieldV4bodyQrvp", 0) __
+}
 public struct Toast : SwiftUI.View {
   public var displayMode: MagicUI.ToastDisplayMode
   public var type: MagicUI.ToastType
@@ -398,8 +413,29 @@ extension Swift.Double {
   public func toDecimalString(withPlaces places: Swift.Int) -> Swift.String
   public func convert(maxDecimals max: Swift.Int) -> Swift.Double
 }
+public enum CurrencyType : Swift.String {
+  case dollar
+  case dollarWithSpace
+  case euro
+  case euroWithSpace
+  case pound
+  case poundWithSpace
+  case yen
+  case yenWithSpace
+  case bitcoin
+  case bitcoinWithSpace
+  case rupee
+  case rupeeWithSpace
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 extension SwiftUI.View {
   public func currency(_ currency: MagicUI.Currency) -> some SwiftUI.View
+  
+  public func currencyFieldStyle<S>(_ style: S) -> some SwiftUI.View where S : SwiftUI.TextFieldStyle
   
 }
 public struct CurrencyFieldModifier : SwiftUI.ViewModifier {
@@ -439,23 +475,13 @@ public class Currency : Foundation.ObservableObject {
     set
   }
   public var currency: Swift.String
-  public init(_ currency: Swift.String)
-  public init(_ type: MagicUI.CurrencyType)
-  public func title() -> Swift.String
+  public var title: Swift.String?
+  public init(_ currency: Swift.String, title: Swift.String? = nil)
+  public init(_ type: MagicUI.CurrencyType, title: Swift.String? = nil)
+  public func defaultTitle() -> Swift.String
   public func text() -> SwiftUI.Binding<Swift.String>
   public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
   @objc deinit
-}
-public enum CurrencyType : Swift.String {
-  case dollarSign
-  case dollarSignSpace
-  case usd
-  case usdSpace
-  public init?(rawValue: Swift.String)
-  public typealias RawValue = Swift.String
-  public var rawValue: Swift.String {
-    get
-  }
 }
 extension MagicUI.WebView {
   public func load(url: Foundation.URL, webViewStore: MagicUI.WebViewStore, isActive: SwiftUI.Binding<Swift.Bool>? = nil) -> some SwiftUI.View
