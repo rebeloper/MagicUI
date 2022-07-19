@@ -4,6 +4,7 @@
 import Combine
 import Foundation
 @_exported import MagicUI
+import MessageUI
 import Swift
 import SwiftUI
 import UIKit
@@ -486,6 +487,18 @@ public class Currency : Foundation.ObservableObject {
 extension MagicUI.WebView {
   public func load(url: Foundation.URL, webViewStore: MagicUI.WebViewStore, isActive: SwiftUI.Binding<Swift.Bool>? = nil) -> some SwiftUI.View
   
+}
+public struct MailView : SwiftUI.UIViewControllerRepresentable {
+  public init(configure: ((MessageUI.MFMailComposeViewController) -> Swift.Void)?, onFinish: ((MessageUI.MFMailComposeResult) -> ())?, onFail: ((Swift.Error) -> ())?)
+  @objc @_hasMissingDesignatedInitializers public class Coordinator : ObjectiveC.NSObject, MessageUI.MFMailComposeViewControllerDelegate {
+    @objc public func mailComposeController(_ controller: MessageUI.MFMailComposeViewController, didFinishWith result: MessageUI.MFMailComposeResult, error: Swift.Error?)
+    @objc deinit
+  }
+  @_Concurrency.MainActor(unsafe) public func makeCoordinator() -> MagicUI.MailView.Coordinator
+  @_Concurrency.MainActor(unsafe) public func makeUIViewController(context: SwiftUI.UIViewControllerRepresentableContext<MagicUI.MailView>) -> MessageUI.MFMailComposeViewController
+  @_Concurrency.MainActor(unsafe) public func updateUIViewController(_ uiViewController: MessageUI.MFMailComposeViewController, context: SwiftUI.UIViewControllerRepresentableContext<MagicUI.MailView>)
+  public typealias Body = Swift.Never
+  public typealias UIViewControllerType = MessageUI.MFMailComposeViewController
 }
 public struct LoremPicsum {
   public static let foodAndDrinkName: Swift.String
