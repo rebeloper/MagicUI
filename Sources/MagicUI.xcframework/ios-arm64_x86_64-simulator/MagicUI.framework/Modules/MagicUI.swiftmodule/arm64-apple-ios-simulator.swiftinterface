@@ -402,12 +402,12 @@ extension SwiftUI.Color {
     get
   }
 }
-@_Concurrency.MainActor(unsafe) public struct ContentView<Content> : SwiftUI.View where Content : SwiftUI.View {
+@_Concurrency.MainActor(unsafe) public struct MagicUIView<Content> : SwiftUI.View where Content : SwiftUI.View {
   @_Concurrency.MainActor(unsafe) public init(licenseKey: Swift.String, content: @escaping () -> Content)
   @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
     get
   }
-  public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI11ContentViewV4bodyQrvp", 0) __<Content>
+  public typealias Body = @_opaqueReturnTypeOf("$s7MagicUI0A6UIViewV4bodyQrvp", 0) __<Content>
 }
 extension Swift.Double {
   public func rounded(toPlaces places: Swift.Int) -> Swift.Double
