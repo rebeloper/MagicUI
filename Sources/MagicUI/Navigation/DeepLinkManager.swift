@@ -12,6 +12,7 @@ public struct DeepLinkManager {
         if isActive {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(count), execute: {
                 action()
+                completion()
             })
         }
     }
