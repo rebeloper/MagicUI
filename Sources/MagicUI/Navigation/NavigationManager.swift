@@ -9,5 +9,5 @@ import SwiftUI
 
 public class NavigationManager: ObservableObject {
     @Published var tagToPopTo = Int.max
-    @Published var isPoping = false
+    @Published var isPopping = false
 }
