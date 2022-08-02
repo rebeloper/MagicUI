@@ -29,11 +29,11 @@ public class Navigation: ObservableObject {
     @Published public var attachmentAnchor: PopoverAttachmentAnchor = .rect(.bounds)
     @Published public var arrowEdge: Edge = .top
     
-    @available(iOS, introduced: 14.0, deprecated: 16.0, message: "use push(_ style:destination:onDismiss:)")
-    @available(macOS, introduced: 11.0, deprecated: 13.0, message: "use push(_ style:destination:onDismiss:)")
-    @available(tvOS, introduced: 14.0, deprecated: 16.0, message: "use push(_ style:destination:onDismiss:)")
-    @available(watchOS, introduced: 7.0, deprecated: 9.0, message: "use push(_ style:destination:onDismiss:)")
-    public func present<Destination: View>(_ type: NavigationType, @ViewBuilder destination: () -> (Destination), onDismiss: (() -> Void)? = nil) {
+    @available(iOS, introduced: 14.0, deprecated: 16.0, message: "use push(_ style:destination:onDismiss:completion:)")
+    @available(macOS, introduced: 11.0, deprecated: 13.0, message: "use push(_ style:destination:onDismiss:completion:)")
+    @available(tvOS, introduced: 14.0, deprecated: 16.0, message: "use push(_ style:destination:onDismiss:completion:)")
+    @available(watchOS, introduced: 7.0, deprecated: 9.0, message: "use push(_ style:destination:onDismiss:completion:)")
+    public func present<Destination: View>(_ type: NavigationType, @ViewBuilder destination: () -> (Destination), onDismiss: (() -> Void)? = nil, completion: @escaping () -> () = {}) {
         self.destination = AnyView(destination())
         switch type {
         case .page:
@@ -51,10 +51,13 @@ public class Navigation: ObservableObject {
             self.onDismiss = onDismiss
             isCovered = true
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+            completion()
+        })
     }
     
     @available(iOS 16, *, macOS 13.0, *, tvOS 16.0, *, watchOS 9.0, *)
-    public func push<Destination: View>(_ style: NavigationStyle, @ViewBuilder destination: () -> (Destination), onDismiss: (() -> Void)? = nil) {
+    public func push<Destination: View>(_ style: NavigationStyle, @ViewBuilder destination: () -> (Destination), onDismiss: (() -> Void)? = nil, completion: @escaping () -> () = {}) {
         self.destination = AnyView(destination())
         switch style {
         case .page:
@@ -77,16 +80,24 @@ public class Navigation: ObservableObject {
         case .fullScreenCover:
             self.onDismiss = onDismiss
             isCovered = true
-        
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+            completion()
+        })
     }
     
-    public func pop() {
+    public func pop(completion: @escaping () -> () = {}) {
         dismiss.toggle()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+            completion()
+        })
     }
     
-    public func pop(to tag: Int) {
+    public func pop(to tag: Int, completion: @escaping () -> () = {}) {
         tagToPopTo = tag
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+            completion()
+        })
     }
     
 }
