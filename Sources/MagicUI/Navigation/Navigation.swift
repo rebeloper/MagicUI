@@ -100,4 +100,35 @@ public class Navigation: ObservableObject {
         })
     }
     
+    // MARK: - Async
+    
+    @available(iOS, introduced: 14.0, deprecated: 16.0, message: "use push(_ style:destination:onDismiss:completion:)")
+    @available(macOS, introduced: 11.0, deprecated: 13.0, message: "use push(_ style:destination:onDismiss:completion:)")
+    @available(tvOS, introduced: 14.0, deprecated: 16.0, message: "use push(_ style:destination:onDismiss:completion:)")
+    @available(watchOS, introduced: 7.0, deprecated: 9.0, message: "use push(_ style:destination:onDismiss:completion:)")
+    public func present<Destination: View>(_ type: NavigationType, @ViewBuilder destination: () -> (Destination), onDismiss: (() -> Void)? = nil) async {
+        await withCheckedContinuation({ continuation in
+            present(type, destination: destination, onDismiss: onDismiss, completion: continuation.resume)
+        })
+    }
+    
+    @available(iOS 16, *, macOS 13.0, *, tvOS 16.0, *, watchOS 9.0, *)
+    public func push<Destination: View>(_ style: NavigationStyle, @ViewBuilder destination: () -> (Destination), onDismiss: (() -> Void)? = nil) async {
+        await withCheckedContinuation { continuation in
+            push(style, destination: destination, onDismiss: onDismiss, completion: continuation.resume)
+        }
+    }
+    
+    public func pop() async {
+        await withCheckedContinuation { continuation in
+            pop(completion: continuation.resume)
+        }
+    }
+    
+    public func pop(to tag: Int) async {
+        await withCheckedContinuation { continuation in
+            pop(to: tag, completion: continuation.resume)
+        }
+    }
+    
 }
