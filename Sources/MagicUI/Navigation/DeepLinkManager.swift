@@ -8,13 +8,10 @@
 import SwiftUI
 
 public struct DeepLinkManager {
-    public static func step(_ count: Int, isActive: Binding<Bool>, isLast: Bool = false, action: @escaping () -> ()) {
-        if isActive.wrappedValue {
+    public static func step(_ count: Int, isActive: Bool, action: @escaping () -> (), completion: @escaping () -> () = {}) {
+        if isActive {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(count), execute: {
                 action()
-                if isLast {
-                    isActive.wrappedValue = false
-                }
             })
         }
     }
