@@ -1,8 +1,8 @@
 //
 //  PreferenceKeys.swift
-//  MultiplatformNavigation
+//  MagicUI
 //
-//  Created by Alex Nagy on 18.07.2022.
+//  Created by Alex Nagy on 01.08.2022.
 //
 
 import SwiftUI
@@ -27,4 +27,3 @@ private struct SizePreferenceKey: PreferenceKey {
     static var defaultValue: CGSize = .zero
     static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
 }
-
