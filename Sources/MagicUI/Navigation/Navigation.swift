@@ -81,11 +81,11 @@ public class Navigation: ObservableObject {
         }
     }
     
-    func pop() {
+    public func pop() {
         dismiss.toggle()
     }
     
-    func pop(to tag: Int) {
+    public func pop(to tag: Int) {
         tagToPopTo = tag
     }
     
