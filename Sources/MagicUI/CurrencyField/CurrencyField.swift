@@ -16,7 +16,7 @@ public struct CurrencyField: View {
     }
     
     public var body: some View {
-        TextField(currency.title != nil ? currency.title! : currency.defaultTitle(), text: currency.text())
+        TextField(currency.title != nil ? currency.title! : "", text: currency.text())
             .currency(currency)
     }
 }

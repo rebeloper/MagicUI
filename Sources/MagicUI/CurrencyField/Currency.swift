@@ -14,7 +14,7 @@ public extension View {
     func currency(_ currency: Currency) -> some View {
         self
         #if os(iOS) || os(tvOS)
-            .keyboardType(.decimalPad)
+            .keyboardType(currency.decimalCount == 0 ? .numberPad : .decimalPad)
         #endif
             .modifier(CurrencyFieldModifier(currency: currency))
     }
@@ -43,25 +43,31 @@ public struct CurrencyFieldModifier: ViewModifier {
             .onChange(of: text) { newValue in
                 if !newValue.isEmpty {
                     var replacedNewValue = newValue
-                    if newValue.contains(",") {
-                        replacedNewValue = replacedNewValue.replacingOccurrences(of: ",", with: ".")
-                    }
-                    let textValue = Double(replacedNewValue.dropFirst(currency.currency.count)) ?? 0
-                    print(textValue)
-                    let intTextValue = Int(textValue)
-                    if Double(intTextValue) == textValue {
-                        currency.value = Double(intTextValue)
-                    } else {
-                        currency.value = textValue.convert(maxDecimals: 2)
-                        
-                        
-                        var valueString = "\(currency.value)"
-                        if newValue.contains(",") {
-                            valueString = valueString.replacingOccurrences(of: ".", with: ",")
-                        }
+                    if currency.decimalCount == 0 {
+                        let intTextValue = Int(replacedNewValue.dropFirst(currency.currency.count)) ?? 0
+                        currency.intValue = Int(intTextValue)
+                        let valueString = "\(currency.intValue)"
                         currency.string = String("\(currency.currency)\(valueString)")
+                    } else {
+                        if newValue.contains(",") {
+                            replacedNewValue = replacedNewValue.replacingOccurrences(of: ",", with: ".")
+                        }
+                        let textValue = Double(replacedNewValue.dropFirst(currency.currency.count)) ?? 0
+                        print(textValue)
+                        let intTextValue = Int(textValue)
+                        if Double(intTextValue) == textValue {
+                            currency.value = Double(intTextValue)
+                        } else {
+                            currency.value = textValue.convert(maxDecimals: currency.decimalCount)
+                            
+                            
+                            var valueString = "\(currency.value)"
+                            if newValue.contains(",") {
+                                valueString = valueString.replacingOccurrences(of: ".", with: ",")
+                            }
+                            currency.string = String("\(currency.currency)\(valueString)")
+                        }
                     }
-
                 }
                 if newValue == currency.currency {
                     currency.string = ""
@@ -74,34 +80,33 @@ public class Currency: ObservableObject {
     
     @Published public var string: String = ""
     @Published public var value: Double = 0.0
+    @Published public var intValue: Int = 0
     
     public var currency: String
     public var title: String?
     public var decimalType: DecimalType
+    public var decimalCount: Int
     
     /// Creates a `Currency` from a `Sring`
     /// - Parameter currency: currency `String`
-    public init(_ currency: String, title: String? = nil, decimalType: DecimalType = .dot) {
+    public init(_ currency: String, title: String? = nil, decimalType: DecimalType = .dot,  decimalCount: Int = 2) {
         self.currency = currency
         self.title = title
         self.decimalType = decimalType
+        self.decimalCount = decimalCount
     }
     
     /// Creates a `Currency` from a `CurrencyType`
     /// - Parameter currency: currency `CurrencyType`
-    public init(_ type: CurrencyType, title: String? = nil, decimalType: DecimalType = .dot) {
+    public init(_ type: CurrencyType, title: String? = nil, decimalType: DecimalType = .dot, decimalCount: Int = 2) {
         self.currency = type.rawValue
         self.title = title
         self.decimalType = decimalType
+        self.decimalCount = decimalCount
     }
     
     public enum DecimalType {
         case dot, comma
-    }
-    
-    /// `Title` for the `TextField`
-    public func defaultTitle() -> String {
-        "\(currency)0\(decimalType == .dot ? "." : ",")00"
     }
     
     /// `Text` binding for the `TextField`
