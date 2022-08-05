@@ -100,7 +100,7 @@ public struct NavigationViewModifier: ViewModifier {
                 }
             }
             completion()
-        }
+        })
     }
 }
 
