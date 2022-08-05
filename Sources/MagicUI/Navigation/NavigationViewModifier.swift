@@ -90,15 +90,17 @@ public struct NavigationViewModifier: ViewModifier {
     }
     
     func popIfNeeded(completion: @escaping () -> ()) {
-        if navigationManager.isPopping {
-            if tag != navigationManager.tagToPopTo {
-                dismiss()
-            } else {
-                navigationManager.isPopping = false
-                navigationManager.tagToPopTo = Int.max
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+            if navigationManager.isPopping {
+                if tag != navigationManager.tagToPopTo {
+                    dismiss()
+                } else {
+                    navigationManager.isPopping = false
+                    navigationManager.tagToPopTo = Int.max
+                }
             }
+            completion()
         }
-        completion()
     }
 }
 
