@@ -1,6 +1,6 @@
 //
 //  PreferenceKeys.swift
-//  MagicUI
+//  MagicUI`
 //
 //  Created by Alex Nagy on 01.08.2022.
 //
