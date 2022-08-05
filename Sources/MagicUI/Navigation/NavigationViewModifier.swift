@@ -79,7 +79,8 @@ public struct NavigationViewModifier: ViewModifier {
                 }
                 if tag != tagToPopTo {
                     navigationManager.isPopping = true
-                    dismiss()
+//                    dismiss()
+                    navigation.isPushed = false
                 }
             }
             .onAppear {
