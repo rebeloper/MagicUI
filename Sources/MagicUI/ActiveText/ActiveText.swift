@@ -14,12 +14,12 @@ public struct ActiveText<Content: View>: View {
     @Binding var content: String
     let lineOffset: CGFloat
     let alignment: HorizontalAlignment
-    let transform: (ActiveTextResult) -> Content
+    @ViewBuilder let transform: (ActiveTextResult) -> Content
     
     public init(_ content: Binding<String>,
-         lineOffset: CGFloat = 0,
-         alignment: HorizontalAlignment = .leading,
-         transform: @escaping (ActiveTextResult) -> Content) {
+                lineOffset: CGFloat = 0,
+                alignment: HorizontalAlignment = .leading,
+                @ViewBuilder transform: @escaping (ActiveTextResult) -> Content) {
         self._content = content
         self.lineOffset = lineOffset
         self.alignment = alignment
