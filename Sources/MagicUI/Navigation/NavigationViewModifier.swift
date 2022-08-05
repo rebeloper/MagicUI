@@ -79,8 +79,7 @@ public struct NavigationViewModifier: ViewModifier {
                 }
                 if tag != tagToPopTo {
                     navigationManager.isPopping = true
-//                    dismiss()
-                    navigation.isPushed = false
+                    dismiss()
                 }
             }
             .onAppear {
@@ -91,7 +90,7 @@ public struct NavigationViewModifier: ViewModifier {
     }
     
     func popIfNeeded(completion: @escaping () -> ()) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
             if navigationManager.isPopping {
                 if tag != navigationManager.tagToPopTo {
                     dismiss()
@@ -101,7 +100,7 @@ public struct NavigationViewModifier: ViewModifier {
                 }
             }
             completion()
-        })
+//        })
     }
 }
 

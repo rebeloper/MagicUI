@@ -90,8 +90,7 @@ public class Navigation: ObservableObject {
     
     @MainActor
     public func pop(completion: @escaping () -> () = {}) {
-//        dismiss.toggle()
-        isPushed = false
+        dismiss.toggle()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
             completion()
         })
