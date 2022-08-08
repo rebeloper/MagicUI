@@ -42,6 +42,10 @@ public struct NavigationModifier<D>: ViewModifier where D: View {
                     }
                 } else {
                     if Navigation.popsToRoot {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + (type == .stack ? 0 : 0.6), execute: {
+                            self.dismiss()
+                        })
+                    } else {
                         if Navigation.popsToLast {
                             if Navigation.last > 0 {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + (type == .stack ? 0 : 0.6), execute: {
@@ -52,10 +56,6 @@ public struct NavigationModifier<D>: ViewModifier where D: View {
                                 Navigation.popsToRoot = false
                                 Navigation.popsToLast = false
                             }
-                        } else {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + (type == .stack ? 0 : 0.6), execute: {
-                                self.dismiss()
-                            })
                         }
                     }
                 }

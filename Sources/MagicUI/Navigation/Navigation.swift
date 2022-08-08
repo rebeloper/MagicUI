@@ -48,6 +48,9 @@ public struct Navigation {
         guard total > 0 else { return }
         popsToRoot = true
         dismiss()
+        DispatchQueue.main.asyncAfter(deadline: .now() + (0.6 * Double(total)), execute: {
+            popsToRoot = false
+        })
         total = 0
     }
     
@@ -57,7 +60,7 @@ public struct Navigation {
     ///   - dismiss: ``DismissAction`` provided by the current ``View``
     public static func pop(last: Int, with dismiss: DismissAction) {
         guard total > 0 else { return }
-        popsToRoot = true
+        popsToRoot = false
         popsToLast = true
         self.last = last - 1
         dismiss()
@@ -70,7 +73,7 @@ public struct Navigation {
     ///   - dismiss: ``DismissAction`` provided by the current ``View``
     public static func pop(to: Int, with dismiss: DismissAction) {
         let last = total - to - 1
-        popsToRoot = true
+        popsToRoot = false
         popsToLast = true
         self.last = last
         dismiss()
