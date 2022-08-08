@@ -1,142 +1,62 @@
 //
 //  Navigation.swift
-//  MagicUI
+//  StringNavigation
 //
-//  Created by Alex Nagy on 09.08.2021.
+//  Created by Alex Nagy on 08.08.2022.
 //
 
 import SwiftUI
 
-public class Navigation: ObservableObject {
+public struct Navigation {
     
-    public init() {}
+    static var total = 0
+    static var popsToRoot = false
+    static var popsToLast = false
+    static var last = 0
     
-    @Published public var isPushed = false
-    @Published public var isPresented = false
-    @Published public var isFlexiblePresented = false
-    @Published public var isCovered = false
-    @Published public var isPoppedOver = false
-    @Published public var destination: AnyView?
-    @Published public var onDismiss: (() -> Void)?
-    
-    @available(iOS 16, *, macOS 13.0, *, tvOS 16.0, *, watchOS 9.0, *)
-    @Published public var detents: Set<PresentationDetent> = []
-    @Published public var dragIndicator: Visibility = .visible
-    
-    @Published public var dismiss = false
-    @Published public var tagToPopTo = Int.max
-    
-    @Published public var attachmentAnchor: PopoverAttachmentAnchor = .rect(.bounds)
-    @Published public var arrowEdge: Edge = .top
-    
-    @available(iOS, introduced: 14.0, deprecated: 16.0, message: "use push(_ style:destination:onDismiss:completion:)")
-    @available(macOS, introduced: 11.0, deprecated: 13.0, message: "use push(_ style:destination:onDismiss:completion:)")
-    @available(tvOS, introduced: 14.0, deprecated: 16.0, message: "use push(_ style:destination:onDismiss:completion:)")
-    @available(watchOS, introduced: 7.0, deprecated: 9.0, message: "use push(_ style:destination:onDismiss:completion:)")
-    @MainActor
-    public func present<Destination: View>(_ type: NavigationType, @ViewBuilder destination: () -> (Destination), onDismiss: (() -> Void)? = nil, completion: @escaping () -> () = {}) {
-        self.destination = AnyView(destination())
-        switch type {
-        case .page:
-            self.onDismiss = onDismiss
-            isPushed = true
-        case .sheet:
-            self.onDismiss = onDismiss
-            isPresented = true
-        case .popover(let attachmentAnchor, let arrowEdge):
-            self.onDismiss = onDismiss
-            self.attachmentAnchor = attachmentAnchor
-            self.arrowEdge = arrowEdge
-            isPoppedOver = true
-        case .fullScreenCover:
-            self.onDismiss = onDismiss
-            isCovered = true
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            completion()
-        })
-    }
-    
-    @available(iOS 16, *, macOS 13.0, *, tvOS 16.0, *, watchOS 9.0, *)
-    @MainActor
-    public func push<Destination: View>(_ style: NavigationStyle, @ViewBuilder destination: () -> (Destination), onDismiss: (() -> Void)? = nil, completion: @escaping () -> () = {}) {
-        self.destination = AnyView(destination())
-        switch style {
-        case .page:
-            self.onDismiss = onDismiss
-            isPushed = true
-        case .sheet(let detents, let dragIndicator):
-            self.onDismiss = onDismiss
-            self.detents = detents
-            self.dragIndicator = dragIndicator
-            isPresented = true
-        case .flexibleSheet(let dragIndicator):
-            self.onDismiss = onDismiss
-            self.dragIndicator = dragIndicator
-            isFlexiblePresented = true
-        case .popover(let attachmentAnchor, let arrowEdge):
-            self.onDismiss = onDismiss
-            self.attachmentAnchor = attachmentAnchor
-            self.arrowEdge = arrowEdge
-            isPoppedOver = true
-        case .fullScreenCover:
-            self.onDismiss = onDismiss
-            isCovered = true
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            completion()
-        })
-    }
-    
-    @MainActor
-    public func pop(completion: @escaping () -> () = {}) {
-        dismiss.toggle()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            completion()
-        })
-    }
-    
-    @MainActor
-    public func pop(to tag: Int, completion: @escaping () -> () = {}) {
-        tagToPopTo = tag
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            completion()
-        })
-    }
-    
-    // MARK: - Async
-    
-    @available(iOS, introduced: 14.0, deprecated: 16.0, message: "use push(_ style:destination:onDismiss:completion:)")
-    @available(macOS, introduced: 11.0, deprecated: 13.0, message: "use push(_ style:destination:onDismiss:completion:)")
-    @available(tvOS, introduced: 14.0, deprecated: 16.0, message: "use push(_ style:destination:onDismiss:completion:)")
-    @available(watchOS, introduced: 7.0, deprecated: 9.0, message: "use push(_ style:destination:onDismiss:completion:)")
-    @MainActor
-    public func present<Destination: View>(_ type: NavigationType, @ViewBuilder destination: () -> (Destination), onDismiss: (() -> Void)? = nil) async {
-        await withCheckedContinuation({ continuation in
-            present(type, destination: destination, onDismiss: onDismiss, completion: continuation.resume)
-        })
-    }
-    
-    @available(iOS 16, *, macOS 13.0, *, tvOS 16.0, *, watchOS 9.0, *)
-    @MainActor
-    public func push<Destination: View>(_ style: NavigationStyle, @ViewBuilder destination: () -> (Destination), onDismiss: (() -> Void)? = nil) async {
-        await withCheckedContinuation { continuation in
-            push(style, destination: destination, onDismiss: onDismiss, completion: continuation.resume)
+    public static func push(_ path: Binding<Bool>) {
+        total += 1
+        if path.wrappedValue != true {
+            path.wrappedValue = true
         }
     }
     
-    @MainActor
-    public func pop() async {
-        await withCheckedContinuation { continuation in
-            pop(completion: continuation.resume)
-        }
+    public static func pop(with dismiss: DismissAction) {
+        guard total > 0 else { return }
+        popsToRoot = false
+        dismiss()
+        total -= 1
     }
     
-    @MainActor
-    public func pop(to tag: Int) async {
-        await withCheckedContinuation { continuation in
-            pop(to: tag, completion: continuation.resume)
-        }
+    public static func popToRoot(with dismiss: DismissAction) {
+        guard total > 0 else { return }
+        popsToRoot = true
+        dismiss()
+        total = 0
     }
     
+    public static func pop(last: Int, with dismiss: DismissAction) {
+        guard total > 0 else { return }
+        popsToRoot = true
+        popsToLast = true
+        self.last = last - 1
+        dismiss()
+        total -= last
+    }
+    
+    public static func pop(to: Int, with dismiss: DismissAction) {
+        let last = total - to - 1
+        popsToRoot = true
+        popsToLast = true
+        self.last = last
+        dismiss()
+        total -= last + 1
+    }
+    
+    public static func pushDeepLink(_ path: Binding<Bool>, step: Int) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + (0.6 * Double(step)), execute: {
+            push(path)
+        })
+    }
 }
+
