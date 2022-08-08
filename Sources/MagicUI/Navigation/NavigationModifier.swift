@@ -79,7 +79,7 @@ public struct NavigationModifier<D>: ViewModifier where D: View {
 }
 
 public extension View {
-    func navigation<D: View>(destination: Binding<Bool>, type: NavigationType, onDismiss: (() -> Void)? = nil, @ViewBuilder destinationView: @escaping () -> D) -> some View {
-        self.modifier(NavigationModifier(type: type, isActive: destination, onDismiss: onDismiss, destination: destinationView))
+    func navigation<D: View>(step: Binding<Bool>, type: NavigationType, onDismiss: (() -> Void)? = nil, @ViewBuilder destinationView: @escaping () -> D) -> some View {
+        self.modifier(NavigationModifier(type: type, isActive: step, onDismiss: onDismiss, destination: destinationView))
     }
 }
