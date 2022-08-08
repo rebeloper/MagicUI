@@ -21,6 +21,8 @@ public struct FlexibleSheetModifier: ViewModifier {
 }
 
 public extension View {
+    
+    /// Sets the ``sheet``'s height from the content's heigh
     func flexibleSheet() -> some View {
         modifier(FlexibleSheetModifier())
     }

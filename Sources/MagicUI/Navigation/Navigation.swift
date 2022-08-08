@@ -14,13 +14,27 @@ public struct Navigation {
     static var popsToLast = false
     static var last = 0
     
-    public static func push(_ path: Binding<Bool>) {
+    /// Triggers a ``Navigation Step``
+    /// - Parameter step: a ``Bool Binding`` representing a ``Navigation Step``
+    public static func trigger(_ step: Binding<Bool>) {
         total += 1
-        if path.wrappedValue != true {
-            path.wrappedValue = true
+        if step.wrappedValue != true {
+            step.wrappedValue = true
         }
     }
     
+    /// Triggers an array of ``Navigation Step``s
+    /// - Parameter steps: ``Bool Binding``s representing ``Navigation Step``s
+    public static func trigger(steps: [Binding<Bool>]) {
+        for i in 0..<steps.count {
+            DispatchQueue.main.asyncAfter(deadline: .now() + (0.6 * Double(i)), execute: {
+                trigger(steps[i])
+            })
+        }
+    }
+    
+    /// Pops a ``Navigation Step``
+    /// - Parameter dismiss: ``DismissAction`` provided by the current ``View``
     public static func pop(with dismiss: DismissAction) {
         guard total > 0 else { return }
         popsToRoot = false
@@ -28,6 +42,8 @@ public struct Navigation {
         total -= 1
     }
     
+    /// Pops all the ``Navigation Step``s
+    /// - Parameter dismiss: ``DismissAction`` provided by the current ``View``
     public static func popToRoot(with dismiss: DismissAction) {
         guard total > 0 else { return }
         popsToRoot = true
@@ -35,6 +51,10 @@ public struct Navigation {
         total = 0
     }
     
+    /// Pops the provided last ``Navigation Step``s
+    /// - Parameters:
+    ///   - last: count for the ``Navigation Step``s to pop
+    ///   - dismiss: ``DismissAction`` provided by the current ``View``
     public static func pop(last: Int, with dismiss: DismissAction) {
         guard total > 0 else { return }
         popsToRoot = true
@@ -44,6 +64,10 @@ public struct Navigation {
         total -= last
     }
     
+    /// Pops to the provided indexed ``Navigation Step``
+    /// - Parameters:
+    ///   - to: the index of the ``Navigation Step`` we pop to
+    ///   - dismiss: ``DismissAction`` provided by the current ``View``
     public static func pop(to: Int, with dismiss: DismissAction) {
         let last = total - to - 1
         popsToRoot = true
@@ -53,10 +77,5 @@ public struct Navigation {
         total -= last + 1
     }
     
-    public static func pushDeepLink(_ path: Binding<Bool>, step: Int) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + (0.6 * Double(step)), execute: {
-            push(path)
-        })
-    }
 }
 
