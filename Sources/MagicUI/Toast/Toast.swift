@@ -737,6 +737,7 @@ public class ToastManager: ObservableObject {
     public init() {}
     
     /// Presents a Toast with Style
+    @MainActor
     public func present(_ displayMode: ToastDisplayMode,
                         type: ToastType = .regular,
                         title: String? = nil,
@@ -746,6 +747,7 @@ public class ToastManager: ObservableObject {
     }
     
     /// Presents a Toast with all style options
+    @MainActor
     public func present(_ displayMode: ToastDisplayMode,
                         type: ToastType = .regular,
                         title: String? = nil,
@@ -763,6 +765,7 @@ public class ToastManager: ObservableObject {
     }
     
     /// Presents a Toast with Options
+    @MainActor
     public func present(options: ToastOptions) {
         self.options = options
         withAnimation {
@@ -771,6 +774,7 @@ public class ToastManager: ObservableObject {
     }
     
     /// Presents a Toast with title and message
+    @MainActor
     public func present(_ displayMode: ToastDisplayMode,
                         type: ToastType = .regular,
                         title: String,
@@ -780,6 +784,7 @@ public class ToastManager: ObservableObject {
     }
     
     /// Presents a Toast with title
+    @MainActor
     public func present(_ displayMode: ToastDisplayMode,
                         type: ToastType = .regular,
                         title: String,
@@ -789,6 +794,7 @@ public class ToastManager: ObservableObject {
     }
     
     /// Presents a Toast with sub title
+    @MainActor
     public func present(_ displayMode: ToastDisplayMode,
                         type: ToastType = .regular,
                         title: String? = nil,
@@ -798,6 +804,7 @@ public class ToastManager: ObservableObject {
     }
     
     /// Presents a Toast with a preset
+    @MainActor
     public func present(_ preset: ToastPreset,
                         _ displayMode: ToastDisplayMode,
                         message: String,
@@ -826,6 +833,7 @@ public class ToastManager: ObservableObject {
     }
     
     /// Presents a Toast with title and message
+    @MainActor
     public func present(_ displayMode: ToastDisplayMode,
                         title: String,
                         message: String,
@@ -834,6 +842,7 @@ public class ToastManager: ObservableObject {
     }
     
     /// Presents a Toast with title
+    @MainActor
     public func present(_ displayMode: ToastDisplayMode,
                         title: String,
                         style: ToastStyle? = nil) {
@@ -841,6 +850,7 @@ public class ToastManager: ObservableObject {
     }
     
     /// Presents a Toast with message
+    @MainActor
     public func present(_ displayMode: ToastDisplayMode,
                         message: String,
                         style: ToastStyle? = nil) {
@@ -856,6 +866,7 @@ public class ToastManager: ObservableObject {
     ///   - style: the style of the Toast
     ///   - alertManager: if set an error alert will be show when an `Error` is thrown
     ///   - action: action being taken while the Toast is presented
+    @MainActor
     public func present(_ displayMode: ToastDisplayMode = .hud, type: ToastType = .loading, title: String? = nil, message: String? = nil, style: ToastStyle? = nil, alertManager: AlertManager? = nil, action: @escaping () async throws -> ()) async throws {
         do {
             present(options: .init(displayMode: displayMode, type: type, title: title, message: message, style: style))
@@ -871,6 +882,7 @@ public class ToastManager: ObservableObject {
     }
     
     /// Hides a Toast
+    @MainActor
     public func hide() {
         withAnimation {
             isPresented = false
