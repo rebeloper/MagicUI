@@ -53,7 +53,6 @@ public struct CurrencyFieldModifier: ViewModifier {
                             replacedNewValue = replacedNewValue.replacingOccurrences(of: ",", with: ".")
                         }
                         let textValue = Double(replacedNewValue.dropFirst(currency.currency.count)) ?? 0
-                        print(textValue)
                         let intTextValue = Int(textValue)
                         if Double(intTextValue) == textValue {
                             currency.value = Double(intTextValue)
