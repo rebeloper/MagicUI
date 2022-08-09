@@ -10,7 +10,7 @@ import SwiftUI
 #if os(iOS)
 public extension WebView {
     
-    func load(url: URL, webViewStore: WebViewStore, isActive: Binding<Bool>? = nil) -> some View {
+    func load(url: URL?, webViewStore: WebViewStore, isActive: Binding<Bool>? = nil) -> some View {
         self
             .navigationBarTitle(Text(verbatim: webViewStore.title ?? ""), displayMode: .inline)
             .toolbar(content: {
@@ -59,7 +59,9 @@ public extension WebView {
                                     })
             )
             .onAppear {
-                webViewStore.wkWebView.load(URLRequest(url: url))
+                if let url = url {
+                    webViewStore.wkWebView.load(URLRequest(url: url))
+                }
             }
     }
 }
