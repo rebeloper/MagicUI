@@ -16,6 +16,7 @@ public struct Navigation {
     
     /// Triggers a ``Navigation Step``
     /// - Parameter step: a ``Bool Binding`` representing a ``Navigation Step``
+    @MainActor
     public static func trigger(_ step: Binding<Bool>) {
         total += 1
         if step.wrappedValue != true {
@@ -25,6 +26,7 @@ public struct Navigation {
     
     /// Triggers an array of ``Navigation Step``s
     /// - Parameter steps: ``Bool Binding``s representing ``Navigation Step``s
+    @MainActor
     public static func trigger(steps: [Binding<Bool>]) {
         for i in 0..<steps.count {
             DispatchQueue.main.asyncAfter(deadline: .now() + (0.6 * Double(i)), execute: {
@@ -35,6 +37,7 @@ public struct Navigation {
     
     /// Pops a ``Navigation Step``
     /// - Parameter dismiss: ``DismissAction`` provided by the current ``View``
+    @MainActor
     public static func pop(with dismiss: DismissAction) {
         guard total > 0 else { return }
         popsToRoot = false
@@ -44,6 +47,7 @@ public struct Navigation {
     
     /// Pops all the ``Navigation Step``s
     /// - Parameter dismiss: ``DismissAction`` provided by the current ``View``
+    @MainActor
     public static func popToRoot(with dismiss: DismissAction) {
         guard total > 0 else { return }
         popsToRoot = true
@@ -58,6 +62,7 @@ public struct Navigation {
     /// - Parameters:
     ///   - last: count for the ``Navigation Step``s to pop
     ///   - dismiss: ``DismissAction`` provided by the current ``View``
+    @MainActor
     public static func pop(last: Int, with dismiss: DismissAction) {
         guard total > 0 else { return }
         popsToRoot = false
@@ -71,6 +76,7 @@ public struct Navigation {
     /// - Parameters:
     ///   - to: the index of the ``Navigation Step`` we pop to
     ///   - dismiss: ``DismissAction`` provided by the current ``View``
+    @MainActor
     public static func pop(to: Int, with dismiss: DismissAction) {
         let last = total - to - 1
         popsToRoot = false
