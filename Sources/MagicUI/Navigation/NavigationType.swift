@@ -7,8 +7,7 @@
 
 import Foundation
 
+/// Navigation types used by ``navigationDestination(_ type:isPresented:destination:onDismiss:)``
 public enum NavigationType {
-    case stack
-    case sheet
-    case cover
+    case stack, sheet, fullScreenCover
 }
