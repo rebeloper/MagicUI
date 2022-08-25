@@ -8,7 +8,11 @@
 import SwiftUI
 
 /// Convenience ``ObservableObject`` that you can subclass for deep links
-open class DeepLinksBuilder: ObservableObject { }
+open class DeepLinksBuilder: ObservableObject {
+    public init() {}
+}
 
 /// Convenience ``ObservableObject`` that you can subclass for pop destinations
-open class PopDestinationsBuilder: ObservableObject { }
+open class PopDestinationsBuilder: ObservableObject {
+    public init() {}
+}
