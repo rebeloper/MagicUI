@@ -36,7 +36,7 @@ public extension View {
     /// you provide is true.
     ///
     /// - Parameters:
-    ///   - isActive: A binding to a Boolean value that determines whether
+    ///   - isActive: A binding to a Boolean value that activates the navigation push
     ///   - type: the navigation type: ``stack``, ``sheet`` or ``fullScreenCover``
     ///     to present the view that you create in the modifier's
     ///     `destination` closure.
@@ -76,8 +76,7 @@ public extension View {
     ///   - isPushActive: A binding to a Boolean value that activates the navigation push
     ///   - pushType: the navigation push type: ``stack``, ``sheet`` or ``fullScreenCover``
     ///   - popDestination: A binding to a Boolean value that determines
-    ///   the pop destination
-    ///   the current / popped view's presented state
+    ///   the pop destination the current / popped view's presented state
     ///   - dismiss: ``DismissAction`` associated with the current view
     func navigationPopBridge(isPushActive: Binding<Bool>, pushType: NavigationType, popDestination: Binding<Bool>, dismiss: DismissAction) -> some View {
         self.onChange(of: isPushActive.wrappedValue) { newValue in

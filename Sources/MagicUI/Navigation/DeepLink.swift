@@ -24,12 +24,11 @@ public struct DeepLink {
     /// Handles the deep link active state change from inside an ``onReceive(:)``
     /// - Parameters:
     ///   - newValue: the new value received from an ``onReceive(:)``
-    ///   - isPresented: A binding to a Boolean value that determines
-    ///   the current / popped view's presented state
-    public static func onReceive(_ newValue: Bool, isPresented: Binding<Bool>) {
+    ///   - isPushActive: A binding to a Boolean value that that activates the navigation push
+    public static func onReceive(_ newValue: Bool, isActive: Binding<Bool>) {
         if newValue {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-                isPresented.wrappedValue.toggle()
+                isActive.wrappedValue.toggle()
             })
         }
     }
