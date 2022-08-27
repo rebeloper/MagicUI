@@ -36,21 +36,21 @@ public extension View {
     /// you provide is true.
     ///
     /// - Parameters:
+    ///   - isActive: A binding to a Boolean value that determines whether
     ///   - type: the navigation type: ``stack``, ``sheet`` or ``fullScreenCover``
-    ///   - isPresented: A binding to a Boolean value that determines whether
     ///     to present the view that you create in the modifier's
     ///     `destination` closure.
     ///   - destination: A closure that returns the content of the sheet.
     ///   - onDismiss: The closure to execute when dismissing the sheet.
     @ViewBuilder
-    func navigationDestination<D: View>(_ type: NavigationType, isPresented: Binding<Bool>, @ViewBuilder destination: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
+    func navigationPush<D: View>(isActive: Binding<Bool>, type: NavigationType, @ViewBuilder destination: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
         switch type {
         case .stack:
-            self.navigationDestination(isPresented: isPresented, destination: destination)
+            self.navigationDestination(isPresented: isActive, destination: destination)
         case .sheet:
-            self.sheet(isPresented: isPresented, onDismiss: onDismiss, content: destination)
+            self.sheet(isPresented: isActive, onDismiss: onDismiss, content: destination)
         case .fullScreenCover:
-            self.fullScreenCover(isPresented: isPresented, onDismiss: onDismiss, content: destination)
+            self.fullScreenCover(isPresented: isActive, onDismiss: onDismiss, content: destination)
         }
     }
     
@@ -58,30 +58,30 @@ public extension View {
     /// - Parameters:
     ///   - isActive: A binding to a Boolean value that determines whether
     ///     to activate the view to pop itself and its predecesors till we
-    ///     reach the view associated with the ``popDestination``
-    ///   - popDestination: A binding to a Boolean value that determines
+    ///     reach the view associated with the ``destination``
+    ///   - destination: A binding to a Boolean value that determines
     ///   the pop destination
-    func pop(isActive: Binding<Bool>, popDestination: Binding<Bool>) -> some View {
+    func navigationPop(isActive: Binding<Bool>, destination: Binding<Bool>) -> some View {
         self.onAppear {
-            popDestination.wrappedValue = false
+            destination.wrappedValue = false
         }.onDisappear {
             if isActive.wrappedValue {
-                popDestination.wrappedValue = true
+                destination.wrappedValue = true
             }
         }
     }
     
     /// Sets the view as popable by a pop destination
     /// - Parameters:
-    ///   - type: the navigation type: ``stack``, ``sheet`` or ``fullScreenCover``
+    ///   - isPushActive: A binding to a Boolean value that activates the navigation push
+    ///   - pushType: the navigation push type: ``stack``, ``sheet`` or ``fullScreenCover``
     ///   - popDestination: A binding to a Boolean value that determines
     ///   the pop destination
-    ///   - isPresented: A binding to a Boolean value that determines
     ///   the current / popped view's presented state
     ///   - dismiss: ``DismissAction`` associated with the current view
-    func popable(_ type: NavigationType, byPopDestination popDestination: Binding<Bool>, isPresented: Binding<Bool>, dismiss: DismissAction) -> some View {
-        self.onChange(of: isPresented.wrappedValue) { newValue in
-            if type == .stack {
+    func navigationPopBridge(isPushActive: Binding<Bool>, pushType: NavigationType, popDestination: Binding<Bool>, dismiss: DismissAction) -> some View {
+        self.onChange(of: isPushActive.wrappedValue) { newValue in
+            if pushType == .stack {
                 if !newValue, popDestination.wrappedValue {
                     dismiss()
                 }
