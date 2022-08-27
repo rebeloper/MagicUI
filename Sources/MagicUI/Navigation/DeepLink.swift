@@ -25,10 +25,10 @@ public struct DeepLink {
     /// - Parameters:
     ///   - newValue: the new value received from an ``onReceive(:)``
     ///   - isPushActive: A binding to a Boolean value that that activates the navigation push
-    public static func onReceive(_ newValue: Bool, isActive: Binding<Bool>) {
+    public static func onReceive(_ newValue: Bool, isPushActive: Binding<Bool>) {
         if newValue {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-                isActive.wrappedValue.toggle()
+                isPushActive.wrappedValue.toggle()
             })
         }
     }
