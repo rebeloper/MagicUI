@@ -40,12 +40,13 @@ public extension View {
     ///   - type: the navigation type: ``stack``, ``sheet`` or ``fullScreenCover``
     ///     to present the view that you create in the modifier's
     ///     `destination` closure.
-    ///   - destination: A closure that returns the content of the sheet.
-    ///   - onDismiss: The closure to execute when dismissing the sheet.
+    ///   - destination: A closure that returns the content of the navigation.
+    ///   - onDismiss: The closure to execute when dismissing the ``sheet`` or ``fullScreenCover``. Does not work for ``stack``
     @ViewBuilder
     func navigationPush<D: View>(isActive: Binding<Bool>, type: NavigationType, @ViewBuilder destination: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
         switch type {
         case .stack:
+            if onDismiss != nil { fatalError(".stack type cannot have an onDismiss") }
             self.navigationDestination(isPresented: isActive, destination: destination)
         case .sheet:
             self.sheet(isPresented: isActive, onDismiss: onDismiss, content: destination)
