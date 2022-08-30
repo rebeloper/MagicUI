@@ -40,4 +40,40 @@ public extension View {
             self
         }
     }
+    
+    /// Clips this view to its bounding rectangular frame and defines the content shape for hit testing.
+    /// - Parameters:
+    ///   - cornerRadius: corner radius. Default is 0
+    ///   - style: rounded corner style. Default is .circular
+    func clippedContent(cornerRadius: CGFloat = 0, style: RoundedCornerStyle = .circular) -> some View {
+        self.clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: style))
+            .contentShape(RoundedRectangle(cornerRadius: cornerRadius, style: style))
+    }
+    
+    /// Creates a `Push Out View` from a `Pull In View`
+    /// - Parameter backgroundColor: The color of the area outside of the `Pull In View`
+    /// - Returns: a `Push Out View`
+    func asPushOutView(_ backgroundColor: Color = .clear) -> some View {
+        ZStack {
+            backgroundColor
+            self
+        }
+    }
+    
+    @ViewBuilder
+    /// Can create a `Push Out View` from a
+    /// - Parameters:
+    ///   - isPushOutView: should create a `Push Out View` from a `Pull In View`
+    ///   - backgroundColor: The color of the area outside of the `Pull In View`
+    /// - Returns: a `Push Out View` or a `Pull In View`
+    func isPushOutView(_ isPushOutView: Bool = true, backgroundColor: Color = .clear) -> some View {
+        if isPushOutView {
+            ZStack {
+                backgroundColor
+                self
+            }
+        } else {
+            self
+        }
+    }
 }
