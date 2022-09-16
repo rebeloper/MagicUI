@@ -40,5 +40,13 @@ public extension View {
     func navigationDestination<D: View>(isActive: Binding<Bool>, @ViewBuilder destination: @escaping () -> D) -> some View {
         self.modifier(NavigationDestinationPublishedModifier(published: isActive, destination: destination))
     }
+    
+    func dismissable(_ dismiss: DismissAction, isDismissed: Published<Bool>.Publisher) -> some View {
+        self.onReceive(isDismissed) { shouldDismiss in
+            if shouldDismiss {
+                dismiss()
+            }
+        }
+    }
 }
 
