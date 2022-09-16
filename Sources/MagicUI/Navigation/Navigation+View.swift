@@ -21,11 +21,11 @@ public extension View {
         switch push.wrappedValue.type {
         case .stack:
             if onDismiss != nil { fatalError(".stack type cannot have an onDismiss") }
-            self.navigationDestination(isPresented: push.isActive, destination: destination)
+            self.navigationDestination(isPublished: push.isActive, destination: destination)
         case .sheet:
-            self.sheet(isPresented: push.isActive, onDismiss: onDismiss, content: destination)
+            self.sheet(isPublished: push.isActive, onDismiss: onDismiss, content: destination)
         case .fullScreenCover:
-            self.fullScreenCover(isPresented: push.isActive, onDismiss: onDismiss, content: destination)
+            self.fullScreenCover(isPublished: push.isActive, onDismiss: onDismiss, content: destination)
         }
     }
     
@@ -53,6 +53,28 @@ public extension View {
                 })
             }
         }
+    }
+    
+    func sync(_ published: Binding<Bool>, with binding: Binding<Bool>) -> some View {
+        self
+            .onChange(of: published.wrappedValue) { published in
+                binding.wrappedValue = published
+            }
+            .onChange(of: binding.wrappedValue) { binding in
+                published.wrappedValue = binding
+            }
+    }
+    
+    func sheet<D: View>(isPublished: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> D) -> some View {
+        self.modifier(SheetPublishedModifier(published: isPublished, onDismiss: onDismiss, content: content))
+    }
+    
+    func fullScreenCover<D: View>(isPublished: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> D) -> some View {
+        self.modifier(FullScreenCoverPublishedModifier(published: isPublished, onDismiss: onDismiss, content: content))
+    }
+    
+    func navigationDestination<D: View>(isPublished: Binding<Bool>, @ViewBuilder destination: @escaping () -> D) -> some View {
+        self.modifier(NavigationDestinationPublishedModifier(published: isPublished, destination: destination))
     }
 }
 
