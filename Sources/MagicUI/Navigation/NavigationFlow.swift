@@ -8,6 +8,7 @@
 import SwiftUI
 
 public struct NavigationFlow {
+    
     public static func pop(path: [Binding<Bool>]) {
         for i in 0..<path.count {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 + 0.6 * Double(i), execute: {
