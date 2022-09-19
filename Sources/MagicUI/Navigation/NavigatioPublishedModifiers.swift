@@ -68,8 +68,7 @@ public struct NavigationDestinationPublishedModifier<D: View>: ViewModifier {
     
     public func body(content: Content) -> some View {
         content
-            .navigationDestination(isPresented: $binding, destination: destination)
             .sync($published, with: $binding)
-            .dismissable($binding)
+            .navigationDestination(isPresented: $binding, destination: destination)
     }
 }
