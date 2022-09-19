@@ -17,32 +17,19 @@ import SwiftUI
 public extension View {
     
     @ViewBuilder
-    func navigation<D: View>(_ type: NavigationType, isActive: Binding<Bool>, @ViewBuilder destination: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
+    func navigation<D: View>(_ type: NavigationType, destination: Binding<Bool>, @ViewBuilder content: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
         switch type {
         case .stack:
             if onDismiss != nil { fatalError(".stack type cannot have an onDismiss") }
-            self.navigationDestination(isActive: isActive, destination: destination)
+            self.navigationDestination(destination: destination, content: content)
         case .sheet:
-            self.sheet(isActive: isActive, onDismiss: onDismiss, content: destination)
+            self.sheet(destination: destination, onDismiss: onDismiss, content: content)
         case .fullScreenCover:
-            self.fullScreenCover(isActive: isActive, onDismiss: onDismiss, content: destination)
+            self.fullScreenCover(destination: destination, onDismiss: onDismiss, content: content)
         }
     }
     
-    @ViewBuilder
-    func navigation<D: View>(_ type: NavigationType, isPresented: Binding<Bool>, @ViewBuilder destination: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
-        switch type {
-        case .stack:
-            if onDismiss != nil { fatalError(".stack type cannot have an onDismiss") }
-            self.navigationDestination(isPresented: isPresented, destination: destination)
-        case .sheet:
-            self.sheet(isPresented: isPresented, onDismiss: onDismiss, content: destination)
-        case .fullScreenCover:
-            self.fullScreenCover(isPresented: isPresented, onDismiss: onDismiss, content: destination)
-        }
-    }
-    
-    func sync(_ published: Binding<Bool>, with binding: Binding<Bool>) -> some View {
+    internal func sync(_ published: Binding<Bool>, with binding: Binding<Bool>) -> some View {
         self
             .onChange(of: published.wrappedValue) { published in
                 binding.wrappedValue = published
@@ -53,18 +40,18 @@ public extension View {
     }
     
     @ViewBuilder
-    func navigationDestination<D: View>(isActive: Binding<Bool>, @ViewBuilder destination: @escaping () -> D) -> some View {
-        self.modifier(NavigationDestinationPublishedModifier(published: isActive, destination: destination))
+    private func navigationDestination<D: View>(destination: Binding<Bool>, @ViewBuilder content: @escaping () -> D) -> some View {
+        self.modifier(NavigationDestinationPublishedModifier(published: destination, destination: content))
     }
     
     @ViewBuilder
-    func sheet<D: View>(isActive: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> D) -> some View {
-        self.modifier(SheetPublishedModifier(published: isActive, onDismiss: onDismiss, content: content))
+    private func sheet<D: View>(destination: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> D) -> some View {
+        self.modifier(SheetPublishedModifier(published: destination, onDismiss: onDismiss, content: content))
     }
     
     @ViewBuilder
-    func fullScreenCover<D: View>(isActive: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> D) -> some View {
-        self.modifier(FullScreenCoverPublishedModifier(published: isActive, onDismiss: onDismiss, content: content))
+    private func fullScreenCover<D: View>(destination: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> D) -> some View {
+        self.modifier(FullScreenCoverPublishedModifier(published: destination, onDismiss: onDismiss, content: content))
     }
     
 }
