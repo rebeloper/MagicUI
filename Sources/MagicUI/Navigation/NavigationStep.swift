@@ -1,5 +1,5 @@
 //
-//  NavigationDestination.swift
+//  NavigationStep.swift
 //  
 //
 //  Created by Alex Nagy on 19.09.2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct NavigationDestination {
+public struct NavigationStep {
     public var isActive: Bool
     public let type: NavigationType
     

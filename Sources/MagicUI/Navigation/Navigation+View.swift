@@ -17,15 +17,15 @@ import SwiftUI
 public extension View {
     
     @ViewBuilder
-    func navigationDestination<D: View>(_ destination: Binding<NavigationDestination>, @ViewBuilder content: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
-        switch destination.wrappedValue.type {
+    func navigationStep<D: View>(_ step: Binding<NavigationStep>, @ViewBuilder destination: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
+        switch step.wrappedValue.type {
         case .stack:
             if onDismiss != nil { fatalError(".stack type cannot have an onDismiss") }
-            self.navigationDestination(isActive: destination.isActive, content: content)
+            self.navigationDestination(isActive: step.isActive, destination: destination)
         case .sheet:
-            self.sheet(isActive: destination.isActive, onDismiss: onDismiss, content: content)
+            self.sheet(isActive: step.isActive, onDismiss: onDismiss, destination: destination)
         case .fullScreenCover:
-            self.fullScreenCover(isActive: destination.isActive, onDismiss: onDismiss, content: content)
+            self.fullScreenCover(isActive: step.isActive, onDismiss: onDismiss, destination: destination)
         }
     }
     
@@ -40,18 +40,18 @@ public extension View {
     }
     
     @ViewBuilder
-    private func navigationDestination<D: View>(isActive: Binding<Bool>, @ViewBuilder content: @escaping () -> D) -> some View {
-        self.modifier(NavigationDestinationPublishedModifier(published: isActive, destination: content))
+    private func navigationDestination<D: View>(isActive: Binding<Bool>, @ViewBuilder destination: @escaping () -> D) -> some View {
+        self.modifier(NavigationDestinationPublishedModifier(published: isActive, destination: destination))
     }
     
     @ViewBuilder
-    private func sheet<D: View>(isActive: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> D) -> some View {
-        self.modifier(SheetPublishedModifier(published: isActive, onDismiss: onDismiss, content: content))
+    private func sheet<D: View>(isActive: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder destination: @escaping () -> D) -> some View {
+        self.modifier(SheetPublishedModifier(published: isActive, onDismiss: onDismiss, content: destination))
     }
     
     @ViewBuilder
-    private func fullScreenCover<D: View>(isActive: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> D) -> some View {
-        self.modifier(FullScreenCoverPublishedModifier(published: isActive, onDismiss: onDismiss, content: content))
+    private func fullScreenCover<D: View>(isActive: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder destination: @escaping () -> D) -> some View {
+        self.modifier(FullScreenCoverPublishedModifier(published: isActive, onDismiss: onDismiss, content: destination))
     }
     
 }

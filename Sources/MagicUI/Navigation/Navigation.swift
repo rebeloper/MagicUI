@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct Navigation {
     
-    public static func pop(_ path: Binding<NavigationDestination>...) {
+    public static func pop(_ path: Binding<NavigationStep>...) {
         if path.count >= 2 {
             for i in 0..<path.count {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 + 0.6 * Double(i), execute: {
@@ -23,7 +23,7 @@ public struct Navigation {
         }
     }
     
-    public static func present(_ path: Binding<NavigationDestination>...) {
+    public static func present(_ path: Binding<NavigationStep>...) {
         if path.count >= 2 {
             for i in 0..<path.count {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 + 0.6 * Double(i), execute: {
