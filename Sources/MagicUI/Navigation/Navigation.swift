@@ -13,10 +13,7 @@ public struct Navigation {
         if path.count >= 2 {
             for i in 0..<path.count {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 + 0.6 * Double(i), execute: {
-                    path[i].wrappedValue.toggle()
-                })
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 + 0.6 * Double(path.count), execute: {
-                    path[i].wrappedValue.toggle()
+                    path[i].wrappedValue = false
                 })
             }
         } else {
@@ -30,7 +27,7 @@ public struct Navigation {
         if path.count >= 2 {
             for i in 0..<path.count {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 + 0.6 * Double(i), execute: {
-                    path[i].wrappedValue.toggle()
+                    path[i].wrappedValue = true
                 })
             }
         } else {
