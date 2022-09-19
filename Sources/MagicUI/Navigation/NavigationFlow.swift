@@ -33,4 +33,16 @@ public struct NavigationFlow {
             isActive.wrappedValue.toggle()
         }
     }
+    
+    public static func present(_ isActive: Binding<Bool>) {
+        DispatchQueue.main.async {
+            isActive.wrappedValue = true
+        }
+    }
+    
+    public static func pop(_ isActive: Binding<Bool>) {
+        DispatchQueue.main.async {
+            isActive.wrappedValue = false
+        }
+    }
 }
