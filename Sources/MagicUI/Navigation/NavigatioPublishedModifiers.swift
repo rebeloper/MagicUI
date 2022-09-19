@@ -27,6 +27,7 @@ public struct SheetPublishedModifier<D: View>: ViewModifier {
         content
             .sync($published, with: $binding)
             .sheet(isPresented: $binding, onDismiss: onDismiss, content: destination)
+            .dismissable($binding)
     }
 }
 

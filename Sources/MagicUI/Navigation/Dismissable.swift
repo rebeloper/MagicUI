@@ -11,12 +11,12 @@ public struct Dismissable: ViewModifier {
     
     @Environment(\.dismiss) private var dismiss
     
-    public var isDismissed: Published<Bool>.Publisher
+    @Binding public var isActive: Bool
     
     public func body(content: Content) -> some View {
         content
-            .onReceive(isDismissed) { shouldDismiss in
-                if shouldDismiss {
+            .onChange(of: isActive) { isActive in
+                if !isActive {
                     dismiss()
                 }
             }
@@ -24,7 +24,7 @@ public struct Dismissable: ViewModifier {
 }
 
 public extension View {
-    func dismissable(_ isDismissed: Published<Bool>.Publisher) -> some View {
-        self.modifier(Dismissable(isDismissed: isDismissed))
+    func dismissable(_ isActive: Binding<Bool>) -> some View {
+        self.modifier(Dismissable(isActive: isActive))
     }
 }
