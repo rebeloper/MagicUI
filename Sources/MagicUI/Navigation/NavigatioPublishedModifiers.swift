@@ -70,5 +70,6 @@ public struct NavigationDestinationPublishedModifier<D: View>: ViewModifier {
         content
             .sync($published, with: $binding)
             .navigationDestination(isPresented: $binding, destination: destination)
+            .dismissable($binding)
     }
 }
