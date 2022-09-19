@@ -14,21 +14,6 @@
 
 import SwiftUI
 
-/// Convenience ``ObservableObject`` that you can subclass for ``NavigationDestination``s
-open class NavigationObservable: ObservableObject {
-    public init() {}
-}
-
-public struct NavigationDestination {
-    public var isActive: Bool
-    public let type: NavigationType
-    
-    public init(type: NavigationType) {
-        self.isActive = false
-        self.type = type
-    }
-}
-
 public extension View {
     
     @ViewBuilder
