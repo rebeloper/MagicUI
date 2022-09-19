@@ -9,8 +9,13 @@ import SwiftUI
 
 public struct AsyncButton<Label: View>: View {
     
-    public let action: () -> Void
-    public let label: () -> Label
+    private let action: () -> Void
+    private let label: () -> Label
+    
+    public init(action: @escaping () -> Void, label: @escaping () -> Label) {
+        self.action = action
+        self.label = label
+    }
     
     public var body: some View {
         Button(action: {
