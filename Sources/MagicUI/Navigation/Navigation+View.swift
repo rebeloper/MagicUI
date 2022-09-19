@@ -41,12 +41,5 @@ public extension View {
         self.modifier(NavigationDestinationPublishedModifier(published: isActive, destination: destination))
     }
     
-    func dismissable(_ dismiss: DismissAction, isDismissed: Published<Bool>.Publisher) -> some View {
-        self.onReceive(isDismissed) { shouldDismiss in
-            if shouldDismiss {
-                dismiss()
-            }
-        }
-    }
 }
 

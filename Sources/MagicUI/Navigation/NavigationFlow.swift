@@ -27,4 +27,10 @@ public struct NavigationFlow {
             })
         }
     }
+    
+    public static func toggle(_ isActive: Binding<Bool>) {
+        DispatchQueue.main.async {
+            isActive.wrappedValue.toggle()
+        }
+    }
 }
