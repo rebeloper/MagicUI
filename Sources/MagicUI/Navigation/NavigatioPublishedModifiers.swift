@@ -55,8 +55,6 @@ public struct FullScreenCoverPublishedModifier<D: View>: ViewModifier {
 
 public struct NavigationDestinationPublishedModifier<D: View>: ViewModifier {
     
-    @Environment(\.dismiss) private var dismiss
-    
     @State private var binding = false
     
     @Binding public var published: Bool
@@ -71,15 +69,7 @@ public struct NavigationDestinationPublishedModifier<D: View>: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .navigationDestination(isPresented: $binding, destination: destination)
-            .onChange(of: published) { newValue in
-                if newValue {
-                    binding = true
-                } else {
-                    dismiss()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-                        binding = false
-                    })
-                }
-            }
+            .sync($published, with: $binding)
+            .dismissable($binding)
     }
 }
