@@ -1,5 +1,5 @@
 //
-//  Dismissable.swift
+//  AsNavigationDestination.swift
 //  
 //
 //  Created by Alex Nagy on 18.09.2022.
@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-public struct Dismissable: ViewModifier {
+public struct AsNavigationDestination: ViewModifier {
     
     @Environment(\.dismiss) private var dismiss
     
-    @Binding public var isActive: Bool
+    @Binding public var navigationDestination: Bool
     
     public func body(content: Content) -> some View {
         content
-            .onChange(of: isActive) { isActive in
-                if !isActive {
+            .onChange(of: navigationDestination) { navigationDestination in
+                if !navigationDestination {
                     dismiss()
                 }
             }
@@ -25,6 +25,6 @@ public struct Dismissable: ViewModifier {
 
 public extension View {
     func setAsNavigationDestination(_ navigationDestination: Binding<Bool>) -> some View {
-        self.modifier(Dismissable(isActive: navigationDestination))
+        self.modifier(AsNavigationDestination(navigationDestination: navigationDestination))
     }
 }
