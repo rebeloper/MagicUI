@@ -16,6 +16,11 @@ import SwiftUI
 
 public extension View {
     
+    /// Sets a destination view for a ``NavigationStep``
+    /// - Parameters:
+    ///   - step: the ``NavigationStep``
+    ///   - destination: A closure that returns the content of the destination.
+    ///   - onDismiss: The closure to execute when dismissing the sheet.
     @ViewBuilder
     func navigationStep<D: View>(_ step: Binding<NavigationStep>, @ViewBuilder destination: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
         switch step.wrappedValue.type {

@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-public struct AsDestinationForNavigationStep: ViewModifier {
+internal struct AsDestinationForNavigationStep: ViewModifier {
     
     @Environment(\.dismiss) private var dismiss
     
-    @Binding public var navigationStep: NavigationStep
+    @Binding internal var navigationStep: NavigationStep
     
-    public func body(content: Content) -> some View {
+    internal func body(content: Content) -> some View {
         content
             .onChange(of: navigationStep.isActive) { isActive in
                 if !isActive {
@@ -24,6 +24,9 @@ public struct AsDestinationForNavigationStep: ViewModifier {
 }
 
 public extension View {
+    
+    /// Sets this view as the destination from a ``NavigationStep``
+    /// - Parameter navigationStep: a ``NavigationStep``
     func setAsDestinationForNavigationStep(_ navigationStep: Binding<NavigationStep>) -> some View {
         self.modifier(AsDestinationForNavigationStep(navigationStep: navigationStep))
     }
