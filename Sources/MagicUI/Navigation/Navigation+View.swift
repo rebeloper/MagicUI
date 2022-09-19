@@ -23,9 +23,8 @@ public struct NavigationDestination {
     public var isActive: Bool
     public let type: NavigationType
     
-    public init(isActive: Bool,
-                type: NavigationType) {
-        self.isActive = isActive
+    public init(type: NavigationType) {
+        self.isActive = false
         self.type = type
     }
 }
