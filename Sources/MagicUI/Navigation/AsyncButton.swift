@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct AsyncButton<Label: View>: View {
+public struct AsyncButton<Label: View>: View {
     
-    let action: () -> Void
-    let label: () -> Label
+    public let action: () -> Void
+    public let label: () -> Label
     
-    var body: some View {
+    public var body: some View {
         Button(action: {
             DispatchQueue.main.async {
                 action()
