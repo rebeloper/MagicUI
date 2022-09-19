@@ -24,7 +24,7 @@ public struct Dismissable: ViewModifier {
 }
 
 public extension View {
-    func dismissable(_ isActive: Binding<Bool>) -> some View {
-        self.modifier(Dismissable(isActive: isActive))
+    func setAsNavigationDestination(_ navigationDestination: Binding<Bool>) -> some View {
+        self.modifier(Dismissable(isActive: navigationDestination))
     }
 }
