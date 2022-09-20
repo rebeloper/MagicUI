@@ -28,9 +28,9 @@ public extension View {
             if onDismiss != nil { fatalError(".stack type cannot have an onDismiss") }
             self.navigationDestination(isActive: step.isActive, destination: destination)
         case .sheet:
-            self.sheet(isActive: step.isActive, onDismiss: onDismiss, destination: destination)
+            self.sheet(isActive: step.isActive, onDismiss: onDismiss, content: destination)
         case .fullScreenCover:
-            self.fullScreenCover(isActive: step.isActive, onDismiss: onDismiss, destination: destination)
+            self.fullScreenCover(isActive: step.isActive, onDismiss: onDismiss, content: destination)
         }
     }
     
@@ -44,19 +44,141 @@ public extension View {
             }
     }
     
+    /// Associates a destination view with a binding or publisher that can be used to push
+    /// the view onto a ``NavigationStack``.
+    ///
+    /// In general, favor binding a path to a navigation stack for programmatic
+    /// navigation. Add this view modifer to a view inside a ``NavigationStack``
+    /// to programmatically push a single view onto the stack. This is useful
+    /// for building components that can push an associated view. For example,
+    /// you can present a `ColorDetail` view for a particular color:
+    ///
+    ///     @State private var showDetails = false
+    ///     var favoriteColor: Color
+    ///
+    ///     NavigationStack {
+    ///         VStack {
+    ///             Circle()
+    ///                 .fill(favoriteColor)
+    ///             Button("Show details") {
+    ///                 showDetails = true
+    ///             }
+    ///         }
+    ///         .navigationDestination(isPresented: $showDetails) {
+    ///             ColorDetail(color: favoriteColor)
+    ///         }
+    ///         .navigationTitle("My Favorite Color")
+    ///     }
+    ///
+    /// Do not put a navigation destination modifier inside a "lazy" container,
+    /// like ``List`` or ``LazyVStack``. These containers create child views
+    /// only when needed to render on screen. Add the navigation destination
+    /// modifier outside these containers so that the navigation stack can
+    /// always see the destination.
+    ///
+    /// - Parameters:
+    ///   - isActive: A binding or publisher to a Boolean value that indicates whether
+    ///     `destination` is currently presented.
+    ///   - destination: A view to present.
     @ViewBuilder
-    private func navigationDestination<D: View>(isActive: Binding<Bool>, @ViewBuilder destination: @escaping () -> D) -> some View {
+    func navigationDestination<D: View>(isActive: Binding<Bool>, @ViewBuilder destination: @escaping () -> D) -> some View {
         self.modifier(NavigationDestinationPublishedModifier(published: isActive, destination: destination))
     }
     
+    /// Presents a sheet when a binding or publisher to a Boolean value that you
+    /// provide is true.
+    ///
+    /// Use this method when you want to present a modal view to the
+    /// user when a Boolean value you provide is true. The example
+    /// below displays a modal view of the mockup for a software license
+    /// agreement when the user toggles the `isShowingSheet` variable by
+    /// clicking or tapping on the "Show License Agreement" button:
+    ///
+    ///     struct ShowLicenseAgreement: View {
+    ///         @State private var isShowingSheet = false
+    ///         var body: some View {
+    ///             Button(action: {
+    ///                 isShowingSheet.toggle()
+    ///             }) {
+    ///                 Text("Show License Agreement")
+    ///             }
+    ///             .sheet(isPresented: $isShowingSheet,
+    ///                    onDismiss: didDismiss) {
+    ///                 VStack {
+    ///                     Text("License Agreement")
+    ///                         .font(.title)
+    ///                         .padding(50)
+    ///                     Text("""
+    ///                             Terms and conditions go here.
+    ///                         """)
+    ///                         .padding(50)
+    ///                     Button("Dismiss",
+    ///                            action: { isShowingSheet.toggle() })
+    ///                 }
+    ///             }
+    ///         }
+    ///
+    ///         func didDismiss() {
+    ///             // Handle the dismissing action.
+    ///         }
+    ///     }
+    ///
+    /// - Parameters:
+    ///   - isActive: A binding or publisher to a Boolean value that determines whether
+    ///     to present the sheet that you create in the modifier's
+    ///     `content` closure.
+    ///   - onDismiss: The closure to execute when dismissing the sheet.
+    ///   - content: A closure that returns the content of the sheet.
     @ViewBuilder
-    private func sheet<D: View>(isActive: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder destination: @escaping () -> D) -> some View {
-        self.modifier(SheetPublishedModifier(published: isActive, onDismiss: onDismiss, content: destination))
+    func sheet<D: View>(isActive: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> D) -> some View {
+        self.modifier(SheetPublishedModifier(published: isActive, onDismiss: onDismiss, content: content))
     }
     
+    /// Presents a modal view that covers as much of the screen as
+    /// possible when a binding or publisher to a Boolean value that you
+    /// provide is true.
+    ///
+    /// Use this method to show a modal view that covers as much of the screen
+    /// as possible. The example below displays a custom view when the user
+    /// toggles the value of the `isPresenting` binding:
+    ///
+    ///     struct FullScreenCoverPresentedOnDismiss: View {
+    ///         @State private var isPresenting = false
+    ///         var body: some View {
+    ///             Button("Present Full-Screen Cover") {
+    ///                 isPresenting.toggle()
+    ///             }
+    ///             .fullScreenCover(isPresented: $isPresenting,
+    ///                              onDismiss: didDismiss) {
+    ///                 VStack {
+    ///                     Text("A full-screen modal view.")
+    ///                         .font(.title)
+    ///                     Text("Tap to Dismiss")
+    ///                 }
+    ///                 .onTapGesture {
+    ///                     isPresenting.toggle()
+    ///                 }
+    ///                 .foregroundColor(.white)
+    ///                 .frame(maxWidth: .infinity,
+    ///                        maxHeight: .infinity)
+    ///                 .background(Color.blue)
+    ///                 .ignoresSafeArea(edges: .all)
+    ///             }
+    ///         }
+    ///
+    ///         func didDismiss() {
+    ///             // Handle the dismissing action.
+    ///         }
+    ///     }
+    ///
+    /// - Parameters:
+    ///   - isActive: A binding or publisher to a Boolean value that determines whether
+    ///     to present the modal view.
+    ///   - onDismiss: The closure to execute when dismissing the modal view.
+    ///   - content: A closure that returns the content of the modal view.
     @ViewBuilder
-    private func fullScreenCover<D: View>(isActive: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder destination: @escaping () -> D) -> some View {
-        self.modifier(FullScreenCoverPublishedModifier(published: isActive, onDismiss: onDismiss, content: destination))
+    func fullScreenCover<D: View>(isActive: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> D) -> some View {
+        self.modifier(FullScreenCoverPublishedModifier(published: isActive, onDismiss: onDismiss, content: content))
     }
     
 }
