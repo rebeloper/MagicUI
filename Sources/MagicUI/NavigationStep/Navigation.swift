@@ -37,8 +37,11 @@ public struct Navigation {
             if path.count >= 2 {
                 for i in 0..<path.count {
                     do {
-                        try await Task.sleep(nanoseconds: 100_000_000 + UInt64(600_000_000 * i)) // 1 second = 1_000_000_000 nanoseconds
-                        path[i].isActive.wrappedValue = false
+                        let step = path[i]
+                        if step.wrappedValue.type != .stack {
+                            try await Task.sleep(nanoseconds: 100_000_000 + UInt64(600_000_000 * i)) // 1 second = 1_000_000_000 nanoseconds
+                        }
+                        step.isActive.wrappedValue = false
                     } catch {
                         print("Navigation error: \(error.localizedDescription)")
                     }
