@@ -11,19 +11,15 @@ public struct Navigation {
     
     /// Activates one or more ``NavigationStep``s
     /// - Parameter path: one or more ``NavigationStep``s
-    @MainActor
     public static func activate(_ path: Binding<NavigationStep>...) {
-        Task {
-            if path.count >= 2 {
-                for i in 0..<path.count {
-                    do {
-                        try await Task.sleep(nanoseconds: 100_000_000 + UInt64(600_000_000 * i)) // 1 second = 1_000_000_000 nanoseconds
-                        path[i].isActive.wrappedValue = true
-                    } catch {
-                        print("Navigation error: \(error.localizedDescription)")
-                    }
-                }
-            } else {
+        if path.count >= 2 {
+            for i in 0..<path.count {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 + 0.6 * Double(i), execute: {
+                    path[i].isActive.wrappedValue = true
+                })
+            }
+        } else {
+            DispatchQueue.main.async {
                 path[0].isActive.wrappedValue = true
             }
         }
@@ -31,22 +27,15 @@ public struct Navigation {
     
     /// Deactivates one or more ``NavigationStep``s
     /// - Parameter path: one or more ``NavigationStep``s
-    @MainActor
     public static func deactivate(_ path: Binding<NavigationStep>...) {
-        Task {
-            if path.count >= 2 {
-                for i in 0..<path.count {
-                    do {
-                        let step = path[i]
-                        if step.wrappedValue.type != .stack {
-                            try await Task.sleep(nanoseconds: 100_000_000 + UInt64(600_000_000 * i)) // 1 second = 1_000_000_000 nanoseconds
-                        }
-                        step.isActive.wrappedValue = false
-                    } catch {
-                        print("Navigation error: \(error.localizedDescription)")
-                    }
-                }
-            } else {
+        if path.count >= 2 {
+            for i in 0..<path.count {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 + 0.6 * Double(i), execute: {
+                    path[i].isActive.wrappedValue = false
+                })
+            }
+        } else {
+            DispatchQueue.main.async {
                 path[0].isActive.wrappedValue = false
             }
         }
