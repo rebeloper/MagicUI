@@ -34,7 +34,7 @@ public extension View {
         }
     }
     
-    internal func sync(_ published: Binding<Bool>, with binding: Binding<Bool>) -> some View {
+    internal func sync<T: Equatable>(_ published: Binding<T>, with binding: Binding<T>) -> some View {
         self
             .onChange(of: published.wrappedValue) { published in
                 binding.wrappedValue = published

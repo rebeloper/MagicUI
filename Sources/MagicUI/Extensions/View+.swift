@@ -83,7 +83,7 @@ public extension View {
     ///   - selection: ``PhotosPicker`` selection
     ///   - selectedUIImage: ``UIImage`` binding
     @MainActor
-    func linkPhotosPicker(selection: Binding<PhotosPickerItem?>,toSelectedUIImage selectedUIImage: Binding<UIImage?>) -> some View {
+    func linkPhotosPicker(selection: Binding<PhotosPickerItem?>, toSelectedUIImage selectedUIImage: Binding<UIImage?>) -> some View {
         self.onChange(of: selection.wrappedValue) { newValue in
             Task {
                 if let imageData = try? await newValue?.loadTransferable(type: Data.self), let image = UIImage(data: imageData) {
