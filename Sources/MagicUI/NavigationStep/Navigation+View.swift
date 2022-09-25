@@ -22,7 +22,7 @@ public extension View {
     ///   - destination: A closure that returns the destination view of the ``NavigationStep``
     ///   - onDismiss: The closure to execute when dismissing the sheet / full screen cover type of ``NavigationStep``. Note: .stack type cannot have an onDismiss
     @ViewBuilder
-    func navigationStep<D: View>(_ step: Binding<NavigationStep>, @ViewBuilder destination: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
+    func navigationDestination<D: View>(for step: Binding<NavigationStep>, @ViewBuilder destination: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
         switch step.wrappedValue.type {
         case .stack:
             if onDismiss != nil { fatalError(".stack type cannot have an onDismiss") }
