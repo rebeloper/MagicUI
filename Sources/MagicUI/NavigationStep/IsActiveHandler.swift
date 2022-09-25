@@ -1,5 +1,5 @@
 //
-//  AsActiveDestination.swift
+//  IsActiveHandler.swift
 //  
 //
 //  Created by Alex Nagy on 20.09.2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-internal struct AsActiveDestination: ViewModifier {
+internal struct IsActiveHandler: ViewModifier {
     
     @Environment(\.dismiss) private var dismiss
     
@@ -29,7 +29,7 @@ public extension View {
     ///     this view is presented.
     /// - Parameter isActive: A binding or publisher to a Boolean value that determines whether
     ///     this view is presented.
-    func setAsActiveDestination(_ isActive: Binding<Bool>) -> some View {
-        self.modifier(AsActiveDestination(isActive: isActive))
+    func isActiveHandler(_ isActive: Binding<Bool>) -> some View {
+        self.modifier(IsActiveHandler(isActive: isActive))
     }
 }
