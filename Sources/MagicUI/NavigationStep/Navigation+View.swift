@@ -27,9 +27,13 @@ public extension View {
         switch type {
         case .stack:
             self.navigationDestination(isActive: step.isActive, destination: destination)
-        case .sheet(let onDismiss):
+        case .sheet:
+            self.sheet(isActive: step.isActive, content: destination)
+        case .sheetWith(let onDismiss):
             self.sheet(isActive: step.isActive, onDismiss: onDismiss, content: destination)
-        case .fullScreenCover(let onDismiss):
+        case .fullScreenCover:
+            self.fullScreenCover(isActive: step.isActive, content: destination)
+        case .fullScreenCoverWith(let onDismiss):
             self.fullScreenCover(isActive: step.isActive, onDismiss: onDismiss, content: destination)
         }
     }
