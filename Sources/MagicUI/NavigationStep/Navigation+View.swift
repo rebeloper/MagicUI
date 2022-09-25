@@ -18,18 +18,18 @@ public extension View {
     
     /// Sets a destination view for a ``NavigationStep``
     /// - Parameters:
+    ///   - type: the type of navigation
     ///   - step: the ``NavigationStep``
     ///   - destination: A closure that returns the destination view of the ``NavigationStep``
-    ///   - onDismiss: The closure to execute when dismissing the sheet / full screen cover type of ``NavigationStep``. Note: .stack type cannot have an onDismiss
+    ///   - onDismiss: The closure to execute when dismissing the sheet / full screen cover type of ``NavigationStep``.
     @ViewBuilder
-    func navigationDestination<D: View>(for step: Binding<NavigationStep>, @ViewBuilder destination: @escaping () -> D, onDismiss: (() -> Void)? = nil) -> some View {
-        switch step.wrappedValue.type {
+    func navigationDestination<D: View>(type: NavigationType, for step: Binding<NavigationStep>, @ViewBuilder destination: @escaping () -> D) -> some View {
+        switch type {
         case .stack:
-            if onDismiss != nil { fatalError(".stack type cannot have an onDismiss") }
             self.navigationDestination(isActive: step.isActive, destination: destination)
-        case .sheet:
+        case .sheet(let onDismiss):
             self.sheet(isActive: step.isActive, onDismiss: onDismiss, content: destination)
-        case .fullScreenCover:
+        case .fullScreenCover(let onDismiss):
             self.fullScreenCover(isActive: step.isActive, onDismiss: onDismiss, content: destination)
         }
     }

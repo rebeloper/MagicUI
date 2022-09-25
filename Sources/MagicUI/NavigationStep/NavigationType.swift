@@ -9,5 +9,5 @@ import Foundation
 
 /// Navigation types
 public enum NavigationType {
-    case stack, sheet, fullScreenCover
+    case stack, sheet(onDismiss: (() -> Void)? = nil), fullScreenCover(onDismiss: (() -> Void)? = nil)
 }
