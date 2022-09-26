@@ -1,6 +1,6 @@
 //
 //  Navigation.swift
-//  
+//  NavigationStep
 //
 //  Created by Alex Nagy on 16.09.2022.
 //

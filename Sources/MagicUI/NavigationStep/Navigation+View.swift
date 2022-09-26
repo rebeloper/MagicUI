@@ -1,15 +1,8 @@
 //
 //  Navigation+View.swift
-//  StringNavigation
+//  NavigationStep
 //
 //  Created by Alex Nagy on 08.08.2022.
-//
-
-//
-//  Navigation.swift
-//  SwiftUI4BetaNavigation
-//
-//  Created by Alex Nagy on 24.08.2022.
 //
 
 import SwiftUI

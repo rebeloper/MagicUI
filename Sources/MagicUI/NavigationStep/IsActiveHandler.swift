@@ -1,6 +1,6 @@
 //
 //  IsActiveHandler.swift
-//  
+//  NavigationStep
 //
 //  Created by Alex Nagy on 20.09.2022.
 //

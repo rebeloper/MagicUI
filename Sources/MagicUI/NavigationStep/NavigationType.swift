@@ -1,6 +1,6 @@
 //
 //  NavigationType.swift
-//  StringNavigation
+//  NavigationStep
 //
 //  Created by Alex Nagy on 08.08.2022.
 //
