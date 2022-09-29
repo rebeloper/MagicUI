@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Observable object for Routes
 open class RoutesObject: ObservableObject {
     public init() {}
 }
