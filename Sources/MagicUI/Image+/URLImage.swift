@@ -9,21 +9,21 @@ import SwiftUI
 
 public struct URLImage: View {
     
-    private let url: String
+    private let source: String
     private let width: CGFloat?
     private let height: CGFloat?
     
-    public init(url: String,
+    public init(source: String,
                 width: CGFloat? = nil,
                 height: CGFloat? = nil) {
-        self.url = url
+        self.source = source
         self.width = width
         self.height = height
     }
     
     public var body: some View {
         VStack {
-            AsyncImage(url: URL(string: url)) { phase in
+            AsyncImage(url: URL(string: source)) { phase in
                 if let image = phase.image {
                     image
                         .resizable()

@@ -13,16 +13,16 @@ public enum ImageViewScale {
 
 public struct ImageView: View {
     
-    private let name: String
+    private let source: String
     private let scale: ImageViewScale
     private let width: CGFloat?
     private let height: CGFloat?
     
-    public init(name: String,
+    public init(source: String,
                 scale: ImageViewScale = .fill,
                 width: CGFloat? = nil,
                 height: CGFloat? = nil) {
-        self.name = name
+        self.source = source
         self.scale = scale
         self.width = width
         self.height = height
@@ -30,15 +30,15 @@ public struct ImageView: View {
     
     public var body: some View {
         VStack {
-            if name.contains("https") {
-                URLImage(url: name, width: width, height: height)
+            if source.contains("https") {
+                URLImage(source: source, width: width, height: height)
                     .aspectRatio(contentMode: scale == .fill ? .fill : .fit)
             } else {
-                if name == "" {
-                    URLImage(url: name, width: width, height: height)
+                if source == "" {
+                    URLImage(source: source, width: width, height: height)
                         .aspectRatio(contentMode: scale == .fill ? .fill : .fit)
                 } else {
-                    Image(name)
+                    Image(source)
                         .resizable()
                         .aspectRatio(contentMode: scale == .fill ? .fill : .fit)
                         .frame(width: width, height: height)
