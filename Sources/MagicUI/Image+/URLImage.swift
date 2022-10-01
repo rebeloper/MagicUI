@@ -23,7 +23,7 @@ public struct URLImage: View {
     
     public var body: some View {
         VStack {
-            AsyncImage(url: URL(string: source)) { phase in
+            CachedAsyncImage(url: URL(string: source)) { phase in
                 if let image = phase.image {
                     image
                         .resizable()
