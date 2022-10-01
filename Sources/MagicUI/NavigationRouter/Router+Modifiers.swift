@@ -12,7 +12,6 @@ internal struct SheetRouterModifier<D: Hashable, C: View, Root: View>: ViewModif
     @EnvironmentObject private var router: Router
     
     @Binding internal var isPresented: Bool
-    @ObservedObject internal var routes: RoutesObject
     internal var presentationDetents: Set<PresentationDetent>
     internal var presentationDragIndicatorVisibility: Visibility
     internal var data: D.Type
@@ -23,7 +22,6 @@ internal struct SheetRouterModifier<D: Hashable, C: View, Root: View>: ViewModif
     @State private var isPresentedIndex = 0
     
     internal init(isPresented: Binding<Bool>,
-                  routes: RoutesObject,
                   presentationDetents: Set<PresentationDetent> = [],
                   presentationDragIndicator visibility: Visibility = .automatic,
                   for data: D.Type,
@@ -31,7 +29,6 @@ internal struct SheetRouterModifier<D: Hashable, C: View, Root: View>: ViewModif
                   @ViewBuilder root: @escaping () -> Root,
                   onDismiss: (() -> Void)? = nil) {
         self._isPresented = isPresented
-        self.routes = routes
         self.presentationDetents = presentationDetents
         self.presentationDragIndicatorVisibility = visibility
         self.data = data
@@ -62,7 +59,6 @@ internal struct FullScreenCoverRouterModifier<D: Hashable, C: View, Root: View>:
     @EnvironmentObject private var router: Router
     
     @Binding internal var isPresented: Bool
-    @ObservedObject internal var routes: RoutesObject
     internal var data: D.Type
     @ViewBuilder internal var destination: (D) -> C
     @ViewBuilder internal var root: () -> Root
@@ -71,13 +67,11 @@ internal struct FullScreenCoverRouterModifier<D: Hashable, C: View, Root: View>:
     @State private var isPresentedIndex = 0
     
     internal init(isPresented: Binding<Bool>,
-                  routes: RoutesObject,
                   for data: D.Type,
                   @ViewBuilder _ destination: @escaping (D) -> C,
                   @ViewBuilder root: @escaping () -> Root,
                   onDismiss: (() -> Void)? = nil) {
         self._isPresented = isPresented
-        self.routes = routes
         self.data = data
         self.destination = destination
         self.root = root

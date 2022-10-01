@@ -25,7 +25,6 @@ public extension View {
     /// - Parameters:
     ///   - isPresented: A binding to a Boolean value that determines whether
     ///     to present the sheet.
-    ///   - routes: Navigation routes.
     ///   - presentationDetents: A set of supported detents for the sheet.
     ///   - visibility: The preferred visibility of the drag indicator.
     ///   - data: The type of data that the destination matches.
@@ -33,14 +32,13 @@ public extension View {
     ///   - root: A closure that returns the content of the modal view.
     ///   - onDismiss: The closure to execute when dismissing the modal view.
     func sheet<D: Hashable, C: View, Root: View>(isPresented: Binding<Bool>,
-                                                 routes: RoutesObject,
                                                  presentationDetents: Set<PresentationDetent> = [],
                                                  presentationDragIndicator visibility: Visibility = .automatic,
                                                  for data: D.Type,
                                                  @ViewBuilder destination: @escaping (D) -> C,
                                                  @ViewBuilder root: @escaping () -> Root,
                                                  onDismiss: (() -> Void)? = nil) -> some View {
-        self.modifier(SheetRouterModifier(isPresented: isPresented, routes: routes, presentationDetents: presentationDetents, presentationDragIndicator: visibility, for: data, destination, root: root, onDismiss: onDismiss))
+        self.modifier(SheetRouterModifier(isPresented: isPresented, presentationDetents: presentationDetents, presentationDragIndicator: visibility, for: data, destination, root: root, onDismiss: onDismiss))
     }
     
     /// Presents a sheet when a binding or @Published to a Boolean value that you
@@ -65,18 +63,16 @@ public extension View {
     /// - Parameters:
     ///   - isPresented: A binding to a Boolean value that determines whether
     ///     to present the sheet.
-    ///   - routes: Navigation routes.
     ///   - data: The type of data that the destination matches.
     ///   - destination: A view to present.
     ///   - root: A closure that returns the content of the modal view.
     ///   - onDismiss: The closure to execute when dismissing the modal view.
     func fullScreenCover<D: Hashable, C: View, Root: View>(isPresented: Binding<Bool>,
-                                                           routes: RoutesObject,
                                                            for data: D.Type,
                                                            @ViewBuilder destination: @escaping (D) -> C,
                                                            @ViewBuilder root: @escaping () -> Root,
                                                            onDismiss: (() -> Void)? = nil) -> some View {
-        self.modifier(FullScreenCoverRouterModifier(isPresented: isPresented, routes: routes, for: data, destination, root: root, onDismiss: onDismiss))
+        self.modifier(FullScreenCoverRouterModifier(isPresented: isPresented, for: data, destination, root: root, onDismiss: onDismiss))
     }
     
     /// Presents a full screen cover when a binding or @Published to a Boolean value that you
