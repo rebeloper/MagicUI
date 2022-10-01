@@ -31,11 +31,11 @@ public struct ImageView: View {
     public var body: some View {
         VStack {
             if source.contains("https") {
-                URLImage(source: source, width: width, height: height)
+                URLImage(source, width: width, height: height)
                     .aspectRatio(contentMode: scale == .fill ? .fill : .fit)
             } else {
                 if source == "" {
-                    URLImage(source: source, width: width, height: height)
+                    URLImage(source, width: width, height: height)
                         .aspectRatio(contentMode: scale == .fill ? .fill : .fit)
                 } else {
                     Image(source)
