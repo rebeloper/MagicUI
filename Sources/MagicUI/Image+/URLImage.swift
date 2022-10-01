@@ -26,6 +26,7 @@ public struct URLImage: View {
             AsyncImage(url: URL(string: url)) { phase in
                 if let image = phase.image {
                     image
+                        .resizable()
                 } else if phase.error != nil {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.gray)
