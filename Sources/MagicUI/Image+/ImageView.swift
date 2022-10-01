@@ -18,7 +18,7 @@ public struct ImageView: View {
     private let width: CGFloat?
     private let height: CGFloat?
     
-    public init(source: String,
+    public init(_ source: String,
                 scale: ImageViewScale = .fill,
                 width: CGFloat? = nil,
                 height: CGFloat? = nil) {
