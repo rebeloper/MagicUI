@@ -7,19 +7,16 @@
 
 import SwiftUI
 
-public struct URLImage<P: View>: View {
+public struct URLImage: View {
     
     private let url: String
-    @ViewBuilder private var placeholder: () -> P
     private let width: CGFloat?
     private let height: CGFloat?
     
     public init(url: String,
-                @ViewBuilder placeholder: @escaping () -> P,
                 width: CGFloat? = nil,
                 height: CGFloat? = nil) {
         self.url = url
-        self.placeholder = placeholder
         self.width = width
         self.height = height
     }
@@ -33,7 +30,7 @@ public struct URLImage<P: View>: View {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.gray)
                 } else {
-                    placeholder()
+                    ProgressView()
                 }
             }
         }
