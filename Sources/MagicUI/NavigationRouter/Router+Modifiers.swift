@@ -9,8 +9,9 @@ import SwiftUI
 
 internal struct SheetRouterModifier<D: Hashable, C: View, Root: View>: ViewModifier {
     
+    @EnvironmentObject private var router: Router
+    
     @Binding internal var isPresented: Bool
-    @ObservedObject internal var router: Router
     @ObservedObject internal var routes: RoutesObject
     internal var presentationDetents: Set<PresentationDetent>
     internal var presentationDragIndicatorVisibility: Visibility
@@ -22,7 +23,6 @@ internal struct SheetRouterModifier<D: Hashable, C: View, Root: View>: ViewModif
     @State private var isPresentedIndex = 0
     
     internal init(isPresented: Binding<Bool>,
-                  router: Router,
                   routes: RoutesObject,
                   presentationDetents: Set<PresentationDetent> = [],
                   presentationDragIndicator visibility: Visibility = .automatic,
@@ -31,7 +31,6 @@ internal struct SheetRouterModifier<D: Hashable, C: View, Root: View>: ViewModif
                   @ViewBuilder root: @escaping () -> Root,
                   onDismiss: (() -> Void)? = nil) {
         self._isPresented = isPresented
-        self.router = router
         self.routes = routes
         self.presentationDetents = presentationDetents
         self.presentationDragIndicatorVisibility = visibility
@@ -60,8 +59,9 @@ internal struct SheetRouterModifier<D: Hashable, C: View, Root: View>: ViewModif
 
 internal struct FullScreenCoverRouterModifier<D: Hashable, C: View, Root: View>: ViewModifier {
     
+    @EnvironmentObject private var router: Router
+    
     @Binding internal var isPresented: Bool
-    @ObservedObject internal var router: Router
     @ObservedObject internal var routes: RoutesObject
     internal var data: D.Type
     @ViewBuilder internal var destination: (D) -> C
@@ -71,14 +71,12 @@ internal struct FullScreenCoverRouterModifier<D: Hashable, C: View, Root: View>:
     @State private var isPresentedIndex = 0
     
     internal init(isPresented: Binding<Bool>,
-                  router: Router,
                   routes: RoutesObject,
                   for data: D.Type,
                   @ViewBuilder _ destination: @escaping (D) -> C,
                   @ViewBuilder root: @escaping () -> Root,
                   onDismiss: (() -> Void)? = nil) {
         self._isPresented = isPresented
-        self.router = router
         self.routes = routes
         self.data = data
         self.destination = destination
