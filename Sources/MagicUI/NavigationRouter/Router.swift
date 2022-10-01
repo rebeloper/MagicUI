@@ -93,11 +93,11 @@ public class Router: ObservableObject {
     
     /// Toggles the wrapped value if a Bool binding.
     /// - Parameters:
-    ///   - isPresented: A Bool binding.
+    ///   - isActive: A Bool binding.
     ///   - completion: Optional completion trigerred after the pop has finished.
-    public func toggle(_ isPresented: Binding<Bool>, completion: @escaping () -> () = {}) {
+    public func toggle(_ isActive: Binding<Bool>, completion: @escaping () -> () = {}) {
         DispatchQueue.main.async {
-            isPresented.wrappedValue.toggle()
+            isActive.wrappedValue.toggle()
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
             completion()
@@ -105,56 +105,56 @@ public class Router: ObservableObject {
     }
     
     /// Toggles the wrapped value if a Bool binding.
-    /// - Parameter isPresented: A Bool binding.
-    public func toggle(_ isPresented: Binding<Bool>) async {
+    /// - Parameter isActive: A Bool binding.
+    public func toggle(_ isActive: Binding<Bool>) async {
         await withCheckedContinuation({ continuation in
-            toggle(isPresented) {
+            toggle(isActive) {
                 continuation.resume()
             }
         })
     }
     
-    /// Presents a destination associated to the `isPresented` value.
+    /// Presents a destination associated to the `isActive` value.
     /// - Parameters:
-    ///   - isPresented: A Bool binding representing the presentation of the destination.
+    ///   - isActive: A Bool binding representing the presentation of the destination.
     ///   - completion: Optional completion trigerred after the pop has finished.
-    public func push(_ isPresented: Binding<Bool>, completion: @escaping () -> () = {}) {
+    public func push(_ isActive: Binding<Bool>, completion: @escaping () -> () = {}) {
         DispatchQueue.main.async {
-            isPresented.wrappedValue = true
+            isActive.wrappedValue = true
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
             completion()
         })
     }
     
-    /// Presents a destination associated to the `isPresented` value.
-    /// - Parameter isPresented: A Bool binding representing the presentation of the destination.
-    public func push(_ isPresented: Binding<Bool>) async {
+    /// Presents a destination associated to the `isActive` value.
+    /// - Parameter isActive: A Bool binding representing the presentation of the destination.
+    public func push(_ isActive: Binding<Bool>) async {
         await withCheckedContinuation({ continuation in
-            push(isPresented) {
+            push(isActive) {
                 continuation.resume()
             }
         })
     }
     
-    /// Pops a destination associated to the `isPresented` value.
+    /// Pops a destination associated to the `isActive` value.
     /// - Parameters:
-    ///   - isPresented: A Bool binding representing the presentation of the destination.
+    ///   - isActive: A Bool binding representing the presentation of the destination.
     ///   - completion: Optional completion trigerred after the pop has finished.
-    public func pop(_ isPresented: Binding<Bool>, completion: @escaping () -> () = {}) {
+    public func pop(_ isActive: Binding<Bool>, completion: @escaping () -> () = {}) {
         DispatchQueue.main.async {
-            isPresented.wrappedValue = false
+            isActive.wrappedValue = false
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
             completion()
         })
     }
     
-    /// Pops a destination associated to the `isPresented` value.
-    /// - Parameter isPresented: A Bool binding representing the presentation of the destination.
-    public func pop(_ isPresented: Binding<Bool>) async {
+    /// Pops a destination associated to the `isActive` value.
+    /// - Parameter isActive: A Bool binding representing the presentation of the destination.
+    public func pop(_ isActive: Binding<Bool>) async {
         await withCheckedContinuation({ continuation in
-            pop(isPresented) {
+            pop(isActive) {
                 continuation.resume()
             }
         })
