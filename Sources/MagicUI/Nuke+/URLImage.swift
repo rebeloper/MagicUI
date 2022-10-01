@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NukeUI
 
 public struct URLImage<P: View>: View {
     
@@ -27,19 +26,15 @@ public struct URLImage<P: View>: View {
     
     public var body: some View {
         VStack {
-            if let url = URL(string: url) {
-                LazyImage(source: url) { state in
-                    if let image = state.image {
-                        image
-                    } else if state.error != nil {
-                        Image(systemName: "exclamationmark.triangle.fill")
-                    } else {
-                        ProgressView()
-                            .asPushOutView()
-                    }
+            AsyncImage(url: URL(string: url)) { phase in
+                if let image = phase.image {
+                    image
+                } else if phase.error != nil {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.gray)
+                } else {
+                    placeholder()
                 }
-            } else {
-                placeholder()
             }
         }
         .frame(width: width, height: height)
