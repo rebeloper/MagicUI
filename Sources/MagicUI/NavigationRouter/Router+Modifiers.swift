@@ -11,7 +11,7 @@ internal struct SheetRouterModifier<D: Hashable, C: View, Root: View>: ViewModif
     
     @EnvironmentObject private var router: Router
     
-    @Binding internal var isPresented: Bool
+    @Binding internal var isActive: Bool
     internal var presentationDetents: Set<PresentationDetent>
     internal var presentationDragIndicatorVisibility: Visibility
     internal var data: D.Type
@@ -21,14 +21,14 @@ internal struct SheetRouterModifier<D: Hashable, C: View, Root: View>: ViewModif
     
     @State private var isPresentedIndex = 0
     
-    internal init(isPresented: Binding<Bool>,
+    internal init(isActive: Binding<Bool>,
                   presentationDetents: Set<PresentationDetent> = [],
                   presentationDragIndicator visibility: Visibility = .automatic,
                   for data: D.Type,
                   @ViewBuilder _ destination: @escaping (D) -> C,
                   @ViewBuilder root: @escaping () -> Root,
                   onDismiss: (() -> Void)? = nil) {
-        self._isPresented = isPresented
+        self._isActive = isActive
         self.presentationDetents = presentationDetents
         self.presentationDragIndicatorVisibility = visibility
         self.data = data
@@ -39,7 +39,7 @@ internal struct SheetRouterModifier<D: Hashable, C: View, Root: View>: ViewModif
     
     internal func body(content: Content) -> some View {
         content
-            .sheet(isActive: $isPresented, onDismiss: {
+            .sheet(isActive: $isActive, onDismiss: {
                 DispatchQueue.main.async {
                     router.pathIndex = max(0, router.pathIndex - 1)
                     isPresentedIndex = max(0, isPresentedIndex - 1)
@@ -58,7 +58,7 @@ internal struct FullScreenCoverRouterModifier<D: Hashable, C: View, Root: View>:
     
     @EnvironmentObject private var router: Router
     
-    @Binding internal var isPresented: Bool
+    @Binding internal var isActive: Bool
     internal var data: D.Type
     @ViewBuilder internal var destination: (D) -> C
     @ViewBuilder internal var root: () -> Root
@@ -66,12 +66,12 @@ internal struct FullScreenCoverRouterModifier<D: Hashable, C: View, Root: View>:
     
     @State private var isPresentedIndex = 0
     
-    internal init(isPresented: Binding<Bool>,
+    internal init(isActive: Binding<Bool>,
                   for data: D.Type,
                   @ViewBuilder _ destination: @escaping (D) -> C,
                   @ViewBuilder root: @escaping () -> Root,
                   onDismiss: (() -> Void)? = nil) {
-        self._isPresented = isPresented
+        self._isActive = isActive
         self.data = data
         self.destination = destination
         self.root = root
@@ -80,7 +80,7 @@ internal struct FullScreenCoverRouterModifier<D: Hashable, C: View, Root: View>:
     
     internal func body(content: Content) -> some View {
         content
-            .fullScreenCover(isActive: $isPresented, onDismiss: {
+            .fullScreenCover(isActive: $isActive, onDismiss: {
                 DispatchQueue.main.async {
                     router.pathIndex = max(0, router.pathIndex - 1)
                     isPresentedIndex = max(0, isPresentedIndex - 1)
