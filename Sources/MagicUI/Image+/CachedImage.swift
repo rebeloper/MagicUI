@@ -9,7 +9,11 @@ import SwiftUI
 
 public struct CachedImage: View {
     
-    public let url: String
+    private let url: String
+    
+    public init(_ url: String) {
+        self.url = url
+    }
     
     public var body: some View {
         CachedAsyncImage(url: URL(string: url)) { phase in
