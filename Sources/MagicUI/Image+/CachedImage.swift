@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct CachedImage: View {
+public struct CachedImage: View {
     
-    let url: String
+    public let url: String
     
-    var body: some View {
+    public var body: some View {
         CachedAsyncImage(url: URL(string: url)) { phase in
             if let image = phase.image {
                 image
