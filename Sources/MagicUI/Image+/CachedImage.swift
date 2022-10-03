@@ -22,7 +22,6 @@ public struct CachedImage: View {
             if let image = phase.image {
                 image
                     .resizable()
-                    .clippedContent()
             } else if phase.error != nil {
                 if showsError {
                     Image(systemName: "exclamationmark.triangle.fill")
