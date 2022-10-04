@@ -17,6 +17,7 @@ public class Router: ObservableObject {
     ///   - destination: The type of data that this destination matches.
     ///   - completion: Optional completion trigerred after the push.
     public func push<Destination: Hashable>(_ destination: Destination, completion: @escaping () -> () = {}) {
+        guard pathIndex < paths.count else { return }
         DispatchQueue.main.async {
             self.paths[self.pathIndex].append(destination)
         }
@@ -37,6 +38,7 @@ public class Router: ObservableObject {
     
     /// Pops the last destination from the navigation stack
     public func pop() {
+        guard pathIndex < paths.count, !paths[pathIndex].isEmpty else { return }
         DispatchQueue.main.async {
             self.paths[self.pathIndex].removeLast()
         }
