@@ -1,5 +1,5 @@
 import XCTest
-@testable import MagicUI
+//@testable import MagicUI
 
 final class MagicUITests: XCTestCase {
     func testExample() throws {

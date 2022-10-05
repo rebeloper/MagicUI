@@ -12,6 +12,13 @@ public class Router: ObservableObject {
     @Published internal var paths = Array(repeating: NavigationPath(), count: 100)
     @Published internal var pathIndex = 0
     
+    public enum PopType {
+        case one
+        case the(last: Int)
+        case to(index: Int)
+        case popToStackRoot
+    }
+    
     /// Pushes a destination onto the navigation stack.
     /// - Parameters:
     ///   - destination: The type of data that this destination matches.
@@ -36,28 +43,38 @@ public class Router: ObservableObject {
         })
     }
     
-    /// Pops the last destination from the navigation stack
-    public func pop() {
-        guard pathIndex < paths.count, !paths[pathIndex].isEmpty else { return }
-        DispatchQueue.main.async {
-            self.paths[self.pathIndex].removeLast()
+    /// Pops one or more destinations from the end of this path according to the provided `PopType`
+    /// - Parameters:
+    ///   - type: The pop type
+    ///   - completion: Optional completion trigerred after the push.
+    public func pop(_ type: PopType = .one, completion: @escaping () -> () = {}) {
+        switch type {
+        case .one:
+            pop(theLast: 1, completion: completion)
+        case .the(let last):
+            pop(theLast: last, completion: completion)
+        case .to(let index):
+            pop(to: index, completion: completion)
+        case .popToStackRoot:
+            popToStackRoot(completion: completion)
         }
     }
     
-    /// Pops the last destination from the navigation stack
-    public func pop() async {
+    /// Pops one or more destinations from the end of this path according to the provided `PopType`
+    /// - Parameter type: The pop type
+    public func pop(_ type: PopType = .one) async {
         await withCheckedContinuation({ continuation in
-            pop()
-            continuation.resume()
+            pop(type) {
+                continuation.resume()
+            }
         })
     }
-    
     
     /// Pops the last destinations from the navigation stack.
     /// - Parameters:
     ///   - last: The amount of destinations to be popped.
     ///   - completion: Optional completion trigerred after the pop has finished.
-    public func pop(last: Int, completion: @escaping () -> () = {}) {
+    private func pop(theLast last: Int, completion: @escaping () -> () = {}) {
         for i in 0..<min(paths[self.pathIndex].count, last) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
                 self.pop()
@@ -68,30 +85,22 @@ public class Router: ObservableObject {
         })
     }
     
-    /// Pops the last destinations from the navigation stack.
-    /// - Parameter last: The amount of destinations to be popped.
-    public func pop(last: Int) async {
-        await withCheckedContinuation({ continuation in
-            pop(last: last) {
-                continuation.resume()
-            }
-        })
+    /// Pops to the destination with the specified index.
+    /// - Parameters:
+    ///   - index: The index of the destination to be popped to.
+    ///   - completion: Optional completion trigerred after the pop has finished.
+    private func pop(to index: Int, completion: @escaping () -> () = {}) {
+        let last = paths[self.pathIndex].count - index
+        pop(theLast: last, completion: completion)
     }
+    
     
     /// Pops all the destinations from the navigation stack.
     /// - Parameter completion: Optional completion trigerred after the pop has finished.
-    public func popToStackRoot(completion: @escaping () -> () = {}) {
-        pop(last: paths[self.pathIndex].count, completion: completion)
+    private func popToStackRoot(completion: @escaping () -> () = {}) {
+        pop(theLast: paths[self.pathIndex].count, completion: completion)
     }
     
-    /// Pops all the destinations from the navigation stack.
-    public func popToStackRoot() async {
-        await withCheckedContinuation({ continuation in
-            popToStackRoot {
-                continuation.resume()
-            }
-        })
-    }
     
     /// Toggles the wrapped value if a Bool binding.
     /// - Parameters:
