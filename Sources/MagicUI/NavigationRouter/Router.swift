@@ -16,7 +16,7 @@ public class Router: ObservableObject {
         case one
         case the(last: Int)
         case to(index: Int)
-        case popToStackRoot
+        case toStackRoot
     }
     
     /// Pushes a destination onto the navigation stack.
@@ -55,7 +55,7 @@ public class Router: ObservableObject {
             pop(theLast: last, completion: completion)
         case .to(let index):
             pop(to: index, completion: completion)
-        case .popToStackRoot:
+        case .toStackRoot:
             popToStackRoot(completion: completion)
         }
     }
