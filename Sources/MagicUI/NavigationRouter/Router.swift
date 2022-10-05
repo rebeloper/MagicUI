@@ -70,6 +70,14 @@ public class Router: ObservableObject {
         })
     }
     
+    /// Removes the last destination from the navigation stack
+    private func removeLast() {
+        guard pathIndex < paths.count, !paths[pathIndex].isEmpty else { return }
+        DispatchQueue.main.async {
+            self.paths[self.pathIndex].removeLast()
+        }
+    }
+    
     /// Pops the last destinations from the navigation stack.
     /// - Parameters:
     ///   - last: The amount of destinations to be popped.
@@ -77,7 +85,7 @@ public class Router: ObservableObject {
     private func pop(theLast last: Int, completion: @escaping () -> () = {}) {
         for i in 0..<min(paths[self.pathIndex].count, last) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
-                self.pop()
+                self.removeLast()
             })
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(last), execute: {
