@@ -9,6 +9,7 @@ import SwiftUI
 
 /// Navigation coordinator
 public class Router: ObservableObject {
+    
     @Published internal var paths = Array(repeating: NavigationPath(), count: 100)
     @Published internal var pathIndex = 0
     

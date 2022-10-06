@@ -11,7 +11,7 @@ import SwiftUI
 ///
 /// - Parameters:
 ///   - root: The view to display when the stack is empty.
-public struct ModalOnlyNavigationRouter<Root: View>: View {
+public struct ModalOnlyNavigationStack<Root: View>: View {
     
     @StateObject private var router = Router()
     

@@ -19,7 +19,7 @@ public extension View {
             }
     }
     
-    /// Presents a modal view that covers as much of the screen as
+    /// Presents a modal view with a NavigationStack that covers as much of the screen as
     /// possible when binding to a Boolean value you provide is true.
     ///
     /// - Parameters:
@@ -31,14 +31,14 @@ public extension View {
     ///   - destination: A view to present.
     ///   - root: A closure that returns the content of the modal view.
     ///   - onDismiss: The closure to execute when dismissing the modal view.
-    func sheet<D: Hashable, C: View, Root: View>(isActive: Binding<Bool>,
-                                                 presentationDetents: Set<PresentationDetent> = [],
-                                                 presentationDragIndicator visibility: Visibility = .automatic,
-                                                 for data: D.Type,
-                                                 @ViewBuilder destination: @escaping (D) -> C,
-                                                 @ViewBuilder root: @escaping () -> Root,
-                                                 onDismiss: (() -> Void)? = nil) -> some View {
-        self.modifier(SheetRouterModifier(isActive: isActive, presentationDetents: presentationDetents, presentationDragIndicator: visibility, for: data, destination, root: root, onDismiss: onDismiss))
+    func sheetNavigationStack<D: Hashable, C: View, Root: View>(isActive: Binding<Bool>,
+                                                                presentationDetents: Set<PresentationDetent> = [],
+                                                                presentationDragIndicator visibility: Visibility = .automatic,
+                                                                for data: D.Type,
+                                                                @ViewBuilder destination: @escaping (D) -> C,
+                                                                @ViewBuilder root: @escaping () -> Root,
+                                                                onDismiss: (() -> Void)? = nil) -> some View {
+        self.modifier(SheetNavigationStackModifier(isActive: isActive, presentationDetents: presentationDetents, presentationDragIndicator: visibility, for: data, destination, root: root, onDismiss: onDismiss))
     }
     
     /// Presents a sheet when a binding or @Published to a Boolean value that you
@@ -57,7 +57,7 @@ public extension View {
     }
     
     
-    /// Presents a modal view that covers as much of the screen as
+    /// Presents a modal view with a NavigationStack that covers as much of the screen as
     /// possible when binding to a Boolean value you provide is true.
     ///
     /// - Parameters:
@@ -67,12 +67,12 @@ public extension View {
     ///   - destination: A view to present.
     ///   - root: A closure that returns the content of the modal view.
     ///   - onDismiss: The closure to execute when dismissing the modal view.
-    func fullScreenCover<D: Hashable, C: View, Root: View>(isActive: Binding<Bool>,
-                                                           for data: D.Type,
-                                                           @ViewBuilder destination: @escaping (D) -> C,
-                                                           @ViewBuilder root: @escaping () -> Root,
-                                                           onDismiss: (() -> Void)? = nil) -> some View {
-        self.modifier(FullScreenCoverRouterModifier(isActive: isActive, for: data, destination, root: root, onDismiss: onDismiss))
+    func fullScreenCoverNavigationStack<D: Hashable, C: View, Root: View>(isActive: Binding<Bool>,
+                                                                          for data: D.Type,
+                                                                          @ViewBuilder destination: @escaping (D) -> C,
+                                                                          @ViewBuilder root: @escaping () -> Root,
+                                                                          onDismiss: (() -> Void)? = nil) -> some View {
+        self.modifier(FullScreenCoverNavigationStackModifier(isActive: isActive, for: data, destination, root: root, onDismiss: onDismiss))
     }
     
     /// Presents a full screen cover when a binding or @Published to a Boolean value that you

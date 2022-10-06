@@ -1,5 +1,5 @@
 //
-//  NavigationRouter.swift
+//  RootNavigationStack.swift
 //  
 //
 //  Created by Alex Nagy on 28.09.2022.
@@ -18,7 +18,7 @@ import SwiftUI
 ///     type `data`. The closure takes one argument, which is the value
 ///     of the data to present.
 ///   - root: The view to display when the stack is empty.
-public struct NavigationRouter<D: Hashable, C: View, Root: View>: View {
+public struct RootNavigationStack<D: Hashable, C: View, Root: View>: View {
     
     @StateObject private var router = Router()
     
