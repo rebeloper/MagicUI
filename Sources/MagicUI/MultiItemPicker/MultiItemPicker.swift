@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B: View>: View {
     
-    @Binding private var all: [T]
+    @Binding private var data: [T]
     @Binding private var selected: [T]
     private var options: MultiItemPickerOptions
     private var rowBackground: B?
@@ -22,7 +22,7 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
     
     /// A List that lets you pick multiple items
     /// - Parameters:
-    ///   - all: all the availabel items
+    ///   - data: all the available items
     ///   - selected: the selected items
     ///   - options: picker options
     ///   - rowBackground: row background
@@ -30,7 +30,7 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
     ///   - pickedIcon: picked icon
     ///   - unpickedIcon: unpicked icon
     ///   - label: label for the picker
-    public init(all: Binding<[T]>,
+    public init(_ data: Binding<[T]>,
                 selected: Binding<[T]>,
                 options: MultiItemPickerOptions = .init(),
                 rowBackground: B? = nil,
@@ -38,7 +38,7 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
                 @ViewBuilder pickedIcon: @escaping () -> P,
                 @ViewBuilder unpickedIcon: @escaping () -> U,
                 @ViewBuilder label: @escaping () -> L) {
-        self._all = all
+        self._data = data
         self._selected = selected
         self.options = options
         self.rowBackground = rowBackground
@@ -51,7 +51,7 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
     public var body: some View {
         List {
             Section {
-                ForEach(all, id: \.self) { item in
+                ForEach(data, id: \.self) { item in
                     Button {
                         if selected.contains(item) {
                             selected.removeAll(where: { $0 == item })
@@ -94,8 +94,8 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
                         .foregroundColor(.accentColor)
                         .onChange(of: isAllSelected) { isAllSelected in
                             if isAllSelected {
-                                selected = all
-                            } else if selected.count == all.count {
+                                selected = data
+                            } else if selected.count == data.count {
                                 selected.removeAll()
                             }
                         }
@@ -118,9 +118,9 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
             })
         }
         .onChange(of: selected) { selectedItems in
-            if selectedItems.count == all.count {
+            if selectedItems.count == data.count {
                 isAllSelected = true
-            } else if selectedItems.count == all.count - 1 {
+            } else if selectedItems.count == data.count - 1 {
                 isAllSelected = false
             }
         }
@@ -145,21 +145,21 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
 public extension MultiItemPicker where B == EmptyView {
     /// A List that lets you pick multiple items
     /// - Parameters:
-    ///   - all: all the availabel items
+    ///   - data: all the available items
     ///   - selected: the selected items
     ///   - options: picker options
     ///   - content: content for the row
     ///   - pickedIcon: picked icon
     ///   - unpickedIcon: unpicked icon
     ///   - label: label for the picker
-    init(all: Binding<[T]>,
+    init(_ data: Binding<[T]>,
          selected: Binding<[T]>,
          options: MultiItemPickerOptions = .init(),
          @ViewBuilder content: @escaping (T) -> C,
          @ViewBuilder pickedIcon: @escaping () -> P,
          @ViewBuilder unpickedIcon: @escaping () -> U,
          @ViewBuilder label: @escaping () -> L) {
-        self._all = all
+        self._data = data
         self._selected = selected
         self.options = options
         self.rowBackground = nil
@@ -173,19 +173,19 @@ public extension MultiItemPicker where B == EmptyView {
 public extension MultiItemPicker where B == EmptyView, L == EmptyView {
     /// A List that lets you pick multiple items
     /// - Parameters:
-    ///   - all: all the availabel items
+    ///   - data: all the available items
     ///   - selected: the selected items
     ///   - options: picker options
     ///   - content: content for the row
     ///   - pickedIcon: picked icon
     ///   - unpickedIcon: unpicked icon
-    init(all: Binding<[T]>,
+    init(_ data: Binding<[T]>,
          selected: Binding<[T]>,
          options: MultiItemPickerOptions = .init(),
          @ViewBuilder content: @escaping (T) -> C,
          @ViewBuilder pickedIcon: @escaping () -> P,
          @ViewBuilder unpickedIcon: @escaping () -> U) {
-        self._all = all
+        self._data = data
         self._selected = selected
         self.options = options
         self.rowBackground = nil
@@ -199,19 +199,19 @@ public extension MultiItemPicker where B == EmptyView, L == EmptyView {
 public extension MultiItemPicker where B == EmptyView, U == EmptyView {
     /// A List that lets you pick multiple items
     /// - Parameters:
-    ///   - all: all the availabel items
+    ///   - data: all the available items
     ///   - selected: the selected items
     ///   - options: picker options
     ///   - content: content for the row
     ///   - icon: picked icon
     ///   - label: label for the picker
-    init(all: Binding<[T]>,
+    init(_ data: Binding<[T]>,
          selected: Binding<[T]>,
          options: MultiItemPickerOptions = .init(),
          @ViewBuilder content: @escaping (T) -> C,
          @ViewBuilder icon pickedIcon: @escaping () -> P,
          @ViewBuilder label: @escaping () -> L) {
-        self._all = all
+        self._data = data
         self._selected = selected
         self.options = options
         self.rowBackground = nil
@@ -225,17 +225,17 @@ public extension MultiItemPicker where B == EmptyView, U == EmptyView {
 public extension MultiItemPicker where B == EmptyView, L == EmptyView, U == EmptyView {
     /// A List that lets you pick multiple items
     /// - Parameters:
-    ///   - all: all the availabel items
+    ///   - data: all the available items
     ///   - selected: the selected items
     ///   - options: picker options
     ///   - content: content for the row
     ///   - icon: picked icon
-    init(all: Binding<[T]>,
+    init(_ data: Binding<[T]>,
          selected: Binding<[T]>,
          options: MultiItemPickerOptions = .init(),
          @ViewBuilder content: @escaping (T) -> C,
          @ViewBuilder icon pickedIcon: @escaping () -> P) {
-        self._all = all
+        self._data = data
         self._selected = selected
         self.options = options
         self.rowBackground = nil
@@ -249,21 +249,21 @@ public extension MultiItemPicker where B == EmptyView, L == EmptyView, U == Empt
 public extension MultiItemPicker where L == EmptyView {
     /// A List that lets you pick multiple items
     /// - Parameters:
-    ///   - all: all the availabel items
+    ///   - data: all the available items
     ///   - selected: the selected items
     ///   - options: picker options
     ///   - rowBackground: row background
     ///   - content: content for the row
     ///   - pickedIcon: picked icon
     ///   - unpickedIcon: unpicked icon
-    init(all: Binding<[T]>,
+    init(_ data: Binding<[T]>,
          selected: Binding<[T]>,
          options: MultiItemPickerOptions = .init(),
          rowBackground: B? = nil,
          @ViewBuilder content: @escaping (T) -> C,
          @ViewBuilder pickedIcon: @escaping () -> P,
          @ViewBuilder unpickedIcon: @escaping () -> U) {
-        self._all = all
+        self._data = data
         self._selected = selected
         self.options = options
         self.rowBackground = rowBackground
@@ -277,21 +277,21 @@ public extension MultiItemPicker where L == EmptyView {
 public extension MultiItemPicker where U == EmptyView {
     /// A List that lets you pick multiple items
     /// - Parameters:
-    ///   - all: all the availabel items
+    ///   - data: all the available items
     ///   - selected: the selected items
     ///   - options: picker options
     ///   - rowBackground: row background
     ///   - content: content for the row
     ///   - icon: picked icon
     ///   - label: label for the picker
-    init(all: Binding<[T]>,
+    init(_ data: Binding<[T]>,
          selected: Binding<[T]>,
          options: MultiItemPickerOptions = .init(),
          rowBackground: B? = nil,
          @ViewBuilder content: @escaping (T) -> C,
          @ViewBuilder icon pickedIcon: @escaping () -> P,
          @ViewBuilder label: @escaping () -> L) {
-        self._all = all
+        self._data = data
         self._selected = selected
         self.options = options
         self.rowBackground = rowBackground
@@ -305,19 +305,19 @@ public extension MultiItemPicker where U == EmptyView {
 public extension MultiItemPicker where L == EmptyView, U == EmptyView {
     /// A List that lets you pick multiple items
     /// - Parameters:
-    ///   - all: all the availabel items
+    ///   - data: all the available items
     ///   - selected: the selected items
     ///   - options: picker options
     ///   - rowBackground: row background
     ///   - content: content for the row
     ///   - icon: picked icon
-    init(all: Binding<[T]>,
+    init(_ data: Binding<[T]>,
          selected: Binding<[T]>,
          options: MultiItemPickerOptions = .init(),
          rowBackground: B? = nil,
          @ViewBuilder content: @escaping (T) -> C,
          @ViewBuilder icon pickedIcon: @escaping () -> P) {
-        self._all = all
+        self._data = data
         self._selected = selected
         self.options = options
         self.rowBackground = rowBackground
