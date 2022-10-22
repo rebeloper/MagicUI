@@ -14,6 +14,8 @@ public class ErrorAlertManager: ObservableObject {
     @Published public var helpAnchor: ErrorAlertButton = .init(title: "", action: {})
     @Published public var cancelButtonTitle: String?
     
+    public init() {}
+    
     public func present(_ error: LocalizedError?, recoverySuggestion: ErrorAlertButton, helpAnchor: ErrorAlertButton) {
         self.error = error
         self.recoverySuggestion = recoverySuggestion
