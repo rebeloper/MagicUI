@@ -16,10 +16,11 @@ public class ErrorAlertManager: ObservableObject {
     
     public init() {}
     
-    public func present(_ error: LocalizedError?, recoverySuggestion: ErrorAlertButton, helpAnchor: ErrorAlertButton) {
+    public func present(_ error: LocalizedError?, recoverySuggestion: ErrorAlertButton, helpAnchor: ErrorAlertButton, cancelButtonTitle: String? = nil) {
         self.error = error
         self.recoverySuggestion = recoverySuggestion
         self.helpAnchor = helpAnchor
+        self.cancelButtonTitle = cancelButtonTitle
         isPresented.toggle()
     }
 }
