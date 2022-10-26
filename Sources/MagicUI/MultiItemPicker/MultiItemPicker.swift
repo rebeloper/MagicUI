@@ -71,6 +71,7 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
                                 
                             case .trailing:
                                 content(item)
+                                Spacer()
                                 if selected.contains(item) {
                                     pickedIcon()
                                 } else {
@@ -79,7 +80,6 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
                             }
                         }
                     }
-                    .buttonStyle(.plain)
                 }
             } header: {
                 HStack {
