@@ -1,16 +1,16 @@
 //
-//  RequestResult.swift
+//  RequestResults.swift
 //  RequesterDemo
 //
-//  Created by Alex Nagy on 25.12.2022.
+//  Created by Alex Nagy on 26.12.2022.
 //
 
 import SwiftUI
 
 @propertyWrapper
-public struct RequestResult<T: Decodable>: DynamicProperty {
+public struct RequestResults<T, U: Decodable>: DynamicProperty {
     
-    @StateObject private var manager: RequestResultManager<T>
+    @StateObject private var manager: RequestResultsManager<T, U>
     
     /// The query's configurable properties.
     public struct Configuration {
@@ -27,7 +27,7 @@ public struct RequestResult<T: Decodable>: DynamicProperty {
         
     }
     
-    public var wrappedValue: T? {
+    public var wrappedValue: U {
         get {
             manager.value
         }
@@ -36,7 +36,7 @@ public struct RequestResult<T: Decodable>: DynamicProperty {
         }
     }
     
-    public var projectedValue: Binding<T?> {
+    public var projectedValue: Binding<U> {
         Binding(
             get: {
                 wrappedValue
@@ -60,9 +60,9 @@ public struct RequestResult<T: Decodable>: DynamicProperty {
     
     public init(request: Request,
                 requester: Requester = Requester(decoder: JSONDecoder()),
-                decodingFailureStrategy: DecodingFailureStrategy = .raise) {
+                decodingFailureStrategy: DecodingFailureStrategy = .raise) where U == [T] {
         let configuration = Configuration(request: request, requester: requester, decodingFailureStrategy: decodingFailureStrategy)
-        self._manager = StateObject(wrappedValue: RequestResultManager<T>(configuration: configuration))
+        self._manager = StateObject(wrappedValue: RequestResultsManager<T, U>(configuration: configuration))
     }
     
     public init(scheme: Scheme,
@@ -75,22 +75,22 @@ public struct RequestResult<T: Decodable>: DynamicProperty {
                 body: HTTPBody? = nil,
                 session: URLSession = URLSession.shared,
                 decoder: GenericDecoder? = JSONDecoder(),
-                decodingFailureStrategy: DecodingFailureStrategy = .raise) {
+                decodingFailureStrategy: DecodingFailureStrategy = .raise) where U == [T] {
         let request = Request(scheme: scheme, host: host, path: path, port: port, method: method, headers: headers, queryParameters: queryParameters, body: body)
         let requester = Requester(session: session, decoder: decoder)
         let configuration = Configuration(request: request, requester: requester, decodingFailureStrategy: decodingFailureStrategy)
-        self._manager = StateObject(wrappedValue: RequestResultManager<T>(configuration: configuration))
+        self._manager = StateObject(wrappedValue: RequestResultsManager<T, U>(configuration: configuration))
     }
 }
 
 @MainActor
-final public class RequestResultManager<T: Decodable>: ObservableObject {
-    @Published public var value: T?
+final fileprivate class RequestResultsManager<T, U: Decodable>: ObservableObject {
+    @Published public var value: U
     
     private var request: (() -> Void)!
     
     internal var shouldUpdateQuery = true
-    internal var configuration: RequestResult<T>.Configuration {
+    internal var configuration: RequestResults<T, U>.Configuration {
         didSet {
             // prevent never-ending update cycle when updating the error field
             guard shouldUpdateQuery else { return }
@@ -98,19 +98,20 @@ final public class RequestResultManager<T: Decodable>: ObservableObject {
         }
     }
     
-    public init(configuration: RequestResult<T>.Configuration) {
+    public init(configuration: RequestResults<T, U>.Configuration) where U == [T] {
+        self.value = [T]()
         self.configuration = configuration
         fetch()
     }
     
-    public func fetch() {
+    public func fetch() where U == [T] {
         request = createRequest(with: { [weak self] result in
             switch result {
             case .success(let value):
                 if self?.configuration.error != nil {
                     if self?.configuration.decodingFailureStrategy == .raise {
                         withAnimation {
-                            self?.value = nil
+                            self?.value = []
                         }
                     } else {
                         withAnimation {
@@ -124,7 +125,7 @@ final public class RequestResultManager<T: Decodable>: ObservableObject {
                 }
             case .failure(let error):
                 withAnimation {
-                    self?.value = nil
+                    self?.value = []
                     self?.projectError(error)
                 }
             }
@@ -132,12 +133,12 @@ final public class RequestResultManager<T: Decodable>: ObservableObject {
         request()
     }
     
-    private func createRequest(with completion: @escaping (Result<T?, Error>) -> Void)
-    -> () -> Void {
+    private func createRequest(with completion: @escaping (Result<U, Error>) -> Void)
+    -> () -> Void where U == [T] {
         return {
             Task {
                 do {
-                    let requestResult = try await self.configuration.requester.send(self.configuration.request, expect: T.self)
+                    let requestResult = try await self.configuration.requester.send(self.configuration.request, expect: U.self)
                     completion(.success(requestResult.result))
                 } catch {
                     completion(.failure(error))
@@ -152,3 +153,4 @@ final public class RequestResultManager<T: Decodable>: ObservableObject {
         shouldUpdateQuery = true
     }
 }
+

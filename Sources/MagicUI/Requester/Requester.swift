@@ -13,7 +13,7 @@ open class Requester: HTTPRequester {
     
     public init(
         session: URLSession = URLSession.shared,
-        decoder: GenericDecoder? = nil
+        decoder: GenericDecoder? = JSONDecoder()
     ) {
         self.session = session
         self.decoder = decoder
@@ -23,15 +23,15 @@ open class Requester: HTTPRequester {
     /// - Parameters:
     ///   - request: an `HTTPRequest`
     ///   - type: a `Decodable` for the result that is expected in
-    /// - Returns: a `RequestResult` containing a `Decodable` set in the `type` and a `HTTPURLResponse`
-    open func send<T: HTTPRequest, R: Decodable>(_ request: T, expect type: R.Type) async throws -> RequestResult<R> {
+    /// - Returns: a `RequestFetch` containing a `Decodable` set in the `type` and a `HTTPURLResponse`
+    open func send<T: HTTPRequest, R: Decodable>(_ request: T, expect type: R.Type) async throws -> RequestFetch<R> {
         let (data, response) = try await data(for: request)
         guard let decoder = decoder else {
             throw RequestError.decoderFailure
         }
         let result = try decoder.decode(expect: R.self, from: data)
-        let requestResult = RequestResult(result: result, response: response)
-        return requestResult
+        let requestFetch = RequestFetch(result: result, response: response)
+        return requestFetch
     }
     
     /// Sends an `HTTPRequest` that expects the data returned as a `JSON String`
