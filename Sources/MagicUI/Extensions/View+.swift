@@ -78,6 +78,7 @@ public extension View {
         }
     }
     
+    #if os(iOS)
     /// Links a ``PhotosPicker`` selection to a ``UIImage`` binding
     /// - Parameters:
     ///   - selection: ``PhotosPicker`` selection
@@ -92,4 +93,5 @@ public extension View {
             }
         }
     }
+    #endif
 }

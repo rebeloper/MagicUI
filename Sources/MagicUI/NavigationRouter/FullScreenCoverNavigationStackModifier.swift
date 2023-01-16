@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(iOS)
 internal struct FullScreenCoverNavigationStackModifier<D: Hashable, C: View, Root: View>: ViewModifier {
     
     @EnvironmentObject private var router: Router
@@ -47,3 +48,4 @@ internal struct FullScreenCoverNavigationStackModifier<D: Hashable, C: View, Roo
             })
     }
 }
+#endif

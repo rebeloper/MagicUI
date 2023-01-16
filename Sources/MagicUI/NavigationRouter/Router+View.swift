@@ -72,7 +72,7 @@ public extension View {
         self.modifier(SheetPublishedModifier(published: isActive, onDismiss: onDismiss, content: content))
     }
     
-    
+    #if os(iOS)
     /// Presents a modal view with a NavigationStack that covers as much of the screen as
     /// possible when binding to a Boolean value you provide is true.
     ///
@@ -105,4 +105,5 @@ public extension View {
     func fullScreenCover<D: View>(isActive: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> D) -> some View {
         self.modifier(FullScreenCoverPublishedModifier(published: isActive, onDismiss: onDismiss, content: content))
     }
+    #endif
 }

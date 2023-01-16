@@ -128,11 +128,15 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
             list.listStyle(.automatic)
         }).if(options.style == .sidebar, transform: { list in
             list.listStyle(.sidebar)
-        }).if(options.style == .insetGrouped, transform: { list in
+        })
+            #if os(iOS)
+            .if(options.style == .insetGrouped, transform: { list in
             list.listStyle(.insetGrouped)
         }).if(options.style == .grouped, transform: { list in
             list.listStyle(.grouped)
-        }).if(options.style == .inset, transform: { list in
+        })
+            #endif
+            .if(options.style == .inset, transform: { list in
             list.listStyle(.inset)
         }).if(options.style == .plain, transform: { list in
             list.listStyle(.plain)

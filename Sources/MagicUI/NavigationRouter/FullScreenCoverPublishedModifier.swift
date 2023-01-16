@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(iOS)
 internal struct FullScreenCoverPublishedModifier<D: View>: ViewModifier {
     
     @State private var binding = false
@@ -29,3 +30,4 @@ internal struct FullScreenCoverPublishedModifier<D: View>: ViewModifier {
             .fullScreenCover(isPresented: $binding, onDismiss: onDismiss, content: destination)
     }
 }
+#endif
