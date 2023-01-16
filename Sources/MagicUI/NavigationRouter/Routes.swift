@@ -49,6 +49,25 @@ open class Routes<Destination: RouterDestination>: ObservableObject {
         })
     }
     
+    public func switchRoot(to destination: Destination, completion: @escaping () -> () = {}) {
+        guard pathIndex[tabSelection] < paths[tabSelection].count else { return }
+        DispatchQueue.main.async {
+            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]] = NavigationPath()
+            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].append(destination)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+            completion()
+        })
+    }
+    
+    public func switchRoot(to destination: Destination) async {
+        await withCheckedContinuation({ continuation in
+            switchRoot(to: destination) {
+                continuation.resume()
+            }
+        })
+    }
+    
     /// Pops one or more destinations from the end of this path according to the provided `PopType`
     /// - Parameters:
     ///   - type: The pop type
