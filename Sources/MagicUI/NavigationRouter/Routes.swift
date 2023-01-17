@@ -16,11 +16,9 @@ public enum RoutesDismissType {
 
 open class Routes<Destination: RouterDestination>: ObservableObject {
     
-    @Published public var modalsState = Array(repeating: Array(repeating: false, count: 100), count: 10)  // we set 'true' for the index of the modal
-    @Published public var activeModalsIndices = [[Int]]() // an array of the active modals' indices; ex. [0, 2, 6, 3]
+    @Published public var modalsState = Array(repeating: Array(repeating: false, count: 100), count: 10)
+    @Published public var activeModalsIndices = [[Int]]()
     @Published public var tabSelection = 0
-    
-    
     
     @Published internal var paths = Array(repeating: Array(repeating: NavigationPath(), count: 100), count: 10)
     @Published internal var pathIndex = Array(repeating: 0, count: 10)
@@ -44,25 +42,6 @@ open class Routes<Destination: RouterDestination>: ObservableObject {
     public func push(_ destination: Destination) async {
         await withCheckedContinuation({ continuation in
             push(destination) {
-                continuation.resume()
-            }
-        })
-    }
-    
-    public func switchRoot(to destination: Destination, completion: @escaping () -> () = {}) {
-        guard pathIndex[tabSelection] < paths[tabSelection].count else { return }
-        DispatchQueue.main.async {
-            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]] = NavigationPath()
-            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].append(destination)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            completion()
-        })
-    }
-    
-    public func switchRoot(to destination: Destination) async {
-        await withCheckedContinuation({ continuation in
-            switchRoot(to: destination) {
                 continuation.resume()
             }
         })

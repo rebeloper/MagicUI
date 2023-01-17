@@ -27,14 +27,6 @@ public struct NavigationRouter<Destination: RouterDestination>: DynamicProperty 
         await routes.push(destination)
     }
     
-    public func switchRoot(to destination: Destination, completion: @escaping () -> () = {}) {
-        routes.switchRoot(to: destination, completion: completion)
-    }
-    
-    public func switchRoot(to destination: Destination) async {
-        await routes.switchRoot(to: destination)
-    }
-    
     #if !os(tvOS)
     public func present(_ destination: Destination, completion: @escaping () -> () = {}) {
         routes.activeModalsIndices[routes.tabSelection].append(destination.rawValue)
