@@ -1,5 +1,6 @@
 //
 //  PocketView.swift
+//  PocketViewExample
 //
 //  Created by Alex Nagy on 17.01.2023.
 //
@@ -26,13 +27,25 @@ public struct PocketView<Data, ToolbarItem: View, Content: View>: View {
         VStack(spacing: 0) {
             switch alignment {
             case .top:
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        PocketToolbarItem(selection: $selection, data: data) { index in
-                            toolbarItem(index)
+                ScrollViewReader { proxy in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            PocketToolbarItem(selection: $selection, data: data) { index in
+                                toolbarItem(index)
+                                    .id(index)
+                            }
                         }
                     }
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                            withAnimation {
+                                proxy.scrollTo(selection, anchor: .leading)
+                            }
+                        })
+                        
+                    }
                 }
+                
                 ZStack {
                     PocketContent(selection: $selection, data: data) { index in
                         content(index)
