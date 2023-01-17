@@ -1,51 +1,61 @@
 //
 //  PocketView.swift
 //
-//  Created by Alex Nagy on 10.01.2023.
+//  Created by Alex Nagy on 17.01.2023.
 //
 
 import SwiftUI
 
-public struct PocketView<Header: View, Content: View>: View {
+public struct PocketView<Data, ToolbarItem: View, Content: View>: View {
     
-    @Binding var selection: Int
-    var alignment: PocketViewHeaderAlignment
+    @Binding public var selection: Int
+    public var data: [Data]
+    public var alignment: PocketViewToolbarAlignment
+    @ViewBuilder public var toolbarItem: (Int) -> ToolbarItem
+    @ViewBuilder public var content: (Int) -> Content
     
-    @ViewBuilder var header: () -> Header
-    @ViewBuilder var content: () -> Content
-    
-    public init(_ selection: Binding<Int>, alignment: PocketViewHeaderAlignment = .top, @ViewBuilder header: @escaping () -> Header, @ViewBuilder content: @escaping () -> Content) {
+    public init(_ selection: Binding<Int>, data: [Data], alignment: PocketViewToolbarAlignment = .top, toolbarItem: @escaping (Int) -> ToolbarItem, content: @escaping (Int) -> Content) {
         self._selection = selection
+        self.data = data
         self.alignment = alignment
-        self.header = header
+        self.toolbarItem = toolbarItem
         self.content = content
     }
     
     public var body: some View {
         VStack(spacing: 0) {
             switch alignment {
-            case .bottom:
-                ZStack {
-                    content()
-                }
-                Divider()
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        header()
-                    }
-                }
             case .top:
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        header()
+                        PocketToolbarItem(selection: $selection, data: data) { index in
+                            toolbarItem(index)
+                        }
                     }
                 }
-                Divider()
                 ZStack {
-                    content()
+                    PocketContent(selection: $selection, data: data) { index in
+                        content(index)
+                    }
+                    
+                }
+            case .bottom:
+                ZStack {
+                    PocketContent(selection: $selection, data: data) { index in
+                        content(index)
+                    }
+                    
+                }
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        PocketToolbarItem(selection: $selection, data: data) { index in
+                            toolbarItem(index)
+                        }
+                    }
                 }
             }
             
         }
     }
 }
+
