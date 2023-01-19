@@ -26,11 +26,14 @@ public struct RouterStack<Destination: RouterDestination>: View {
     }
     
     public var body: some View {
-        RootNavigationStack<Destination, Destination>(pathIndex: roots[0].rawValue, tabIndex: 0) {
-            roots[0]
+        Group {
+            RootNavigationStack<Destination, Destination>(pathIndex: roots[0].rawValue, tabIndex: 0) {
+                roots[0]
+            }
         }
         .environmentObject(routes)
         .onReceive(routes.$activeModalsIndices) { newValue in
+            guard newValue.count - 1 >= routes.tabSelection, newValue[routes.tabSelection].count >= 1 else { return }
             routes.pathIndex[routes.tabSelection] = newValue[routes.tabSelection].count - 1
         }
     }
