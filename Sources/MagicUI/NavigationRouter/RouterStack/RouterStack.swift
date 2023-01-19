@@ -1,7 +1,7 @@
 //
 //  RouterStack.swift
 //
-//  Created by Alex Nagy on 07.01.2023.
+//  Created by Alex Nagy on 19.01.2023.
 //
 
 import SwiftUI
@@ -12,17 +12,10 @@ public struct RouterStack<Destination: RouterDestination>: View {
     
     private var roots: [Destination]
     
-    #if os(iOS) || os(watchOS)
-    public init(roots: [Destination]) {
-        self.roots = roots
-        let routes = Routes<Destination>()
-        for i in 0..<roots.count {
-            routes.activeModalsIndices.append([roots[i].rawValue])
-        }
-        self._routes = StateObject(wrappedValue: routes)
-    }
-    #endif
-    
+    /// Creates a navigation stack with homogeneous navigation state that you
+    /// can control.
+    ///
+    /// - Parameter root: The view to display when the stack is empty.
     public init(root: Destination) {
         self.roots = [root]
         let routes = Routes<Destination>()
@@ -42,3 +35,4 @@ public struct RouterStack<Destination: RouterDestination>: View {
         }
     }
 }
+

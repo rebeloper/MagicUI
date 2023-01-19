@@ -1,7 +1,7 @@
 //
 //  RootNavigationStack.swift
 //
-//  Created by Alex Nagy on 19.12.2022.
+//  Created by Alex Nagy on 19.01.2023.
 //
 
 import SwiftUI
@@ -40,6 +40,4 @@ internal struct RootNavigationStack<Root: View, Destination: RouterDestination>:
         }
     }
 }
-
-
 

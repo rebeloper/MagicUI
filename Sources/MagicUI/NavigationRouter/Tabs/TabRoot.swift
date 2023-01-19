@@ -1,11 +1,12 @@
 //
 //  TabRoot.swift
 //
-//  Created by Alex Nagy on 16.01.2023.
+//  Created by Alex Nagy on 19.01.2023.
 //
 
 import SwiftUI
 
+#if os(iOS) || os(watchOS)
 public struct TabRoot<Destination: RouterDestination, Tab: RouterTab> {
     let root: Destination
     let tab: Tab
@@ -15,4 +16,4 @@ public struct TabRoot<Destination: RouterDestination, Tab: RouterTab> {
         self.tab = tab
     }
 }
-
+#endif

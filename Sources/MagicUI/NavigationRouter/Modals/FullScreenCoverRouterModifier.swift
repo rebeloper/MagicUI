@@ -1,7 +1,7 @@
 //
 //  FullScreenCoverRouterModifier.swift
 //
-//  Created by Alex Nagy on 19.12.2022.
+//  Created by Alex Nagy on 19.01.2023.
 //
 
 import SwiftUI
@@ -27,8 +27,8 @@ internal struct FullScreenCoverRouterModifier<Destination: RouterDestination>: V
         content
             .fullScreenCover(isPresented: $routes.modalsState[routes.tabSelection][isPresentedIndex]) {
                 DispatchQueue.main.async {
-                    routes.paths[routes.tabSelection][routes.activeModalsIndices[routes.tabSelection].count - 1] = NavigationPath()
                     routes.activeModalsIndices[routes.tabSelection].removeLast()
+                    routes.pathIndex[routes.tabSelection] = routes.activeModalsIndices[routes.tabSelection][routes.activeModalsIndices[routes.tabSelection].count - 1]
                     onDismiss?()
                 }
             } content: {
