@@ -10,7 +10,7 @@ import SwiftUI
 public protocol RouterDestination: Hashable, View {
     var modalValue: Int { get }
     
-    init?(rawValue: Int)
+    init?(modalValue: Int)
 }
 
 #if os(iOS) || os(watchOS)

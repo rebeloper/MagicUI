@@ -30,7 +30,7 @@ internal struct RootNavigationStack<Root: View, Destination: RouterDestination>:
     
     internal var body: some View {
         NavigationStack(path: $routes.paths[tabIndex][pathIndex]) {
-            Destination(rawValue: pathIndex)
+            Destination(modalValue: pathIndex)
                 .navigationDestination(for: Destination.self) { $0 }
         }
         .presentationDetents(presentationDetents)
