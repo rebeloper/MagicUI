@@ -139,6 +139,7 @@ public struct NavigationRouter<Destination: RouterDestination>: DynamicProperty 
         }
         count += routes.activeModalsIndices[routes.tabSelection].count
         count -= 1
+        print(count)
         return count
     }
 }
