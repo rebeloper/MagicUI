@@ -59,8 +59,8 @@ public struct NavigationRouter<Destination: RouterDestination>: DynamicProperty 
     ///   - destination: Destination view.
     ///   - completion: Callback trigerred when the destination finished presenting.
     public func present(_ destination: Destination, completion: @escaping () -> () = {}) {
-        routes.activeModalsIndices[routes.tabSelection].append(destination.rawValue)
-        routes.present($routes.modalsState[routes.tabSelection][destination.rawValue], completion: completion)
+        routes.activeModalsIndices[routes.tabSelection].append(destination.modalValue)
+        routes.present($routes.modalsState[routes.tabSelection][destination.modalValue], completion: completion)
     }
     
     /// Presents a destination as a modal on the router stack asyncronously.
@@ -139,7 +139,6 @@ public struct NavigationRouter<Destination: RouterDestination>: DynamicProperty 
         }
         count += routes.activeModalsIndices[routes.tabSelection].count
         count -= 1
-        print(count)
         return count
     }
 }

@@ -8,7 +8,7 @@ import SwiftUI
 
 /// Adhere to this protocol to create a Destination enum for NavigationRouter
 public protocol RouterDestination: Hashable, View {
-    var rawValue: Int { get }
+    var modalValue: Int { get }
     
     init?(rawValue: Int)
 }

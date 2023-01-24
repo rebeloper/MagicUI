@@ -30,7 +30,7 @@ public struct CustomTabRouterStack<Destination: RouterDestination, Tab: RouterTa
         let routes = Routes<Destination>()
         routes.tabSelection = tabSelection
         for i in 0..<roots.count {
-            routes.activeModalsIndices.append([roots[i].rawValue])
+            routes.activeModalsIndices.append([roots[i].modalValue])
         }
         self._routes = StateObject(wrappedValue: routes)
     }
@@ -48,7 +48,7 @@ public struct CustomTabRouterStack<Destination: RouterDestination, Tab: RouterTa
         let routes = Routes<Destination>()
         routes.tabSelection = tabSelection
         for i in 0..<self.roots.count {
-            routes.activeModalsIndices.append([self.roots[i].rawValue])
+            routes.activeModalsIndices.append([self.roots[i].modalValue])
         }
         self._routes = StateObject(wrappedValue: routes)
     }
@@ -68,7 +68,7 @@ public struct CustomTabRouterStack<Destination: RouterDestination, Tab: RouterTa
                 VStack(spacing: 0) {
                     ZStack {
                         ForEach(roots.indices, id: \.self) { index in
-                            RootNavigationStack<Destination, Destination>(pathIndex: roots[index].rawValue, tabIndex: index) {
+                            RootNavigationStack<Destination, Destination>(pathIndex: roots[index].modalValue, tabIndex: index) {
                                 roots[index]
                             }
                             .opacity(index == routes.tabSelection ? 1 : 0)

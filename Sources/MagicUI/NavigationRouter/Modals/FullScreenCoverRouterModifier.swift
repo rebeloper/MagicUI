@@ -20,7 +20,7 @@ internal struct FullScreenCoverRouterModifier<Destination: RouterDestination>: V
                   onDismiss: (() -> Void)? = nil) {
         self.modal = modal
         self.onDismiss = onDismiss
-        self.isPresentedIndex = modal.rawValue
+        self.isPresentedIndex = modal.modalValue
     }
     
     func body(content: Content) -> some View {

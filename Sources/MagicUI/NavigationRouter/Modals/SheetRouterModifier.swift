@@ -26,7 +26,7 @@ internal struct SheetRouterModifier<Destination: RouterDestination>: ViewModifie
         self.presentationDetents = presentationDetents
         self.presentationDragIndicatorVisibility = visibility
         self.onDismiss = onDismiss
-        self.isPresentedIndex = modal.rawValue
+        self.isPresentedIndex = modal.modalValue
     }
     
     func body(content: Content) -> some View {
