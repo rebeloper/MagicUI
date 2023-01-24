@@ -137,8 +137,8 @@ public struct NavigationRouter<Destination: RouterDestination>: DynamicProperty 
         routes.paths[routes.tabSelection].forEach { path in
             count += path.count
         }
-//        count += routes.activeModalsIndices[routes.tabSelection].count
-//        count -= 1
+        count += routes.activeModalsIndices[routes.tabSelection].count
+        count -= 1
         print(count)
         return count
     }

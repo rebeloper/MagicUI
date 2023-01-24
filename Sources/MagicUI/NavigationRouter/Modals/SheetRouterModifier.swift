@@ -33,6 +33,7 @@ internal struct SheetRouterModifier<Destination: RouterDestination>: ViewModifie
         content
             .sheet(isPresented: $routes.modalsState[routes.tabSelection][isPresentedIndex]) {
                 DispatchQueue.main.async {
+                    routes.paths[routes.tabSelection][routes.pathIndex[routes.tabSelection]] = NavigationPath()
                     routes.activeModalsIndices[routes.tabSelection].removeLast()
                     routes.pathIndex[routes.tabSelection] = routes.activeModalsIndices[routes.tabSelection][routes.activeModalsIndices[routes.tabSelection].count - 1]
                     onDismiss?()
