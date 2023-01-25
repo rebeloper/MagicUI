@@ -103,6 +103,7 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
                     }
                 }
             }
+            #if !os(watchOS)
             .if(options.rowSeparatorVisibility == .automatic, transform: { list in
                 list.listRowSeparator(.automatic)
             }).if(options.rowSeparatorVisibility == .visible, transform: { list in
@@ -111,7 +112,9 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
                 list.listRowSeparator(.hidden)
             }).if(options.rowSeparatorTint != nil, transform: { list in
                 list.listRowSeparatorTint(options.rowSeparatorTint!.color, edges: options.rowSeparatorTint!.edges)
-            }).if(options.rowInsets != nil, transform: { list in
+            })
+                #endif
+                .if(options.rowInsets != nil, transform: { list in
                 list.listRowInsets(options.rowInsets!)
             }).if(rowBackground != nil, transform: { list in
                 list.listRowBackground(rowBackground)
@@ -126,9 +129,12 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
         }
         .if(options.style == .automatic, transform: { list in
             list.listStyle(.automatic)
-        }).if(options.style == .sidebar, transform: { list in
+        })
+            #if !os(watchOS)
+            .if(options.style == .sidebar, transform: { list in
             list.listStyle(.sidebar)
         })
+            #endif
             #if os(iOS)
             .if(options.style == .insetGrouped, transform: { list in
             list.listStyle(.insetGrouped)
@@ -136,9 +142,12 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
             list.listStyle(.grouped)
         })
             #endif
+            #if !os(watchOS)
             .if(options.style == .inset, transform: { list in
             list.listStyle(.inset)
-        }).if(options.style == .plain, transform: { list in
+        })
+            #endif
+                .if(options.style == .plain, transform: { list in
             list.listStyle(.plain)
         })
     }

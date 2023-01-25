@@ -8,5 +8,16 @@
 import Foundation
 
 public enum MultiItemPickerStyle {
-    case automatic, sidebar, insetGrouped, grouped, inset, plain
+    case automatic
+    #if !os(watchOS)
+    case sidebar
+    #endif
+    #if os(iOS)
+    case insetGrouped
+    case grouped
+    #endif
+    #if !os(watchOS)
+    case inset
+    #endif
+    case plain
 }
