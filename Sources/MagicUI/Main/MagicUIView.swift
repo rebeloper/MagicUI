@@ -12,7 +12,9 @@ public struct MagicUIView<Content: View>: View {
     
     let content: () -> Content
     
+    #if os(iOS) || os(macOS)
     @StateObject private var toastManager = ToastManager()
+    #endif
     @StateObject private var alertManager = AlertManager()
     
     public init(content: @escaping () -> Content) {
@@ -21,10 +23,12 @@ public struct MagicUIView<Content: View>: View {
     
     public var body: some View {
         content()
+            #if os(iOS) || os(macOS)
             .toast(isPresented: $toastManager.isPresented) {
                 Toast(displayMode: toastManager.options.displayMode, type: toastManager.options.type, title: toastManager.options.title, message: toastManager.options.message, style: toastManager.options.style)
             }
             .environmentObject(toastManager)
+            #endif
             .alert(alertManager.options.title ?? "Alert", isPresented: $alertManager.isAlertPresented) {
                 alertManager.actions()
             } message: {

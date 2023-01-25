@@ -5,6 +5,7 @@
 //  Created by Alex Nagy on 17.06.2022.
 //
 
+#if os(iOS) || os(macOS)
 import SwiftUI
 import Combine
 
@@ -307,7 +308,7 @@ public struct ToastModifier: ViewModifier {
     private var screen: CGRect {
 #if os(iOS)
         return UIScreen.main.bounds
-#else
+#elseif os(macOS)
         return NSScreen.main?.frame ?? .zero
 #endif
     }
@@ -906,4 +907,4 @@ public struct ToastOptions {
         self.style = style
     }
 }
-
+#endif
