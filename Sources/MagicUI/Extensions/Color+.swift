@@ -26,7 +26,7 @@ public extension Color {
 }
 
 import Foundation
-#if canImport(UIKit)
+#if os(iOS)
 import UIKit
 /// Color definitions of the UIColor constant colors.
 public extension Color {
