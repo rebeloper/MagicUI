@@ -5,6 +5,7 @@
 //  Created by Alex Nagy on 11.07.2022.
 //
 
+#if os(iOS) || os(macOS)
 import SwiftUI
 import Combine
 import WebKit
@@ -49,6 +50,7 @@ public class WebViewStore: ObservableObject {
         wkWebView[keyPath: keyPath]
     }
 }
+#endif
 
 #if os(iOS)
 /// A container for using a WKWebView in SwiftUI
