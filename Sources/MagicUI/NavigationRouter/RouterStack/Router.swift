@@ -43,6 +43,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     /// Pushes a destination onto the router stack asyncronously.
     ///
     /// - Parameter destination: Destination view.
+    @MainActor
     public func push(_ destination: Destination) async {
         await withCheckedContinuation({ continuation in
             push(destination) {
@@ -71,6 +72,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     /// Presents a destination as a modal on the router stack asyncronously.
     ///
     /// - Parameter destination: Destination view.
+    @MainActor
     public func present(_ destination: Destination) async {
         await withCheckedContinuation({ continuation in
             present(destination) {
@@ -118,6 +120,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     /// Pops a view from the router stack asyncronously.
     ///
     /// - Parameter type: The type of the pop.
+    @MainActor
     public func pop(_ type: PopType = .one) async {
         await withCheckedContinuation({ continuation in
             pop(type) {
