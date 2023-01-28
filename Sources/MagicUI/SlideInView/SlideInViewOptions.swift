@@ -5,6 +5,7 @@
 //  Created by Alex Nagy on 24.01.2023.
 //
 
+#if !os(tvOS)
 import SwiftUI
 
 public struct SlideInViewOptions {
@@ -26,3 +27,4 @@ public struct SlideInViewOptions {
         self.shouldDismissUponExternalTap = shouldDismissUponExternalTap
     }
 }
+#endif

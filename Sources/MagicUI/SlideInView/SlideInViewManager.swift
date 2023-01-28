@@ -5,6 +5,7 @@
 //  Created by Alex Nagy on 24.01.2023.
 //
 
+#if !os(tvOS)
 import SwiftUI
 
 @propertyWrapper
@@ -32,3 +33,4 @@ final public class SlideInViewManagerContext: ObservableObject {
     public init() { }
     
 }
+#endif

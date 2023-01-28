@@ -5,6 +5,7 @@
 //  Created by Alex Nagy on 24.01.2023.
 //
 
+#if !os(tvOS)
 import SwiftUI
 
 public struct SlideInView<Content: View, Container: View>: View {
@@ -133,3 +134,4 @@ public extension SlideInView {
         }
     }
 }
+#endif
