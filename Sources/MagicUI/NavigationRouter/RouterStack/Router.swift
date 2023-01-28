@@ -1,5 +1,5 @@
 //
-//  Routes.swift
+//  Router.swift
 //
 //  Created by Alex Nagy on 19.01.2023.
 //
@@ -13,7 +13,7 @@ public enum PopType {
     case toRoot
 }
 
-public class Routes<Destination: RouterDestination>: ObservableObject {
+public class Router<Destination: RouterDestination>: ObservableObject {
     
     @Published public var modalsState = Array(repeating: Array(repeating: false, count: 100), count: 10)
     @Published public var activeModalsIndices = [[Int]]()

@@ -9,7 +9,7 @@ import SwiftUI
 #if os(iOS) || os(watchOS)
 public struct CustomTabRouterStack<Destination: RouterDestination, Tab: RouterTab, UnselectedTab: RouterUnselectedTab>: View {
     
-    @StateObject private var routes: Routes<Destination>
+    @StateObject private var router: Router<Destination>
     
     private var roots: [Destination]
     private var selectedTabs: [Tab]
@@ -27,12 +27,12 @@ public struct CustomTabRouterStack<Destination: RouterDestination, Tab: RouterTa
         self.roots = roots
         self.selectedTabs = tabs
         self.unselectedTabs = unselectedTabs
-        let routes = Routes<Destination>()
-        routes.tabSelection = tabSelection
+        let router = Router<Destination>()
+        router.tabSelection = tabSelection
         for i in 0..<roots.count {
-            routes.activeModalsIndices.append([roots[i].modalValue])
+            router.activeModalsIndices.append([roots[i].modalValue])
         }
-        self._routes = StateObject(wrappedValue: routes)
+        self._router = StateObject(wrappedValue: router)
     }
     
     /// Creates a custom TabView with navigation stacks with homogeneous navigation state that you
@@ -45,12 +45,12 @@ public struct CustomTabRouterStack<Destination: RouterDestination, Tab: RouterTa
         self.roots = roots.compactMap( {$0.root} )
         self.selectedTabs = roots.compactMap( {$0.tab} )
         self.unselectedTabs = roots.compactMap( {$0.unselectedTab} )
-        let routes = Routes<Destination>()
-        routes.tabSelection = tabSelection
+        let router = Router<Destination>()
+        router.tabSelection = tabSelection
         for i in 0..<self.roots.count {
-            routes.activeModalsIndices.append([self.roots[i].modalValue])
+            router.activeModalsIndices.append([self.roots[i].modalValue])
         }
-        self._routes = StateObject(wrappedValue: routes)
+        self._router = StateObject(wrappedValue: router)
     }
     
     public var body: some View {
@@ -71,21 +71,21 @@ public struct CustomTabRouterStack<Destination: RouterDestination, Tab: RouterTa
                             RootNavigationStack<Destination, Destination>(pathIndex: roots[index].modalValue, tabIndex: index) {
                                 roots[index]
                             }
-                            .opacity(index == routes.tabSelection ? 1 : 0)
+                            .opacity(index == router.tabSelection ? 1 : 0)
                         }
                     }
                     HStack {
                         Spacer()
                         ForEach(selectedTabs.indices, id: \.self) { index in
                             Group {
-                                if routes.tabSelection == index {
+                                if router.tabSelection == index {
                                     selectedTabs[index]
                                 } else {
                                     unselectedTabs[index]
                                 }
                             }
                             .onTapGesture {
-                                routes.tabSelection = index
+                                router.tabSelection = index
                             }
                             if index != selectedTabs.count {
                                 Spacer()
@@ -95,10 +95,10 @@ public struct CustomTabRouterStack<Destination: RouterDestination, Tab: RouterTa
                 }
             }
         }
-        .environmentObject(routes)
-        .onReceive(routes.$activeModalsIndices) { newValue in
-            guard newValue.count - 1 >= routes.tabSelection, newValue[routes.tabSelection].count >= 1 else { return }
-            routes.pathIndex[routes.tabSelection] = newValue[routes.tabSelection].count - 1
+        .environmentObject(router)
+        .onReceive(router.$activeModalsIndices) { newValue in
+            guard newValue.count - 1 >= router.tabSelection, newValue[router.tabSelection].count >= 1 else { return }
+            router.pathIndex[router.tabSelection] = newValue[router.tabSelection].count - 1
         }
     }
 }

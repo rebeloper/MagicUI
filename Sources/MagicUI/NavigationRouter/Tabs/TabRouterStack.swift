@@ -9,7 +9,7 @@ import SwiftUI
 #if os(iOS) || os(watchOS)
 public struct TabRouterStack<Destination: RouterDestination, Tab: RouterTab>: View {
     
-    @StateObject private var routes: Routes<Destination>
+    @StateObject private var router: Router<Destination>
     
     private var roots: [Destination]
     private var selectedTabs: [Tab]
@@ -24,12 +24,12 @@ public struct TabRouterStack<Destination: RouterDestination, Tab: RouterTab>: Vi
     public init(roots: [Destination], tabs: [Tab], tabSelection: Int = 0) {
         self.roots = roots
         self.selectedTabs = tabs
-        let routes = Routes<Destination>()
-        routes.tabSelection = tabSelection
+        let router = Router<Destination>()
+        router.tabSelection = tabSelection
         for i in 0..<roots.count {
-            routes.activeModalsIndices.append([roots[i].modalValue])
+            router.activeModalsIndices.append([roots[i].modalValue])
         }
-        self._routes = StateObject(wrappedValue: routes)
+        self._router = StateObject(wrappedValue: router)
     }
     
     /// Creates a TabView with navigation stacks with homogeneous navigation state that you
@@ -41,12 +41,12 @@ public struct TabRouterStack<Destination: RouterDestination, Tab: RouterTab>: Vi
     public init(_ roots: [TabRoot<Destination, Tab>], tabSelection: Int = 0) {
         self.roots = roots.compactMap( {$0.root} )
         self.selectedTabs = roots.compactMap( {$0.tab} )
-        let routes = Routes<Destination>()
-        routes.tabSelection = tabSelection
+        let router = Router<Destination>()
+        router.tabSelection = tabSelection
         for i in 0..<self.roots.count {
-            routes.activeModalsIndices.append([self.roots[i].modalValue])
+            router.activeModalsIndices.append([self.roots[i].modalValue])
         }
-        self._routes = StateObject(wrappedValue: routes)
+        self._router = StateObject(wrappedValue: router)
     }
     
     public var body: some View {
@@ -61,7 +61,7 @@ public struct TabRouterStack<Destination: RouterDestination, Tab: RouterTab>: Vi
                         .font(.caption)
                 }
             } else {
-                TabView(selection: $routes.tabSelection) {
+                TabView(selection: $router.tabSelection) {
                     ForEach(roots.indices, id: \.self) { index in
                         RootNavigationStack<Destination, Destination>(pathIndex: roots[index].modalValue, tabIndex: index) {
                             roots[index]
@@ -74,10 +74,10 @@ public struct TabRouterStack<Destination: RouterDestination, Tab: RouterTab>: Vi
                 }
             }
         }
-        .environmentObject(routes)
-        .onReceive(routes.$activeModalsIndices) { newValue in
-            guard newValue.count - 1 >= routes.tabSelection, newValue[routes.tabSelection].count >= 1 else { return }
-            routes.pathIndex[routes.tabSelection] = newValue[routes.tabSelection].count - 1
+        .environmentObject(router)
+        .onReceive(router.$activeModalsIndices) { newValue in
+            guard newValue.count - 1 >= router.tabSelection, newValue[router.tabSelection].count >= 1 else { return }
+            router.pathIndex[router.tabSelection] = newValue[router.tabSelection].count - 1
         }
     }
 }

@@ -8,7 +8,7 @@ import SwiftUI
 
 internal struct RootNavigationStack<Root: View, Destination: RouterDestination>: View {
     
-    @EnvironmentObject private var routes: Routes<Destination>
+    @EnvironmentObject private var router: Router<Destination>
     
     internal let pathIndex: Int
     internal let tabIndex: Int
@@ -29,14 +29,14 @@ internal struct RootNavigationStack<Root: View, Destination: RouterDestination>:
     }
     
     internal var body: some View {
-        NavigationStack(path: $routes.paths[tabIndex][pathIndex]) {
+        NavigationStack(path: $router.paths[tabIndex][pathIndex]) {
             Destination(modalValue: pathIndex)
                 .navigationDestination(for: Destination.self) { $0 }
         }
         .presentationDetents(presentationDetents)
         .presentationDragIndicator(presentationDragIndicatorVisibility)
         .onAppear {
-            routes.pathIndex[tabIndex] = pathIndex
+            router.pathIndex[tabIndex] = pathIndex
         }
     }
 }

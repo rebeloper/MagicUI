@@ -9,7 +9,7 @@ import SwiftUI
 #if os(iOS) || os(watchOS)
 internal struct FullScreenCoverRouterModifier<Destination: RouterDestination>: ViewModifier {
     
-    @EnvironmentObject private var routes: Routes<Destination>
+    @EnvironmentObject private var router: Router<Destination>
     
     internal var modal: Destination
     let onDismiss: (() -> Void)?
@@ -25,15 +25,15 @@ internal struct FullScreenCoverRouterModifier<Destination: RouterDestination>: V
     
     func body(content: Content) -> some View {
         content
-            .fullScreenCover(isPresented: $routes.modalsState[routes.tabSelection][isPresentedIndex]) {
+            .fullScreenCover(isPresented: $router.modalsState[router.tabSelection][isPresentedIndex]) {
                 DispatchQueue.main.async {
-                    routes.paths[routes.tabSelection][routes.pathIndex[routes.tabSelection]] = NavigationPath()
-                    routes.activeModalsIndices[routes.tabSelection].removeLast()
-                    routes.pathIndex[routes.tabSelection] = routes.activeModalsIndices[routes.tabSelection][routes.activeModalsIndices[routes.tabSelection].count - 1]
+                    router.paths[router.tabSelection][router.pathIndex[router.tabSelection]] = NavigationPath()
+                    router.activeModalsIndices[router.tabSelection].removeLast()
+                    router.pathIndex[router.tabSelection] = router.activeModalsIndices[router.tabSelection][router.activeModalsIndices[router.tabSelection].count - 1]
                     onDismiss?()
                 }
             } content: {
-                RootNavigationStack<Destination, Destination>(pathIndex: isPresentedIndex, tabIndex: routes.tabSelection) {
+                RootNavigationStack<Destination, Destination>(pathIndex: isPresentedIndex, tabIndex: router.tabSelection) {
                     modal
                 }
             }

@@ -8,7 +8,7 @@ import SwiftUI
 
 public struct RouterStack<Destination: RouterDestination>: View {
     
-    @StateObject private var routes: Routes<Destination>
+    @StateObject private var router: Router<Destination>
     
     private var roots: [Destination]
     
@@ -18,11 +18,11 @@ public struct RouterStack<Destination: RouterDestination>: View {
     /// - Parameter root: The view to display when the stack is empty.
     public init(root: Destination) {
         self.roots = [root]
-        let routes = Routes<Destination>()
+        let router = Router<Destination>()
         for i in 0..<roots.count {
-            routes.activeModalsIndices.append([roots[i].modalValue])
+            router.activeModalsIndices.append([roots[i].modalValue])
         }
-        self._routes = StateObject(wrappedValue: routes)
+        self._router = StateObject(wrappedValue: router)
     }
     
     public var body: some View {
@@ -31,10 +31,10 @@ public struct RouterStack<Destination: RouterDestination>: View {
                 roots[0]
             }
         }
-        .environmentObject(routes)
-        .onReceive(routes.$activeModalsIndices) { newValue in
-            guard newValue.count - 1 >= routes.tabSelection, newValue[routes.tabSelection].count >= 1 else { return }
-            routes.pathIndex[routes.tabSelection] = newValue[routes.tabSelection].count - 1
+        .environmentObject(router)
+        .onReceive(router.$activeModalsIndices) { newValue in
+            guard newValue.count - 1 >= router.tabSelection, newValue[router.tabSelection].count >= 1 else { return }
+            router.pathIndex[router.tabSelection] = newValue[router.tabSelection].count - 1
         }
     }
 }

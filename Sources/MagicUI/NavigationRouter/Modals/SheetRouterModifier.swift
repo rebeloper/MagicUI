@@ -9,7 +9,7 @@ import SwiftUI
 #if os(iOS) || os(macOS)
 internal struct SheetRouterModifier<Destination: RouterDestination>: ViewModifier {
     
-    @EnvironmentObject private var routes: Routes<Destination>
+    @EnvironmentObject private var router: Router<Destination>
     
     internal var modal: Destination
     internal var presentationDetents: Set<PresentationDetent>
@@ -31,15 +31,15 @@ internal struct SheetRouterModifier<Destination: RouterDestination>: ViewModifie
     
     func body(content: Content) -> some View {
         content
-            .sheet(isPresented: $routes.modalsState[routes.tabSelection][isPresentedIndex]) {
+            .sheet(isPresented: $router.modalsState[router.tabSelection][isPresentedIndex]) {
                 DispatchQueue.main.async {
-                    routes.paths[routes.tabSelection][routes.pathIndex[routes.tabSelection]] = NavigationPath()
-                    routes.activeModalsIndices[routes.tabSelection].removeLast()
-                    routes.pathIndex[routes.tabSelection] = routes.activeModalsIndices[routes.tabSelection][routes.activeModalsIndices[routes.tabSelection].count - 1]
+                    router.paths[router.tabSelection][router.pathIndex[router.tabSelection]] = NavigationPath()
+                    router.activeModalsIndices[router.tabSelection].removeLast()
+                    router.pathIndex[router.tabSelection] = router.activeModalsIndices[router.tabSelection][router.activeModalsIndices[router.tabSelection].count - 1]
                     onDismiss?()
                 }
             } content: {
-                RootNavigationStack<Destination, Destination>(pathIndex: isPresentedIndex, tabIndex: routes.tabSelection, presentationDetents: presentationDetents, presentationDragIndicator: presentationDragIndicatorVisibility) {
+                RootNavigationStack<Destination, Destination>(pathIndex: isPresentedIndex, tabIndex: router.tabSelection, presentationDetents: presentationDetents, presentationDragIndicator: presentationDragIndicatorVisibility) {
                     modal
                 }
             }
