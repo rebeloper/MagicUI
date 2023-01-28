@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-#if !os(tvOS)
+#if os(iOS) || os(macOS)
 internal struct SheetRouterModifier<Destination: RouterDestination>: ViewModifier {
     
     @EnvironmentObject private var routes: Routes<Destination>
