@@ -89,7 +89,11 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
                         Toggle(isOn: $isAllSelected) {
                             Text(isAllSelected ? "Unselect all" : "Select all")
                         }
+                        #if os(tvOS)
+                        .toggleStyle(.automatic)
+                        #else
                         .toggleStyle(.button)
+                        #endif
                         .buttonStyle(.plain)
                         .foregroundColor(.accentColor)
                         .onChange(of: isAllSelected) { isAllSelected in
@@ -103,7 +107,7 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
                     }
                 }
             }
-            #if !os(watchOS)
+            #if os(iOS) || os(macOS)
             .if(options.rowSeparatorVisibility == .automatic, transform: { list in
                 list.listRowSeparator(.automatic)
             }).if(options.rowSeparatorVisibility == .visible, transform: { list in
@@ -130,7 +134,7 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
         .if(options.style == .automatic, transform: { list in
             list.listStyle(.automatic)
         })
-            #if !os(watchOS)
+            #if os(iOS) || os(macOS)
             .if(options.style == .sidebar, transform: { list in
             list.listStyle(.sidebar)
         })
@@ -142,7 +146,7 @@ public struct MultiItemPicker<T: Hashable, C: View, L: View, P: View, U: View, B
             list.listStyle(.grouped)
         })
             #endif
-            #if !os(watchOS)
+            #if os(iOS) || os(macOS)
             .if(options.style == .inset, transform: { list in
             list.listStyle(.inset)
         })
