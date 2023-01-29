@@ -261,7 +261,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             if paths[tabSelection][pathIndex[tabSelection]].count == 0 {
                 dismissModal(completion: completion)
             } else {
-                dismiss(last: paths[tabSelection][pathIndex[tabSelection]].count, completion: completion)
+                dismiss(completion: completion)
             }
         case .the(let last):
             for i in 0..<last {
@@ -279,8 +279,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             pop(.the(last: last), completion: completion)
         case .toRoot:
             let all = getAllViewsCount()
-            let last = all
-            pop(.the(last: last), completion: completion)
+            dismiss(last: all, completion: completion)
         }
     }
     
