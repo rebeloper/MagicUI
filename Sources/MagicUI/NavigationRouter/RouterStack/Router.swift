@@ -265,7 +265,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             }
         case .the(let last):
             for i in 0..<last {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01 * Double(i), execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
                     self.pop {
                         if i == last - 1 {
                             completion()
@@ -303,7 +303,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         DispatchQueue.main.async {
             self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
             completion()
         })
     }
@@ -313,7 +313,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         DispatchQueue.main.async {
             self.modalsState[self.tabSelection][index] = false
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
             completion()
         })
     }
