@@ -278,9 +278,12 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             let last = all - index
             pop(.the(last: last), completion: completion)
         case .toRoot:
-            let all = getAllViewsCount()
-            let last = all
-            pop(.the(last: last), completion: completion)
+//            let all = getAllViewsCount()
+//            let last = all
+//            pop(.the(last: last), completion: completion)
+            if self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count >= 1 {
+                dismissStack(completion: completion)
+            }
         }
     }
 
@@ -302,6 +305,17 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
         DispatchQueue.main.async {
             self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+            completion()
+        })
+    }
+    
+    internal func dismissStack(completion: @escaping () -> ()) {
+        guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
+        DispatchQueue.main.async {
+            let all = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
+            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(all)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
             completion()
