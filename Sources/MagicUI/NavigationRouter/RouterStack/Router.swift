@@ -280,12 +280,10 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         case .toRoot:
 //            let all = getAllViewsCount()
 //            dismiss(last: all, completion: completion)
-            for i in 0...activeModalsIndices[tabSelection].count {
-                dismissAll {
-                    self.dismissModal {
-                        if i >= self.activeModalsIndices[self.tabSelection].count {
-                            completion()
-                        }
+            dismissAll {
+                self.dismissModal {
+                    if self.activeModalsIndices[self.tabSelection].count > 1 {
+                        self.pop(.toRoot, completion: completion)
                     }
                 }
             }
