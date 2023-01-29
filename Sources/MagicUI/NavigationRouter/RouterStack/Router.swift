@@ -283,6 +283,10 @@ public class Router<Destination: RouterDestination>: ObservableObject {
 //            pop(.the(last: last), completion: completion)
             if self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count >= 1 {
                 dismissStack(completion: completion)
+            } else {
+                dismissModal {
+                    self.pop(.toRoot, completion: completion)
+                }
             }
         }
     }
@@ -322,7 +326,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         })
     }
 
-    internal func dismissModal(completion: @escaping () -> () = {}) {
+    internal func dismissModal(completion: @escaping () -> ()) {
         guard let index = activeModalsIndices[tabSelection].last else { return }
         DispatchQueue.main.async {
             self.modalsState[self.tabSelection][index] = false
