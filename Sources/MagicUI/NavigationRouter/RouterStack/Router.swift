@@ -278,18 +278,9 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             let last = all - index
             pop(.the(last: last), completion: completion)
         case .toRoot:
-//            let all = getAllViewsCount()
-//            let last = all
-//            pop(.the(last: last), completion: completion)
-            if self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count >= 2 {
-                dismissStack {
-                    self.pop(.toRoot, completion: completion)
-                }
-            } else {
-                dismissModal {
-                    self.pop(.toRoot, completion: completion)
-                }
-            }
+            let all = getAllViewsCount()
+            let last = all
+            pop(.the(last: last), completion: completion)
         }
     }
 
