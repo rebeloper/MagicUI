@@ -298,7 +298,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     
     // MARK: - internal
     
-    internal func dismiss(last Int = 1, completion: @escaping () -> ()) {
+    internal func dismiss(last: Int = 1, completion: @escaping () -> ()) {
         guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
         DispatchQueue.main.async {
             self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(last)
