@@ -313,7 +313,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     }
     
     internal func dismissAll(completion: @escaping () -> ()) {
-        guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
+//        guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
         DispatchQueue.main.async {
             let last = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
             if last > 0 {
