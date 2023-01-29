@@ -282,7 +282,9 @@ public class Router<Destination: RouterDestination>: ObservableObject {
 //            let last = all
 //            pop(.the(last: last), completion: completion)
             if self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count >= 1 {
-                dismissStack(completion: completion)
+                dismissStack {
+                    self.pop(.toRoot, completion: completion)
+                }
             } else {
                 dismissModal {
                     self.pop(.toRoot, completion: completion)
