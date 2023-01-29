@@ -181,17 +181,17 @@ public enum PopType {
 }
 
 public class Router<Destination: RouterDestination>: ObservableObject {
-    
+
     @Published public var modalsState = Array(repeating: Array(repeating: false, count: 100), count: 10)
     @Published public var activeModalsIndices = [[Int]]()
     @Published public var tabSelection = 0
-    
+
     @Published public var paths = Array(repeating: Array(repeating: NavigationPath(), count: 100), count: 10)
     @Published public var pathIndex = Array(repeating: 0, count: 10)
-    
-    
+
+
     // MARK: - push
-    
+
     /// Pushes a destination onto the router stack.
     ///
     /// - Parameters:
@@ -206,7 +206,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             completion()
         })
     }
-    
+
     /// Pushes a destination onto the router stack asyncronously.
     ///
     /// - Parameter destination: Destination view.
@@ -218,9 +218,9 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             }
         })
     }
-    
+
     // MARK: - present
-    
+
     /// Presents a destination as a modal on the router stack.
     ///
     /// - Parameters:
@@ -235,7 +235,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             completion()
         })
     }
-    
+
     /// Presents a destination as a modal on the router stack asyncronously.
     ///
     /// - Parameter destination: Destination view.
@@ -247,9 +247,9 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             }
         })
     }
-    
+
     // MARK: - pop
-    
+
     /// Pops a view from the router stack.
     ///
     /// - Parameters:
@@ -265,7 +265,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             }
         case .the(let last):
             for i in 0..<last {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01 * Double(i), execute: {
                     self.pop {
                         if i == last - 1 {
                             completion()
@@ -278,16 +278,12 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             let last = all - index
             pop(.the(last: last), completion: completion)
         case .toRoot:
-//            let all = getAllViewsCount()
-//            dismiss(last: all, completion: completion)
-            dismissAll {
-                if self.activeModalsIndices[self.tabSelection].count >= 1 {
-                    self.pop(.toRoot, completion: completion)
-                }
-            }
+            let all = getAllViewsCount()
+            let last = all
+            pop(.the(last: last), completion: completion)
         }
     }
-    
+
     /// Pops a view from the router stack asyncronously.
     ///
     /// - Parameter type: The type of the pop.
@@ -299,53 +295,38 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             }
         })
     }
-    
+
     // MARK: - internal
-    
-    internal func dismiss(last: Int = 1, completion: @escaping () -> ()) {
+
+    internal func dismiss(completion: @escaping () -> ()) {
         guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
         DispatchQueue.main.async {
-            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(last)
+            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
             completion()
         })
     }
-    
-    internal func dismissAll(completion: @escaping () -> ()) {
-//        guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
-        DispatchQueue.main.async {
-            let last = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
-            if last > 0 {
-                self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(last)
-            } else {
-                self.dismissModal(completion: completion)
-            }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            completion()
-        })
-    }
-    
+
     internal func dismissModal(completion: @escaping () -> () = {}) {
         guard let index = activeModalsIndices[tabSelection].last else { return }
         DispatchQueue.main.async {
             self.modalsState[self.tabSelection][index] = false
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
             completion()
         })
     }
-    
+
     internal func getAllViewsCount() -> Int {
         var count = 0
-//        paths[tabSelection].forEach { path in
-//            count += path.count
-//        }
-        count += activeModalsIndices[tabSelection].count * 2
+        paths[tabSelection].forEach { path in
+            count += path.count
+        }
+        count += activeModalsIndices[tabSelection].count
         count -= 1
         return count
     }
-    
+
 }
 
