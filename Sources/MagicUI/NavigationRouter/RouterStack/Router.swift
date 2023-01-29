@@ -280,7 +280,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         case .toRoot:
 //            let all = getAllViewsCount()
 //            dismiss(last: all, completion: completion)
-            dismissAll {
+            dismissAllStacked {
                 self.dismissModal {
                     if self.activeModalsIndices[self.tabSelection].count >= 1 {
                         self.pop(.toRoot, completion: completion)
@@ -314,11 +314,15 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         })
     }
     
-    internal func dismissAll(completion: @escaping () -> ()) {
+    internal func dismissAllStacked(completion: @escaping () -> ()) {
         guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
         DispatchQueue.main.async {
             let last = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
-            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(last)
+            if last > 1 {
+                self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(last)
+            } else {
+                self.dismissModal(completion: completion)
+            }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
             completion()
