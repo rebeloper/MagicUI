@@ -282,7 +282,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
 //            dismiss(last: all, completion: completion)
             dismissAll {
                 self.dismissModal {
-                    if self.activeModalsIndices[self.tabSelection].count > 1 {
+                    if self.activeModalsIndices[self.tabSelection].count >= 1 {
                         self.pop(.toRoot, completion: completion)
                     }
                 }
