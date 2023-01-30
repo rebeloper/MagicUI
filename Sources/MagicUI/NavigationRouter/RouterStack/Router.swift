@@ -308,11 +308,12 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             removeLast = last
             left = 0
         }
+        print("Remove last: \(removeLast)")
+        print("Left: \(left)")
         DispatchQueue.main.async {
             self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(removeLast)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            print("Dismissed left: \(left)")
             completion(left)
         })
     }
