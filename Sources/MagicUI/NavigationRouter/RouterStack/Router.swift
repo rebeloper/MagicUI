@@ -370,7 +370,6 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                     print(self.activeModalsIndices[self.tabSelection])
                     if self.activeModalsIndices[self.tabSelection].count > pathsCount.count {
                         self.dismissModal {
-//                            self.dismissStack(completion: completion)
                             self.popToRoot(style: style, completion: completion)
                         }
                     } else {
@@ -388,7 +387,8 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                                 if i == pathsCount.count - 1 {
                                     completion()
                                 } else {
-                                    self.dismissModal(completion: completion)
+//                                    self.dismissModal(completion: completion)
+                                    self.popToRoot(style: style, completion: completion)
                                 }
                             }
                         }
