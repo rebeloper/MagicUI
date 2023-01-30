@@ -383,6 +383,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         paths[tabSelection].forEach { path in
             if !path.isEmpty {
                 print(path.count)
+                pathsCount.append(path.count)
             }
         }
         return pathsCount.reversed()
