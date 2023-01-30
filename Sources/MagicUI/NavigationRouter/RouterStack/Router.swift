@@ -295,6 +295,18 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             completion()
         })
     }
+    
+    internal func dismissStack(last: Int, completion: @escaping (Int) -> ()) {
+        guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
+        let all = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
+        DispatchQueue.main.async {
+            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(last)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+            let left = max(all - last, 0)
+            completion(left)
+        })
+    }
 
     internal func dismissModal(completion: @escaping () -> ()) {
         guard let index = activeModalsIndices[tabSelection].last else { return }
@@ -327,9 +339,9 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     }
     
     internal func popTheLast(_ last: Int, style: PopStyle, completion: @escaping () -> ()) {
-        guard last > 1 else {
-            fatalError("Using pop(.the(last(\(last)), style: .\(style.rawValue), please use pop() instead.")
-        }
+//        guard last > 1 else {
+//            fatalError("Using pop(.the(last(\(last)), style: .\(style.rawValue), please use pop() instead.")
+//        }
         switch style {
         case .oneByOne:
             for i in 0..<last {
@@ -342,6 +354,10 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                 })
             }
         case .shortest:
+            guard last > 0 else {
+                completion()
+                return
+            }
             let paths = getPaths()
             print(paths)
             for i in 0..<paths.count {
@@ -349,14 +365,15 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                     print(self.activeModalsIndices[self.tabSelection])
                     if self.activeModalsIndices[self.tabSelection].count > paths.count {
                         self.dismissModal {
-                            self.popToRoot(style: style, completion: completion)
+                            let last = last - 1
+                            self.popTheLast(last, style: style, completion: completion)
                         }
                     } else {
-                        self.dismissStack {
+                        self.dismissStack(last: last) { left in
                             if i == paths.count - 1 {
                                 completion()
                             } else {
-                                self.popToRoot(style: style, completion: completion)
+                                self.popTheLast(left, style: style, completion: completion)
                             }
                         }
                     }
