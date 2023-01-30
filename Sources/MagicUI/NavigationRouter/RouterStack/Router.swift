@@ -385,6 +385,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                             if i == paths.count - 1 {
                                 completion()
                             } else {
+                                print("Doing it again for: \(left)")
                                 self.popTheLast(left, style: style, completion: completion)
                             }
                         }
