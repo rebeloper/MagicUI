@@ -382,6 +382,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         var isModal = [Bool]()
         for i in 0..<activeModalsIndices[tabSelection].count {
             let pathCount = paths[tabSelection][i].count
+            print("pathCount: \(pathCount)")
             if pathCount == 0 {
                 if i != 0 {
                     isModal.append(true)
