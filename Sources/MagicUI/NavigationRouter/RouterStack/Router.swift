@@ -308,6 +308,8 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             removeLast = last
             left = 0
         }
+        print("Last: \(last)")
+        print("All: \(all)")
         print("Remove last: \(removeLast)")
         print("Left: \(left)")
         DispatchQueue.main.async {
