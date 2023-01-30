@@ -386,38 +386,40 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         }
     }
     
-    internal func  popToIndex(_ index: Int, style: PopStyle, completion: @escaping () -> ()) {
+    internal func popToIndex(_ index: Int, style: PopStyle, completion: @escaping () -> ()) {
         let all = getAllViewsCount()
         let last = all - index
         popTheLast(last, style: style, completion: completion)
     }
     
     internal func popToRoot(style: PopStyle, completion: @escaping () -> ()) {
-        switch style {
-        case .oneByOne:
-            let all = getAllViewsCount()
-            popTheLast(all, style: style, completion: completion)
-        case .shortest:
-            let paths = getPaths()
-            for i in 0..<paths.count {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
-                    print(self.activeModalsIndices[self.tabSelection])
-                    if self.activeModalsIndices[self.tabSelection].count > paths.count {
-                        self.dismissModal {
-                            self.popToRoot(style: style, completion: completion)
-                        }
-                    } else {
-                        self.dismissStack {
-                            if i == paths.count - 1 {
-                                completion()
-                            } else {
-                                self.popToRoot(style: style, completion: completion)
-                            }
-                        }
-                    }
-                })
-            }
-        }
+        let all = getAllViewsCount()
+        popTheLast(all, style: style, completion: completion)
+//        switch style {
+//        case .oneByOne:
+//            let all = getAllViewsCount()
+//            popTheLast(all, style: style, completion: completion)
+//        case .shortest:
+//            let paths = getPaths()
+//            for i in 0..<paths.count {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
+//                    print(self.activeModalsIndices[self.tabSelection])
+//                    if self.activeModalsIndices[self.tabSelection].count > paths.count {
+//                        self.dismissModal {
+//                            self.popToRoot(style: style, completion: completion)
+//                        }
+//                    } else {
+//                        self.dismissStack {
+//                            if i == paths.count - 1 {
+//                                completion()
+//                            } else {
+//                                self.popToRoot(style: style, completion: completion)
+//                            }
+//                        }
+//                    }
+//                })
+//            }
+//        }
     }
     
     internal func getPaths() -> [Int] {
