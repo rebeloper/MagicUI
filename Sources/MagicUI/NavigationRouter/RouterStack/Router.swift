@@ -367,6 +367,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             print(pathsCount)
             for i in 0..<pathsCount.count {
                 if pathsCount.count == 1 {
+                    print(self.activeModalsIndices[self.tabSelection])
                     self.dismissStack(completion: completion)
                 } else {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.2 * Double(i), execute: {
