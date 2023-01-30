@@ -385,7 +385,6 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                             if i == paths.count - 1 {
                                 completion()
                             } else {
-                                print("Doing it again for: \(left)")
                                 self.popTheLast(left, style: style, completion: completion)
                             }
                         }
@@ -415,7 +414,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             let paths = getPaths()
             print(paths)
             for i in 0..<paths.count {
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
                     print(self.activeModalsIndices[self.tabSelection])
                     if self.activeModalsIndices[self.tabSelection].count > paths.count {
                         self.dismissModal {
@@ -430,7 +429,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                             }
                         }
                     }
-                }
+                })
             }
         }
     }
