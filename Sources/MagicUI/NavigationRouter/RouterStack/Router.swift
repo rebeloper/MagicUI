@@ -299,11 +299,20 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     internal func dismissStack(last: Int, completion: @escaping (Int) -> ()) {
         guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
         let all = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
+        var removeLast = 0
+        var left = 0
+        if last >= all {
+            removeLast = all
+            left = last - all
+        } else {
+            removeLast = last
+            left = 0
+        }
         DispatchQueue.main.async {
-            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(last)
+            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(removeLast)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-            let left = max(all - last, 0)
+            print("Dismissed left: \(left)")
             completion(left)
         })
     }
