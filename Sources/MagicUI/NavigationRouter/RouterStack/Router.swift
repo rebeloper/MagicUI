@@ -285,21 +285,11 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         })
     }
     
-//    internal func dismissStack(completion: @escaping () -> ()) {
-//        guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
-//        DispatchQueue.main.async {
-//            let all = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
-//            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(all)
-//        }
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
-//            completion()
-//        })
-//    }
-    
-    internal func dismissStack(last: Int, completion: @escaping () -> ()) {
+    internal func dismissStack(completion: @escaping () -> ()) {
         guard pathIndex[tabSelection] < paths[tabSelection].count, !paths[tabSelection][pathIndex[tabSelection]].isEmpty else { return }
         DispatchQueue.main.async {
-            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(last)
+            let all = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
+            self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(all)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
             completion()
@@ -359,16 +349,14 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                     print(self.activeModalsIndices[self.tabSelection])
                     if self.activeModalsIndices[self.tabSelection].count > paths.count {
                         self.dismissModal {
-                            self.popTheLast(last - 1, style: style, completion: completion)
+                            self.popToRoot(style: style, completion: completion)
                         }
                     } else {
-                        guard self.pathIndex[self.tabSelection] < self.paths[self.tabSelection].count, !self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].isEmpty else { return }
-                        let stackLast = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
-                        self.dismissStack(last: min(last, stackLast)) {
+                        self.dismissStack {
                             if i == paths.count - 1 {
                                 completion()
                             } else {
-                                self.popTheLast(last - stackLast, style: style, completion: completion)
+                                self.popToRoot(style: style, completion: completion)
                             }
                         }
                     }
@@ -404,9 +392,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                             self.popToRoot(style: style, completion: completion)
                         }
                     } else {
-                        guard self.pathIndex[self.tabSelection] < self.paths[self.tabSelection].count, !self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].isEmpty else { return }
-                        let stackLast = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
-                        self.dismissStack(last: stackLast) {
+                        self.dismissStack {
                             if i == paths.count - 1 {
                                 completion()
                             } else {
