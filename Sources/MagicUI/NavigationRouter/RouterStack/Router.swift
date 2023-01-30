@@ -342,13 +342,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                 })
             }
         case .shortest:
-            getPoppableViewsCount(for: last).forEach { count in
-                if count == 0 {
-                    dismissModal(completion: completion)
-                } else {
-                    dismissStack(completion: completion)
-                }
-            }
+            print("")
         }
     }
     
@@ -367,10 +361,16 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         switch style {
         case .oneByOne:
             let all = getAllViewsCount()
-            let last = all
-            popTheLast(last, style: style, completion: completion)
+            popTheLast(all, style: style, completion: completion)
         case .shortest:
-            print("")
+            let all = getAllViewsCount()
+            getPoppableViewsCount(for: all).forEach { count in
+                if count == 0 {
+                    dismissModal(completion: completion)
+                } else {
+                    dismissStack(completion: completion)
+                }
+            }
         }
     }
     
