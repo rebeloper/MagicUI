@@ -308,10 +308,6 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             removeLast = last
             left = 0
         }
-        print("Last: \(last)")
-        print("All: \(all)")
-        print("Remove last: \(removeLast)")
-        print("Left: \(left)")
         DispatchQueue.main.async {
             self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].removeLast(removeLast)
         }
@@ -351,9 +347,6 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     }
     
     internal func popTheLast(_ last: Int, style: PopStyle, completion: @escaping () -> ()) {
-//        guard last > 1 else {
-//            fatalError("Using pop(.the(last(\(last)), style: .\(style.rawValue), please use pop() instead.")
-//        }
         switch style {
         case .oneByOne:
             for i in 0..<last {
@@ -371,7 +364,6 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                 return
             }
             let paths = getPaths()
-            print(paths)
             for i in 0..<paths.count {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
                     print(self.activeModalsIndices[self.tabSelection])
@@ -395,14 +387,9 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     }
     
     internal func  popToIndex(_ index: Int, style: PopStyle, completion: @escaping () -> ()) {
-        switch style {
-        case .oneByOne:
-            let all = getAllViewsCount()
-            let last = all - index
-            popTheLast(last, style: style, completion: completion)
-        case .shortest:
-            print("")
-        }
+        let all = getAllViewsCount()
+        let last = all - index
+        popTheLast(last, style: style, completion: completion)
     }
     
     internal func popToRoot(style: PopStyle, completion: @escaping () -> ()) {
@@ -412,7 +399,6 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             popTheLast(all, style: style, completion: completion)
         case .shortest:
             let paths = getPaths()
-            print(paths)
             for i in 0..<paths.count {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
                     print(self.activeModalsIndices[self.tabSelection])
