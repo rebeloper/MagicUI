@@ -381,7 +381,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     internal func getModals() -> [Bool] {
         var isModal = [Bool]()
         for i in 0..<activeModalsIndices[tabSelection].count {
-            let index = activeModalsIndices[tabSelection].count - i
+            let index = activeModalsIndices[tabSelection].count - 1 - i
             let pathCount = paths[tabSelection][index].count
             print("pathCount: \(pathCount)")
             if pathCount == 0 {
