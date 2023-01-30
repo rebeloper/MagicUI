@@ -371,7 +371,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                 } else {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.2 * Double(i), execute: {
                         self.dismissStack {
-                            if i == 0 {
+                            if i == pathsCount.count - 1 {
                                 completion()
                             } else {
                                 self.dismissModal(completion: completion)
