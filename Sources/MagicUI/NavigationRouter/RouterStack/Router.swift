@@ -173,13 +173,6 @@
 
 import SwiftUI
 
-public enum PopType {
-    case one
-    case the(last: Int)
-    case to(index: Int)
-    case toRoot
-}
-
 public class Router<Destination: RouterDestination>: ObservableObject {
 
     @Published public var modalsState = Array(repeating: Array(repeating: false, count: 100), count: 10)
@@ -258,29 +251,13 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     public func pop(_ type: PopType = .one, completion: @escaping () -> () = {}) {
         switch type {
         case .one:
-            if paths[tabSelection][pathIndex[tabSelection]].count == 0 {
-                dismissModal(completion: completion)
-            } else {
-                dismiss(completion: completion)
-            }
-        case .the(let last):
-            for i in 0..<last {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
-                    self.pop {
-                        if i == last - 1 {
-                            completion()
-                        }
-                    }
-                })
-            }
-        case .to(let index):
-            let all = getAllViewsCount()
-            let last = all - index
-            pop(.the(last: last), completion: completion)
-        case .toRoot:
-            let all = getAllViewsCount()
-            let last = all
-            pop(.the(last: last), completion: completion)
+            popOne(completion: completion)
+        case .the(let last, let style):
+            popTheLast(last, style: style, completion: completion)
+        case .to(let index, let style):
+            popToIndex(index, style: style, completion: completion)
+        case .toRoot(let style):
+            popToRoot(style: style, completion: completion)
         }
     }
 
@@ -338,6 +315,66 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         count -= 1
         return count
     }
-
+    
+    internal func popOne(completion: @escaping () -> ()) {
+        if paths[tabSelection][pathIndex[tabSelection]].count == 0 {
+            dismissModal(completion: completion)
+        } else {
+            dismiss(completion: completion)
+        }
+    }
+    
+    internal func popTheLast(_ last: Int, style: PopStyle, completion: @escaping () -> ()) {
+        guard last > 1 else {
+            fatalError("Using pop(.the(last(\(last)), style: .\(style.rawValue), please use pop() instead.")
+        }
+        switch style {
+        case .oneByOne:
+            for i in 0..<last {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
+                    self.pop {
+                        if i == last - 1 {
+                            completion()
+                        }
+                    }
+                })
+            }
+        case .shortest:
+            print("")
+        }
+    }
+    
+    internal func  popToIndex(_ index: Int, style: PopStyle, completion: @escaping () -> ()) {
+        switch style {
+        case .oneByOne:
+            let all = getAllViewsCount()
+            let last = all - index
+            popTheLast(last, style: style, completion: completion)
+        case .shortest:
+            print("")
+        }
+    }
+    
+    internal func popToRoot(style: PopStyle, completion: @escaping () -> ()) {
+        switch style {
+        case .oneByOne:
+            let all = getAllViewsCount()
+            let last = all
+            popTheLast(last, style: style, completion: completion)
+        case .shortest:
+            print("")
+        }
+    }
+    
 }
 
+public enum PopType {
+    case one
+    case the(last: Int, style: PopStyle)
+    case to(index: Int, style: PopStyle)
+    case toRoot(style: PopStyle)
+}
+
+public enum PopStyle: String {
+    case oneByOne, shortest
+}
