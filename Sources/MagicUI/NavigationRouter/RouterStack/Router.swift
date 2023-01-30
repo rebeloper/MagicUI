@@ -375,17 +375,19 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     }
     
     internal func getPoppableViewsCount(for last: Int) -> [Int] {
-        var count = 0
+        var count = -1
         var viewsCount = [Int]()
         paths[tabSelection].forEach { path in
-            if count < last {
+            if count <= last {
                 viewsCount.append(min(path.count, last - count))
                 if last - count != 0 {
                     viewsCount.append(0)
                 }
+                count += path.count
                 count += 1
             }
         }
+        print(viewsCount)
         return viewsCount
     }
     
