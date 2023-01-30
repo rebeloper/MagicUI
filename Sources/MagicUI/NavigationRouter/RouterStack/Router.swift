@@ -91,12 +91,16 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             popToIndex(index, style: .shortest, completion: completion)
         case .toRoot:
             popToRoot(style: .shortest, completion: completion)
+        case .toNearestRoot:
+            popToNearestRoot(style: .shortest, completion: completion)
         case .theLastWith(let style, let last):
             popTheLast(last, style: style, completion: completion)
         case .toIndexWith(let style, let index):
             popToIndex(index, style: style, completion: completion)
         case .toRootWith(let style):
             popToRoot(style: style, completion: completion)
+        case .toNearestRootWith(let style):
+            popToNearestRoot(style: style, completion: completion)
         }
     }
 
@@ -185,6 +189,10 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         return paths.reversed()
     }
     
+    internal func getLastPathCount() -> Int {
+        paths[tabSelection][pathIndex[tabSelection]].count
+    }
+    
     internal func popOne(completion: @escaping () -> ()) {
         if paths[tabSelection][pathIndex[tabSelection]].count == 0 {
             dismissModal(completion: completion)
@@ -243,6 +251,11 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         popTheLast(all, style: style, completion: completion)
     }
     
+    internal func popToNearestRoot(style: PopStyle, completion: @escaping () -> ()) {
+        let last = getLastPathCount()
+        popTheLast(last, style: style, completion: completion)
+    }
+    
 }
 
 public enum PopType {
@@ -250,9 +263,11 @@ public enum PopType {
     case the(last: Int)
     case to(index: Int)
     case toRoot
+    case toNearestRoot
     case theLastWith(style: PopStyle, last: Int)
     case toIndexWith(style: PopStyle, index: Int)
     case toRootWith(style: PopStyle)
+    case toNearestRootWith(style: PopStyle)
 }
 
 public enum PopStyle: String {
