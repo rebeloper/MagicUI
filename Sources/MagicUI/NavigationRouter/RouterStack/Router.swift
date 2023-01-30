@@ -316,6 +316,8 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         return count
     }
     
+    
+    
     internal func popOne(completion: @escaping () -> ()) {
         if paths[tabSelection][pathIndex[tabSelection]].count == 0 {
             dismissModal(completion: completion)
@@ -340,7 +342,13 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                 })
             }
         case .shortest:
-            print("")
+            getPoppableViewsCount(for: last).forEach { count in
+                if count == 0 {
+                    dismissModal(completion: completion)
+                } else {
+                    dismissStack(completion: completion)
+                }
+            }
         }
     }
     
@@ -364,6 +372,21 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         case .shortest:
             print("")
         }
+    }
+    
+    internal func getPoppableViewsCount(for last: Int) -> [Int] {
+        var count = 0
+        var viewsCount = [Int]()
+        paths[tabSelection].forEach { path in
+            if count <= last {
+                viewsCount.append(min(path.count, last - count))
+                if last - count != 0 {
+                    viewsCount.append(0)
+                }
+                count += 1
+            }
+        }
+        return viewsCount
     }
     
 }
