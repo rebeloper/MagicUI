@@ -363,29 +363,29 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             let all = getAllViewsCount()
             popTheLast(all, style: style, completion: completion)
         case .shortest:
-            let modals = getModals()
-            for i in 0..<modals.count {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
-                    let isModal = modals[i]
-                    if isModal {
-                        self.dismissModal(completion: completion)
-                    } else {
+            let pathsCount = getPathsCount()
+            print(pathsCount)
+            for i in 0..<pathsCount.count {
+                if pathsCount.count == 1 {
+                    self.dismissStack(completion: completion)
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
                         self.dismissStack(completion: completion)
-                    }
-                })
-                
+                        self.dismissModal(completion: completion)
+                    })
+                }
             }
         }
     }
     
-    internal func getModals() -> [Bool] {
-        var isModal = [Bool]()
+    internal func getPathsCount() -> [Int] {
+        var pathsCount = [Int]()
         paths[tabSelection].forEach { path in
             if !path.isEmpty {
                 print(path.count)
             }
         }
-        return isModal.reversed()
+        return pathsCount.reversed()
     }
     
 }
