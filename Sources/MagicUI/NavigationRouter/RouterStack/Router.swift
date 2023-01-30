@@ -362,6 +362,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                             self.popTheLast(last - 1, style: style, completion: completion)
                         }
                     } else {
+                        guard self.pathIndex[self.tabSelection] < self.paths[self.tabSelection].count, !self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].isEmpty else { return }
                         let stackLast = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
                         self.dismissStack(last: min(last, stackLast)) {
                             if i == paths.count - 1 {
@@ -403,6 +404,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                             self.popToRoot(style: style, completion: completion)
                         }
                     } else {
+                        guard self.pathIndex[self.tabSelection] < self.paths[self.tabSelection].count, !self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].isEmpty else { return }
                         let stackLast = self.paths[self.tabSelection][self.pathIndex[self.tabSelection]].count
                         self.dismissStack(last: stackLast) {
                             if i == paths.count - 1 {
