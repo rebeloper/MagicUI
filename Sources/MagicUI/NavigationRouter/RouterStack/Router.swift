@@ -369,14 +369,11 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                 if pathsCount.count == 1 {
                     self.dismissStack(completion: completion)
                 } else {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
-                        let activeModals = self.modalsState[self.tabSelection].filter { isModal in
-                            isModal == true
-                        }
-                        if activeModals.count > self.paths.count {
-                            self.dismissModal(completion: completion)
-                        } else {
-                            self.dismissStack {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2 * Double(i), execute: {
+                        self.dismissStack {
+                            if i == 0 {
+                                completion()
+                            } else {
                                 self.dismissModal(completion: completion)
                             }
                         }
