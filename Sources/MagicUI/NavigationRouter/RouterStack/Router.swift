@@ -368,7 +368,13 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             for i in 0..<pathsCount.count {
                 if pathsCount.count == 1 {
                     print(self.activeModalsIndices[self.tabSelection])
-                    self.dismissStack(completion: completion)
+                    if self.activeModalsIndices[self.tabSelection].count > pathsCount.count {
+                        self.dismissModal {
+                            self.dismissStack(completion: completion)
+                        }
+                    } else {
+                        self.dismissStack(completion: completion)
+                    }
                 } else {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.2 * Double(i), execute: {
                         print(self.activeModalsIndices[self.tabSelection])
