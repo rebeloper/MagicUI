@@ -85,11 +85,17 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         switch type {
         case .one:
             popOne(completion: completion)
-        case .the(let last, let style):
+        case .the(let last):
+            popTheLast(last, style: .shortest, completion: completion)
+        case .to(let index):
+            popToIndex(index, style: .shortest, completion: completion)
+        case .toRoot:
+            popToRoot(style: .shortest, completion: completion)
+        case .theLastWith(let style, let last):
             popTheLast(last, style: style, completion: completion)
-        case .to(let index, let style):
+        case .toIndexWith(let style, let index):
             popToIndex(index, style: style, completion: completion)
-        case .toRoot(let style):
+        case .toRootWith(let style):
             popToRoot(style: style, completion: completion)
         }
     }
@@ -241,9 +247,12 @@ public class Router<Destination: RouterDestination>: ObservableObject {
 
 public enum PopType {
     case one
-    case the(last: Int, style: PopStyle)
-    case to(index: Int, style: PopStyle)
-    case toRoot(style: PopStyle)
+    case the(last: Int)
+    case to(index: Int)
+    case toRoot
+    case theLastWith(style: PopStyle, last: Int)
+    case toIndexWith(style: PopStyle, index: Int)
+    case toRootWith(style: PopStyle)
 }
 
 public enum PopStyle: String {
