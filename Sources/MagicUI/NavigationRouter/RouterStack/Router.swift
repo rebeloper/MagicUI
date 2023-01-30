@@ -366,34 +366,49 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             let pathsCount = getPathsCount()
             print(pathsCount)
             for i in 0..<pathsCount.count {
-                if pathsCount.count == 1 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
                     print(self.activeModalsIndices[self.tabSelection])
                     if self.activeModalsIndices[self.tabSelection].count > pathsCount.count {
                         self.dismissModal {
                             self.popToRoot(style: style, completion: completion)
                         }
                     } else {
-                        self.dismissStack(completion: completion)
-                    }
-                } else {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2 * Double(i), execute: {
-                        print(self.activeModalsIndices[self.tabSelection])
-                        if self.activeModalsIndices[self.tabSelection].count > pathsCount.count {
-                            self.dismissModal {
+                        self.dismissStack {
+                            if i == pathsCount.count - 1 {
+                                completion()
+                            } else {
                                 self.popToRoot(style: style, completion: completion)
                             }
-                        } else {
-                            self.dismissStack {
-                                if i == pathsCount.count - 1 {
-                                    completion()
-                                } else {
-//                                    self.dismissModal(completion: completion)
-                                    self.popToRoot(style: style, completion: completion)
-                                }
-                            }
                         }
-                    })
-                }
+                    }
+                })
+//                if pathsCount.count == 1 {
+//                    print(self.activeModalsIndices[self.tabSelection])
+//                    if self.activeModalsIndices[self.tabSelection].count > pathsCount.count {
+//                        self.dismissModal {
+//                            self.popToRoot(style: style, completion: completion)
+//                        }
+//                    } else {
+//                        self.dismissStack(completion: completion)
+//                    }
+//                } else {
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
+//                        print(self.activeModalsIndices[self.tabSelection])
+//                        if self.activeModalsIndices[self.tabSelection].count > pathsCount.count {
+//                            self.dismissModal {
+//                                self.popToRoot(style: style, completion: completion)
+//                            }
+//                        } else {
+//                            self.dismissStack {
+//                                if i == pathsCount.count - 1 {
+//                                    completion()
+//                                } else {
+//                                    self.popToRoot(style: style, completion: completion)
+//                                }
+//                            }
+//                        }
+//                    })
+//                }
             }
         }
     }
