@@ -373,7 +373,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             let paths = getPaths()
             print(paths)
             for i in 0..<paths.count {
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 * Double(i), execute: {
                     print(self.activeModalsIndices[self.tabSelection])
                     if self.activeModalsIndices[self.tabSelection].count > paths.count {
                         self.dismissModal {
@@ -390,7 +390,7 @@ public class Router<Destination: RouterDestination>: ObservableObject {
                             }
                         }
                     }
-                }
+                })
             }
         }
     }
