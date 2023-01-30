@@ -364,8 +364,8 @@ public class Router<Destination: RouterDestination>: ObservableObject {
             popTheLast(all, style: style, completion: completion)
         case .shortest:
             let all = getAllViewsCount()
-            getPoppableViewsCount(for: all).forEach { count in
-                if count == 0 {
+            getModalViewsCount().forEach { isModal in
+                if isModal {
                     dismissModal(completion: completion)
                 } else {
                     dismissStack(completion: completion)
@@ -374,21 +374,13 @@ public class Router<Destination: RouterDestination>: ObservableObject {
         }
     }
     
-    internal func getPoppableViewsCount(for last: Int) -> [Int] {
-        var count = -1
-        var viewsCount = [Int]()
+    internal func getModalViewsCount() -> [Bool] {
+        var isModal = [Bool]()
         paths[tabSelection].forEach { path in
-            if count <= last {
-                viewsCount.append(min(path.count, last - count))
-                if last - count != 0 {
-                    viewsCount.append(0)
-                }
-                count += path.count
-                count += 1
-            }
+            isModal.append(path.count == 0 ? true : false)
         }
-        print(viewsCount)
-        return viewsCount
+        print(isModal)
+        return isModal
     }
     
 }
