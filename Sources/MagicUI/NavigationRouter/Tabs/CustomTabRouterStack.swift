@@ -39,6 +39,26 @@ public struct CustomTabRouterStack<Destination: RouterDestination, Tab: RouterTa
     /// can control.
     ///
     /// - Parameters:
+    ///   - router: The navigation router.
+    ///   - roots: The views to display when the stack is empty.
+    ///   - tabs: Tab item view.
+    ///   - unselectedTabs: Unselected tab item views.
+    ///   - tabSelection: Binding for the selected tab.
+    public init(router: Binding<Router<Destination>> ,roots: [Destination], tabs: [Tab], unselectedTabs: [UnselectedTab] = [], tabSelection: Int = 0) {
+        self.roots = roots
+        self.selectedTabs = tabs
+        self.unselectedTabs = unselectedTabs
+        router.tabSelection = tabSelection
+        for i in 0..<roots.count {
+            router.activeModalsIndices.append([roots[i].modalValue])
+        }
+        self._router = router
+    }
+    
+    /// Creates a custom TabView with navigation stacks with homogeneous navigation state that you
+    /// can control.
+    ///
+    /// - Parameters:
     ///   - roots: The tab items and views to display when the stack is empty.
     ///   - tabSelection: Binding for the selected tab.
     public init(_ roots: [CustomTabRoot<Destination, Tab, UnselectedTab>], tabSelection: Int = 0) {
