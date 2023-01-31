@@ -15,8 +15,6 @@ public class Router<Destination: RouterDestination>: ObservableObject {
     @Published public var paths = Array(repeating: Array(repeating: NavigationPath(), count: 100), count: 10)
     @Published public var pathIndex = Array(repeating: 0, count: 10)
 
-    public init() {}
-
     // MARK: - push
 
     /// Pushes a destination onto the router stack.
