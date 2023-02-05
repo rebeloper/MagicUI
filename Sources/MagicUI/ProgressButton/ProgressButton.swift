@@ -5,26 +5,25 @@
 //  Created by Alex Nagy on 04.02.2023.
 //
 
+#if !os(tvOS)
 import SwiftUI
 
 public struct ProgressButton<S, L, P, B>: View where S: Shape, L: View, P: View, B: View {
-    
+
     @State private var isInProgress = false
-    
+
     var clipShape: S
-    var fillStyle: FillStyle
     var direction: ProgressButtonDirection
     var action: (@escaping () -> ()) -> ()
     var progressState: (Bool) -> ()
     @ViewBuilder var label: () -> L
     @ViewBuilder var progress: () -> P
     @ViewBuilder var background: () -> B
-    
+
     /// A button that has a progress animation when pressed
     /// - Parameters:
     ///   - direction: the direction of the animation, defaults to `.down`
     ///   - clipShape: the clipshape of the button, defaults to `Rectangle()`
-    ///   - fillStyle: the fill sytyle of the clipShape, defaults to `FillStyle()`
     ///   - action: the action the button performs
     ///   - progressState: the progress state of the button
     ///   - label: the label of the button
@@ -32,7 +31,6 @@ public struct ProgressButton<S, L, P, B>: View where S: Shape, L: View, P: View,
     ///   - background: the background view of the button
     public init(direction: ProgressButtonDirection = .down,
                 clipShape: S = Rectangle(),
-                fillStyle: FillStyle = FillStyle(),
                 action: @escaping (@escaping () -> Void) -> Void,
                 progressState: @escaping (Bool) -> () = { _ in },
                 @ViewBuilder label: @escaping () -> L,
@@ -40,16 +38,15 @@ public struct ProgressButton<S, L, P, B>: View where S: Shape, L: View, P: View,
                 @ViewBuilder background: @escaping () -> B) {
         self.direction = direction
         self.clipShape = clipShape
-        self.fillStyle = fillStyle
         self.action = action
         self.progressState = progressState
         self.label = label
         self.progress = progress
         self.background = background
     }
-    
+
     @State private var size: CGSize = .zero
-    
+
     public var body: some View {
         ZStack {
             progress()
@@ -63,7 +60,8 @@ public struct ProgressButton<S, L, P, B>: View where S: Shape, L: View, P: View,
         .readSize(onChange: { size in
             self.size = size
         })
-        .clipShape(clipShape, style: fillStyle)
+        .contentShape(clipShape)
+        .clipShape(clipShape)
         .onTapGesture {
             guard !isInProgress else { return }
             withAnimation {
@@ -79,7 +77,7 @@ public struct ProgressButton<S, L, P, B>: View where S: Shape, L: View, P: View,
             progressState(newValue)
         }
     }
-    
+
     func progressOffset() -> CGSize {
         switch direction {
         case .left:
@@ -92,7 +90,7 @@ public struct ProgressButton<S, L, P, B>: View where S: Shape, L: View, P: View,
             return CGSize(width: 0, height: isInProgress ? 0 : -size.width)
         }
     }
-    
+
     func labelOffset() -> CGSize {
         switch direction {
         case .left:
@@ -109,7 +107,7 @@ public struct ProgressButton<S, L, P, B>: View where S: Shape, L: View, P: View,
 
 public enum ProgressButtonDirection: String, CaseIterable, Identifiable {
     case left, right, up, down
-    
+
     public var id: String { self.rawValue }
 }
 
@@ -133,4 +131,4 @@ public enum ProgressButtonDirection: String, CaseIterable, Identifiable {
 //    static var defaultValue: CGSize = .zero
 //    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
 //}
-
+#endif
