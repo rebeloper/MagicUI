@@ -78,7 +78,7 @@ public extension View {
         }
     }
     
-    #if os(iOS)
+    #if os(iOS) || os(watchOS)
     /// Links a ``PhotosPicker`` selection to a ``UIImage`` binding
     /// - Parameters:
     ///   - selection: ``PhotosPicker`` selection
