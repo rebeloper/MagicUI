@@ -13,16 +13,16 @@ public struct SlideInView<Content: View, Container: View>: View {
     private var edge: Edge
     private var paddingPercentage: CGFloat
     private var options: SlideInViewOptions
-    private var content: () -> Content
-    private var container: () -> Container
+    @ViewBuilder private var content: () -> Content
+    @ViewBuilder private var container: () -> Container
     
     @StateObject private var context: SlideInViewManagerContext
     
     public init(_ edge: Edge = .leading,
                 paddingPercentage: CGFloat = 0.35,
                 options: SlideInViewOptions = SlideInViewOptions(),
-                content: @escaping () -> Content,
-                container: @escaping () -> Container) {
+                @ViewBuilder content: @escaping () -> Content,
+                @ViewBuilder container: @escaping () -> Container) {
         self.edge = edge
         guard 0.0...1.0 ~= paddingPercentage else {
             fatalError("paddingPercentage must be between 0 and 1")
